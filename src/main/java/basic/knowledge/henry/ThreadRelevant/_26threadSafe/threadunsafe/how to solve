@@ -1,0 +1,15 @@
+What Happens in the Above Example?
+Expected Behavior: Since each thread adds 1000 elements, the list should have 2000 elements at the end.
+Actual Behavior: The actual size of the list might be less than 2000 due to race conditions. Both threads might try to add an element at the same index simultaneously, leading to data corruption or loss.
+Possible Outcomes:
+The final size of the list could be less than 2000 because some additions may overwrite others.
+The list may throw a ConcurrentModificationException if a thread iterates over it while another modifies it.
+Solution:
+To make ArrayList thread-safe, you can use:
+
+Synchronized blocks to manually synchronize access.
+Collections.synchronizedList to create a synchronized version of the list:
+java
+复制代码
+List<Integer> list = Collections.synchronizedList(new ArrayList<>());
+CopyOnWriteArrayList, which is inherently thread-safe but has a higher memory cost and is slower for write operations.

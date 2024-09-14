@@ -1,0 +1,3 @@
+https://cloud.tencent.com/developer/article/1708132
+
+合理使用volatile 和synchronized 在仅仅为赋值操作时 可只用volatile
