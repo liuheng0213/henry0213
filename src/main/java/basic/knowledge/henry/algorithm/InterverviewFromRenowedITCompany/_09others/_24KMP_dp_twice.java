@@ -9,7 +9,6 @@ public class _24KMP_dp_twice {
         System.out.println(j);
         int i = "abccbccbccb".indexOf("bccbccb");
         System.out.println(i);
-
     }
 
     private int getIndexOf(String str, String pat) {
@@ -22,7 +21,7 @@ public class _24KMP_dp_twice {
         int[] nexts = getCommonNext(pat);
         for(int i = 1;i< n;i++){
             int j = dp[i - 1];
-            while(j == pat.length() || j > 0 && str.charAt(i) != pat.charAt(j)){
+            while(j > 0 && str.charAt(i) != pat.charAt(j)){
                 j = nexts[j - 1];
             }
 

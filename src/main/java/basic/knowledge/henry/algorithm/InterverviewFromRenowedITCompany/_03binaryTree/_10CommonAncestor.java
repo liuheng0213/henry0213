@@ -17,13 +17,20 @@ public class _10CommonAncestor {
         System.out.println(node.value);
     }
 
+    /**
+     * under the head, o1 find its own nearest ancestor, or o2 find its nearest ancestor
+     * @param head
+     * @param o1
+     * @param o2
+     * @return
+     */
     public Node lowestCommonAncestor(Node head, Node o1, Node o2) {
         if (head == null || head == o1 || head == o2) {
             return head;
         }
         Node leftAncestor = lowestCommonAncestor(head.left,o1,o2);
         Node rightAncestor = lowestCommonAncestor(head.right,o1,o2);
-
+        //o1 's ancestor is left && o2 's ancestor is right
         if(leftAncestor != null && rightAncestor != null){
             return head;
         }
