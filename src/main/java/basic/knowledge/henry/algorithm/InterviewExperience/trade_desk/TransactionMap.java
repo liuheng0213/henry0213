@@ -36,7 +36,7 @@ public class TransactionMap {
     }
 
     void set(String key, String val) {
-        if (transactionalStack.isEmpty()) {
+        if (transactionalStack.isEmpty()) { // not in the begin status or transaction status
             store.put(key, val);
             return;
         }
@@ -61,7 +61,7 @@ public class TransactionMap {
     }
 
     void delete (String key) {
-        if (!transactionalStack.isEmpty()) {
+        if (transactionalStack.isEmpty()) {//not in the status of transaction ,similar to set function
             store.remove(key);
         }
         transactionalStack.peek().remove(key);

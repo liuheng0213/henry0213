@@ -3,10 +3,10 @@ package basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._09othe
 public class _24KMP_including_dp_best {
     public static void main(String[] args) {
         _24KMP_including_dp_best kmp = new _24KMP_including_dp_best();
-        int indexOf = kmp.getIndexOf("abcbcc", "bcc");
+        int indexOf = kmp.getIndexOf("abcbccbccb", "bccbccb");
         System.out.println(indexOf);
 
-        int i = "abcbcc".indexOf("bcc");
+        int i = "abcbccbccb".indexOf("bccbccb");
         System.out.println(i);
 
     }
@@ -49,7 +49,7 @@ public class _24KMP_including_dp_best {
        for(int i = 1;i< n;i++){
           int j=dp[i - 1];
           while(j> 0 && chp[j] != chp[i]){
-              j = chp[i - 1];
+              j = dp[j - 1];
           }
 
           dp[i] = j + (chp[j] == chp[i] ? 1 : 0);
