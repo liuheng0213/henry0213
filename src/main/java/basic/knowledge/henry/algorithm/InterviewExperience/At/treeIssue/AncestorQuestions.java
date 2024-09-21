@@ -1,5 +1,7 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.treeIssue;
 
+import basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._03binaryTree.Node;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -10,12 +12,17 @@ public class AncestorQuestions {
 
     public static void main(String[] args) {
         int[][] arr = new int[][]{{1, 4}, {1, 5}, {2, 5}, {3, 6}, {6, 7}, {5, 8}, {5, 9}, {10, 2}, {10, 3}};
-        findParents(10, arr);
+//        findParents(10, arr);
         boolean flag = commonAncestor(10, arr, 7, 9);
-        System.out.println(flag);
-        int farthest = farestAncestor(10, arr, 4);
-        System.out.println("farthest ancestor: " + farthest);
+//        System.out.println(flag);
+        int farthest = farestAncestor(10, arr, 5);
+
+        System.out.println("farestAncestor ancestor: " + farthest);
     }
+
+
+
+
 
     private static int farestAncestor(int n, int[][] arr, int e) {
         int[] starts = new int[n + 1];
@@ -32,12 +39,12 @@ public class AncestorQuestions {
         HashSet<Integer> marked;
         int max = -1;
         int res = 0;
-        for(int i = 1; i < n + 1; i++){
-            if (starts[i] == 0) {
-                res = i;
-                break;
-            }
-        }
+//        for(int i = 1; i < n + 1; i++){
+//            if (starts[i] == 0) {
+//                res = i;
+//                break;
+//            }
+//        }
         for (int i = 1; i < n + 1; i++) {
             if (starts[i] == 0) {
                 queue = new LinkedList<>();
@@ -147,7 +154,7 @@ public class AncestorQuestions {
                 marked = new HashSet<>();
                 marked.add(i);
                 queue.add(i);
-                if (findCommonParents(queue, marked, graph, p, q)) {
+                if (hasCommonParents(queue, marked, graph, p, q)) {
                     return true;
                 }
             }
@@ -156,7 +163,7 @@ public class AncestorQuestions {
         return false;
     }
 
-    private static boolean findCommonParents(LinkedList<Integer> queue, HashSet<Integer> marked, ArrayList<Integer>[] graph, int p, int q) {
+    private static boolean hasCommonParents(LinkedList<Integer> queue, HashSet<Integer> marked, ArrayList<Integer>[] graph, int p, int q) {
         boolean foundP = false;
         boolean foundQ = false;
         while (!queue.isEmpty()) {

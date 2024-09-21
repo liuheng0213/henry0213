@@ -25,6 +25,7 @@ public class lc1639 {
         return (int) dfs(target, 0, 0);
     }
 
+    // calculate
     // at i (in word[i].length),
     // at k (in target)
     private long dfs(String target, int i, int k) {
