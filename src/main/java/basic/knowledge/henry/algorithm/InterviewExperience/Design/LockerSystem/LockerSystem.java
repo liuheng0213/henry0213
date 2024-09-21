@@ -1,17 +1,22 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem;
 
 import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.lock.Locker;
-import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.lock.MediumLocker;
-import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.lock.SmallLocker;
 import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.parcel.MediumParcel;
 import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.parcel.Parcel;
 import basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.parcel.SmallParcel;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+/**
+ * lock table : lockid, type
+ * parcel table:  pid, type
+ */
 public class LockerSystem {
 
     Map<String,Locker> storedP2LMap = new HashMap<>();// parcel stored to locker map
+    Map<String,Parcel> storedL2PMap = new HashMap<>();// locker used to stored parcel map
     Map<SizeEnum, List<Locker>> lockers = new HashMap<>();
 
     public LockerSystem(Map<SizeEnum, List<Locker>> lockers) {
@@ -25,47 +30,55 @@ public class LockerSystem {
         }else {
             throw new RuntimeException("parcel is not in the lockers");
         }
-        lockerToOpen.takeOutParcel(parcel);
+        // update storedP2LMap and storedL2PMap
+        takeOutParcel(lockerToOpen,parcel);
+    }
 
-        //update storedP2LMap
+    private void takeOutParcel(Locker lockerToOpen, Parcel parcel) {
         storedP2LMap.remove(parcel.getId());
-
+        storedL2PMap.remove(lockerToOpen.getLockerId());
     }
 
     public Locker findLockerForDelivery(Parcel parcel){
         Locker locker;
         if(parcel instanceof SmallParcel){
-            locker = (SmallLocker) findFromSmallLocker();
+            locker =findLockerBytype(SizeEnum.SMALL);
+            if(locker == null) {
+                locker =  findLockerBytype(SizeEnum.MEDIUM);
+                if (locker == null) {
+                    locker =  findLockerBytype(SizeEnum.LARGE);
+                }
+            }
+        }else if(parcel instanceof MediumParcel){
+            locker =  findLockerBytype(SizeEnum.MEDIUM);
             if(locker == null){
-                locker = (MediumLocker) findFromMediumLocker();
+                locker =  findLockerBytype(SizeEnum.LARGE);
             }
         }else{
-            locker = (MediumLocker)findFromMediumLocker();
+            locker = findLockerBytype(SizeEnum.LARGE);
         }
-        locker.storeParcel(parcel);
+        //update storedP2LMap and storedL2PMap
+        storeParcel(locker,parcel);
 
-        //update p2lMap
-        storedP2LMap.put(parcel.getId(),locker);
         return locker;
     }
 
-    private Locker findFromMediumLocker() {
-        List<Locker>  list = lockers.get(SizeEnum.MEDIUM);
+    private Locker findLockerBytype(SizeEnum type) {
+        List<Locker>  list = lockers.get(type);
         for(Locker l : list){
-            if(!l.isUsed()){
+            if(!storedL2PMap.containsKey(l.getLockerId())){
                 return l;
             }
         }
         return null;
     }
 
-    private Locker findFromSmallLocker() {
-        List<Locker> list = lockers.get(SizeEnum.SMALL);
-        for(Locker l : list){
-            if(!l.isUsed()){
-                return l;
-            }
-        }
-        return null;
+
+
+    private void storeParcel(Locker locker, Parcel parcel) {
+        storedP2LMap.put(parcel.getId(),locker);
+        storedL2PMap.put(locker.getLockerId(),parcel);
     }
+
+
 }

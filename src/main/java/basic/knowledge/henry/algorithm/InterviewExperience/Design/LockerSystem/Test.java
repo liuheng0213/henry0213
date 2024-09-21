@@ -37,15 +37,15 @@ public class Test {
         Locker p1 = lockerSystem.findLockerForDelivery(new SmallParcel("PS1"));
         System.out.println(p1);
         Locker p2 = lockerSystem.findLockerForDelivery(new SmallParcel("PS2"));
-        System.out.println(p2);
-        Locker p3 = lockerSystem.findLockerForDelivery(new SmallParcel("PS3"));
-        System.out.println(p3);
+//        System.out.println(p2);
+//        Locker p3 = lockerSystem.findLockerForDelivery(new SmallParcel("PS3"));
+//        System.out.println(p3);
         Locker p4 = lockerSystem.findLockerForDelivery(new SmallParcel("PS4"));
         System.out.println(p4);
-        Locker p5 = lockerSystem.findLockerForDelivery(new SmallParcel("PS5"));
-        System.out.println(p5);
-        Locker p6 = lockerSystem.findLockerForDelivery(new SmallParcel("PS6"));
-        System.out.println(p6);
+//        Locker p5 = lockerSystem.findLockerForDelivery(new SmallParcel("PS5"));
+//        System.out.println(p5);
+//        Locker p6 = lockerSystem.findLockerForDelivery(new SmallParcel("PS6"));
+//        System.out.println(p6);
         Locker p7 = lockerSystem.findLockerForDelivery(new SmallParcel("PS7"));
         System.out.println(p7);
 
@@ -53,7 +53,7 @@ public class Test {
         System.out.println(p8);
 
         lockerSystem.openAndPickUp(new SmallParcel("PS4"));
-        lockerSystem.openAndPickUp(new SmallParcel("PS4"));
+//        lockerSystem.openAndPickUp(new SmallParcel("PS4"));
         Locker p100 = lockerSystem.findLockerForDelivery(new SmallParcel("PS4"));
         System.out.println(p100);
 

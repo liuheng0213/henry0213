@@ -1,9 +1,9 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.Design.LockerSystem.parcel;
 
-public class SmallParcel implements Parcel {
+public class LargeParcel implements Parcel{
     String pid;
 
-    public SmallParcel(String pid) {
+    public LargeParcel(String pid) {
         this.pid = pid;
     }
 
@@ -14,7 +14,7 @@ public class SmallParcel implements Parcel {
 
     @Override
     public String toString() {
-        return "SmallParcel{" +
+        return "LargeParcel{" +
                 "pid='" + pid + '\'' +
                 '}';
     }
