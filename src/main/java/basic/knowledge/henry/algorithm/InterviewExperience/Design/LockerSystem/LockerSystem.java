@@ -10,8 +10,10 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * one points to many(one)?
  * lock table : lockid, type
  * parcel table:  pid, type
+ * usage recording  id, lockid pid active(0 or 1)
  */
 public class LockerSystem {
 

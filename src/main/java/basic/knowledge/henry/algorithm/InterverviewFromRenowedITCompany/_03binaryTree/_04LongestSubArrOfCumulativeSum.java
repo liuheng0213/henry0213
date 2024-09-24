@@ -64,8 +64,10 @@ public class _04LongestSubArrOfCumulativeSum {
         }
 
         //试想 没有必要max函数了,注意getMaxLen的方法意义
-        maxLen = Math.max(maxLen, getMaxLen(sumMap, cur.left, maxLen, curSum, level + 1, targetSum));
-        maxLen = Math.max(maxLen, getMaxLen(sumMap, cur.right, maxLen, curSum, level + 1, targetSum));
+        maxLen = getMaxLen(sumMap, cur.left, maxLen, curSum, level + 1, targetSum);
+        maxLen =  getMaxLen(sumMap, cur.right, maxLen, curSum, level + 1, targetSum);
+//        maxLen = Math.max(maxLen, getMaxLen(sumMap, cur.left, maxLen, curSum, level + 1, targetSum));
+//        maxLen = Math.max(maxLen, getMaxLen(sumMap, cur.right, maxLen, curSum, level + 1, targetSum));
 
         return maxLen;
 
