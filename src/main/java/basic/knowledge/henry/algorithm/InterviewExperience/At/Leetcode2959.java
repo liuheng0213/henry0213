@@ -60,6 +60,7 @@ import java.util.*;
 public class Leetcode2959 {
 
     public static void main(String[] args) {
+        System.out.println(1<<4);
         int n = 3, maxDistance = 5;
         int[][] roads = {{0,1,2},{1,2,10},{0,2,10}};
 
@@ -71,69 +72,79 @@ public class Leetcode2959 {
     }
 
 
-    public int numberOfSets(int n, int maxDistance, int[][] roads) {
-        int result = 0;
-        for (int set = 0; set < (1 << n); set++) { // 1 << n is same as Math.pow(2, n)
-            // Note: here `set` is active branches (i.e. remaining branches after closing
-            // some)
-            int[][] dist = calculateDistance(n, roads, set);
-            for(int[] d : dist){
-                String s = Arrays.toString(d);
-                System.out.println(s);
+    private static class Graph {
 
+        private int n;
+        private List<int[]>[] g;
+
+        public Graph(int n, int[][] edges) {
+            this.n = n;
+            g = new ArrayList[n];
+            for (int i = 0; i < n; ++i) g[i] = new ArrayList();
+            for (int[] e : edges) {
+                g[e[0]].add(new int[] {e[1], e[2]});
+                g[e[1]].add(new int[] {e[0], e[2]});
             }
-            System.out.println("=============");
+        }
 
+        public int shortestPath(int src, int dst, boolean[] f) {
+            PriorityQueue<int[]> pq = new PriorityQueue<>(n, (o1, o2) -> o1[0] - o2[0]);
+            int[] dist = new int[n];
+            Arrays.fill(dist, Integer.MAX_VALUE);
+            boolean[] sptSet = new boolean[n];
+            pq.add(new int[] {0, src});
+            dist[src] = 0;
 
-            boolean valid = true;
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (((set >> i) & 1) == 1 && ((set >> j) & 1) == 1) {
-                        if (dist[i][j] > maxDistance) {
-                            valid = false;
-                            break;
+            while (!pq.isEmpty()) {
+                int from = pq.poll()[1];
+//                if (from == dst) break;
+                if (!sptSet[from] && g[from] != null) {
+                    sptSet[from] = true;
+                    for (int[] e : g[from]) {
+                        int to = e[0];
+                        int cost = e[1];
+                        if (!f[to] && (dist[to] > dist[from] + cost)) {
+                            dist[to] = dist[from] + cost;
+                            pq.add(new int[] {dist[to], to});
                         }
                     }
                 }
             }
 
-            result = valid ? result + 1 : result;
+            return dist[dst];
         }
-        return result;
     }
 
 
-
-    private int[][] calculateDistance(int n, int[][] roads, int set) {
-        int[][] dist = new int[n][n];
-        for (int[] row : dist)
-            Arrays.fill(row, Integer.MAX_VALUE);
-        for (int i = 0; i < n; i++)
-            dist[i][i] = 0;
-        for (int[] road : roads) {
-            if (((set >> road[0]) & 1) == 1 && ((set >> road[1]) & 1) == 1) {
-                dist[road[0]][road[1]] = Math.min(dist[road[0]][road[1]], road[2]);
-                // if there are multiple edges from
-                // same
-                // source to dest then we want to
-                // consider the edge with minimum
-                // weight
-                dist[road[1]][road[0]] = Math.min(dist[road[1]][road[0]], road[2]);
+    public int numberOfSets(int n, int maxDistance, int[][] roads) {
+        Graph graph = new Graph(n, roads);
+        boolean[] f = new boolean[n];
+        int ans = 0;
+        for (int i = 0; i < (1<<n); ++i) {
+            Arrays.fill(f, false);
+            for (int j = 0; j < n; ++j) {
+                if (((i >>> j) & 1) == 1) f[j] = true;
             }
-        }
-
-        // Floyd-Warshall algo
-        for (int k = 0; k < n; k++) {
-            for (int i = 0; i < n; i++) {
-                for (int j = 0; j < n; j++) {
-                    if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE) { // must add this if condition , otherwise dist[i][j] might be the minus value
-                        dist[i][j] = Math.min(dist[i][j], dist[i][k] + dist[k][j]);
+            boolean valid = true;
+            outer:
+            for (int src = 0; src < n; ++src) {
+                if (!f[src]) {
+                    for (int dst = src + 1; dst < n; ++dst) {
+                        if (!f[dst]) {
+                            int dist = graph.shortestPath(src, dst, f);
+                            if (dist > maxDistance) {
+                                valid = false;
+                                break outer;
+                            }
+                        }
                     }
                 }
             }
+            if (valid) ++ans;
         }
-        return dist;
+        return ans;
     }
+
 }
 
 

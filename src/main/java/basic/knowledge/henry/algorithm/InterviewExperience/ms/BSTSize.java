@@ -1,8 +1,6 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.microsoft;
+package basic.knowledge.henry.algorithm.InterviewExperience.ms;
 
 
-import basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._03binaryTree.Node;
-import basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._03binaryTree._05MaxSearchSubBinaryTree;
 import basic.knowledge.henry.algorithm.InterviewExperience.TreeNode;
 
 /**

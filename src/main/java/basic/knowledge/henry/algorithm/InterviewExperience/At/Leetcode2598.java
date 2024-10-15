@@ -15,7 +15,7 @@ package basic.knowledge.henry.algorithm.InterviewExperience.At;
 public class Leetcode2598 {
     public static void main(String[] args) {
         Leetcode2598 leetcode2598 = new Leetcode2598();
-        int[] nums = new int[]{1,-10,7,13,6,8};
+        int[] nums = new int[]{0,1,1,2,3,3};
         int value = 5;
         int res = leetcode2598.findSmallestInteger(nums, value);
         System.out.println(res);
@@ -66,19 +66,21 @@ public class Leetcode2598 {
      */
 
     public int findSmallestInteger(int[] nums, int value) {
-        int[] largestModulo = new int[value];
-        for (int i=0;i<nums.length;i++){
-            int modulo = nums[i]%value;
-            if (modulo < 0)modulo = modulo + value;
-            largestModulo[modulo]++;
+        int[] count = new int[value];
+        for(int num : nums){
+            int modulo = num %  value;
+            if(modulo < 0 ){
+                modulo += value;
+            }
+            count[modulo]++;
         }
         int maxIdx = 0;
-        for(int i = 0;i< value;i++) {
-            if (largestModulo[i] < largestModulo[maxIdx]) {
+        for(int i = 0;i< value;i++){
+            if(count[i]< count[maxIdx]){
                 maxIdx = i;
             }
         }
+        return count[maxIdx] * value + maxIdx;
 
-        return maxIdx;
     }
 }

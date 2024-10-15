@@ -1,5 +1,9 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At;
 
+/**
+ * 第一步 ： 记录所有需要转的的字符 uniqueLetter
+ * 第二步：  计算从vidx 在uniqueLetter 到len-1的各种附数字的可能性， 用回溯算法
+ */
 public class Leetcode1307 {
     public static void main(String[] args) {
 
@@ -34,7 +38,7 @@ public class Leetcode1307 {
     }
 
     /**
-     * helper means whether it can return true or false by replace the letters in uniqueLetter with trying different numbers
+     * helper means whether it can return true or false（from vidx to len - 1） by replace the letters in uniqueLetter with trying different numbers
      * @param uniqueLetter
      * @param vidx
      * @param words

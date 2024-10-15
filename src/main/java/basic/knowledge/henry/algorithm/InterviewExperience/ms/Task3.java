@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.microsoft;
+package basic.knowledge.henry.algorithm.InterviewExperience.ms;
 
 import java.util.ArrayList;
 import java.util.Arrays;

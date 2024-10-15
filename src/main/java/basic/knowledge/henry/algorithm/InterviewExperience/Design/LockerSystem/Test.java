@@ -15,6 +15,9 @@ public class Test {
 
 
     public static void main(String[] args) {
+        String str = "/a/a/v/";
+        String[] strs = str.split("/");
+        System.out.println(str.split("/"));
         Map<SizeEnum, List<Locker>> lockers = new HashMap<>();
         lockers.put(SizeEnum.SMALL,new ArrayList<>());
 

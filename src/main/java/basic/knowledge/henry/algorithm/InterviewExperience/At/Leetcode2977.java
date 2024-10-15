@@ -8,10 +8,10 @@ public class Leetcode2977 {
         System.out.println(Long.MIN_VALUE);
         Leetcode2977 leetcode2977 = new Leetcode2977();
         String source = "abcdefgh";
-        String target = "addddddd";
-        String[] original = new String[]{"bcd","defgh"};
-        String[] changed = new String[]{"ddd","ddddd"};
-        int[] cost = new int[]{100,1578};
+        String target = "acdeeghh";
+        String[] original = new String[]{"bcd","fgh","thh"};
+        String[] changed = new String[]{"cde","thh","ghh"};
+        int[] cost = new int[]{1,3,5};
         long res = leetcode2977.minimumCost(source, target, original, changed, cost);
         System.out.println(res);
     }
@@ -48,35 +48,70 @@ public class Leetcode2977 {
         long[] dp=new long[m+1];
         for(int i=0;i<=m;i++)dp[i]=Long.MAX_VALUE;
         dp[0]=0;
+//        for(int i = 0;i< m;i++){
+//            if(dp[i]== Long.MAX_VALUE){
+//                continue;
+//            }
+//            if(s[i]==t[i]){
+//                // System.out.println(" dp i " + dp[i]);
+//                // System.out.println(" dp i+1 " + dp[i+1]);
+//                // dp[i+1] = dp[i];;
+//                //  System.out.println(" dp i+1 final " + dp[i+1])
+//                dp[i+1]= Math.min(dp[i],dp[i+1]);
+//            }
+//
+//            Node souNode =trie.root;
+//            Node tarNode =trie.root;
+//
+//            for(int j = i+1;j<m+1;j++){
+//                //if we get index from source and target we can find adj[i][j] of that
+//                souNode=souNode.child[(int)(s[j-1]-'a')];
+//                tarNode=tarNode.child[(int)(t[j - 1]-'a')];
+//                //if we do not have any souce or target then there is no point in going further
+//                if(souNode==null || tarNode == null){
+//                    break;
+//                }
+//                if(souNode.isEnd && tarNode.isEnd){
+//                    if(adj[souNode.idx][tarNode.idx] != Integer.MAX_VALUE && dp[i] != Long.MAX_VALUE){
+//                        dp[j]=Math.min(dp[j],adj[souNode.idx][tarNode.idx]+dp[i]);
+//                    }
+//                }
+//
+//            }
+//        }
 
 
-        for(int i = 0;i< m;i++){
-            if(dp[i]== Long.MAX_VALUE){
-                continue;
+        for(int i = 1;i< m+1;i++){
+//            long tmp = dp[i];
+            if(s[i - 1] == t[i -1]){
+                dp[i] = dp[i-1];
             }
-            if(s[i]==t[i]){
-                dp[i+1]=Math.min(dp[i+1],dp[i]);
-            }
 
-            Node souNode =trie.root;
-            Node tarNode =trie.root;
+            long tmp = dp[i];
+            for(int j = 0;j<= i -1;j++){
+                if(dp[j] == Long.MAX_VALUE) {
+                    continue;
+                };
 
-            for(int j = i+1;j<m+1;j++){
-                //if we get index from source and target we can find adj[i][j] of that
-                souNode=souNode.child[(int)(s[j-1]-'a')];
-                tarNode=tarNode.child[(int)(t[j - 1]-'a')];
-                //if we do not have any souce or target then there is no point in going further
-                if(souNode==null || tarNode == null){
-                    break;
-                }
-                if(souNode.isEnd && tarNode.isEnd){
-                    if(adj[souNode.idx][tarNode.idx] != Integer.MAX_VALUE && dp[i] != Long.MAX_VALUE){
-                        dp[j]=Math.min(dp[j],adj[souNode.idx][tarNode.idx]+dp[i]);
+                //dp[j] is done
+                String source =new String(s,j,i-j);
+                String target = new String(t,j,i-j);
+
+
+                int s_idx = trie.query(source);
+                int t_idx = trie.query(target);
+                if(s_idx != -1 && t_idx != -1){
+                    if(adj[s_idx][t_idx]!= Integer.MAX_VALUE && Long.MAX_VALUE != dp[j]){
+                        tmp =dp[j] + adj[s_idx][t_idx];
                     }
                 }
 
+
+                dp[i] = Math.min(dp[i],tmp);
             }
         }
+
+
         return dp[m]==Long.MAX_VALUE?-1:dp[m];
     }
     public void floydWarshall(int [][] adj){
@@ -99,6 +134,19 @@ public class Leetcode2977 {
         public Trie(){
             this.root =new Node();
             this.len = 0;
+        }
+
+        int query(String str){
+            Node cur = this.root;
+            char[] chs = str.toCharArray();
+            for(int i=0;i<chs.length;i++){
+                int index=(int)(chs[i]-'a');
+                if(cur.child[index]==null) {
+                    return -1;
+                }
+                cur=cur.child[index];
+            }
+            return cur.isEnd? cur.idx : -1;
         }
         int get(String str){//serves as both add or get str
             Node cur = this.root;

@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.microsoft;
+package basic.knowledge.henry.algorithm.InterviewExperience.ms;
 
 public class Task2 {
     public static void main(String[] args) {
