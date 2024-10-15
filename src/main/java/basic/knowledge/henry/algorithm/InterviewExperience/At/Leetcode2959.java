@@ -28,15 +28,15 @@ import java.util.*;
  * Example with Explanation
  * Consider n = 3 (nodes 0, 1, 2):
  *
- * The subsets can be represented as:
- * 000 (0 in decimal): No nodes included.
- * 001 (1 in decimal): Only node 0 included.
- * 010 (2 in decimal): Only node 1 included.
- * 011 (3 in decimal): Nodes 0 and 1 included.
- * 100 (4 in decimal): Only node 2 included.
- * 101 (5 in decimal): Nodes 0 and 2 included.
- * 110 (6 in decimal): Nodes 1 and 2 included.
- * 111 (7 in decimal): Nodes 0, 1, and 2 included.
+ // * The subsets can be represented as:
+ // * 000 (0 in decimal): No nodes included.
+ //                * 001 (1 in decimal): Only node 2 included.
+ //                * 010 (2 in decimal): Only node 1 included.
+ //                * 011 (3 in decimal): Nodes 1 and 2 included.
+ //                * 100 (4 in decimal): Only node 0 included.
+ //                * 101 (5 in decimal): Nodes 0 and 2 included.
+ //                * 110 (6 in decimal): Nodes 0 and 1 included.
+ //                * 111 (7 in decimal): Nodes 0, 1, and 2 included.
  * In the Context of the Code
  * Iterating Through Subsets:
  *
@@ -67,7 +67,7 @@ public class Leetcode2959 {
         Leetcode2959 leetcode2959 = new Leetcode2959();
         int res = leetcode2959.numberOfSets(n, maxDistance, roads);
 
-
+        System.out.println(1<< 3);
         System.out.println(res);
     }
 
@@ -116,14 +116,14 @@ public class Leetcode2959 {
     }
 
 
-    public int numberOfSets(int n, int maxDistance, int[][] roads) {
+    public int numberOfSets_2(int n, int maxDistance, int[][] roads) {
         Graph graph = new Graph(n, roads);
         boolean[] f = new boolean[n];
         int ans = 0;
         for (int i = 0; i < (1<<n); ++i) {
             Arrays.fill(f, false);
             for (int j = 0; j < n; ++j) {
-                if (((i >>> j) & 1) == 1) f[j] = true;
+                if (((i >> j) & 1) == 1) f[j] = true;
             }
             boolean valid = true;
             outer:
@@ -143,6 +143,102 @@ public class Leetcode2959 {
             if (valid) ++ans;
         }
         return ans;
+    }
+
+
+    public int numberOfSets(int n, int maxDistance, int[][] roads) {
+        //对于n最多102 ^10 = 1024的情况
+                // 0 ~ 1023为止
+                //去掉// 0的node，认为1是活的node
+        //每个活体的node都要用极限检查
+//如果开始节点到其他节点的距离小于或等于maxDistance，就会增加count。
+// 1024 * 10(节点个数，起始点)* 10(需要确认的节点)* log(2)(1000) = 1024,000
+
+        List<List<int[]>> graph = new ArrayList<List<int[]>>();
+        for(int i = 0; i < n; i++) graph.add(new ArrayList<int[]>());
+
+        for(int i = 0; i < roads.length; i++) {
+            int a = roads[i][0];
+            int b = roads[i][1];
+            int dist = roads[i][2];
+            graph.get(a).add(new int[]{b,dist});
+            graph.get(b).add(new int[]{a,dist});
+        }
+
+        int count = 0;
+//        * Consider n = 3 (nodes 0, 1, 2):
+// *
+// * The subsets can be represented as:
+// * 000 (0 in decimal): No nodes included.
+//                * 001 (1 in decimal): Only node 2 included.
+//                * 010 (2 in decimal): Only node 1 included.
+//                * 011 (3 in decimal): Nodes 1 and 2 included.
+//                * 100 (4 in decimal): Only node 0 included.
+//                * 101 (5 in decimal): Nodes 0 and 2 included.
+//                * 110 (6 in decimal): Nodes 0 and 1 included.
+//                * 111 (7 in decimal): Nodes 0, 1, and 2 included.
+        for(int i = 0; i < 1 << n; i++) {
+            if (check(n, i, graph, maxDistance)) count++;
+        }
+
+        return count;
+    }
+
+    private boolean check (int n, int nodes, List<List<int[]>> graph, int maxDistance) {
+
+        String binary = Integer.toBinaryString(nodes);
+        while(binary.length() < n) binary = '0'+binary;
+
+        //when binary is 011, it means 0, 1 is included
+        for(int i = 0; i < binary.length(); i++) {
+            if ( binary.charAt(i) == '0') continue;
+            int startNode = i;
+
+            int distArr[] = new int[n];
+            Arrays.fill(distArr, Integer.MAX_VALUE);
+
+            PriorityQueue<int[]> pq = new PriorityQueue<int[]>(new Comparator<int[]>() {
+                public int compare(int a[], int b[]) {
+                    return a[1]-b[1];
+                }
+            });
+
+            pq.add(new int[]{startNode, 0});
+
+            int current[];
+            while(!pq.isEmpty()) {
+                current = pq.poll();
+                int currentNode = current[0];
+                int currentDist = current[1];
+
+                if ( currentDist > distArr[currentNode] ) continue;
+                distArr[currentNode] = currentDist;
+
+                int nextNode;
+                int nextDist;
+                for(int j = 0; j < graph.get(currentNode).size(); j++) {
+
+                    nextNode = graph.get(currentNode).get(j)[0];
+                    nextDist = graph.get(currentNode).get(j)[1];
+                    if ( binary.charAt(nextNode) == '0') continue;
+
+                    if ( distArr[nextNode] > currentDist+nextDist) {
+                        distArr[nextNode] = currentDist+nextDist;
+                        pq.add(new int[]{nextNode, distArr[nextNode]});
+                    }
+                }
+            }
+
+            for(int j = 0; j < distArr.length; j++) {
+                if ( binary.charAt(j) == '0') continue;
+                if(distArr[j] > maxDistance ) return false;
+            }
+
+        }
+
+
+        return true;
+
     }
 
 }
