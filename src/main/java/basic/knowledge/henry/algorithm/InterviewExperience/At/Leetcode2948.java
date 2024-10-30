@@ -5,9 +5,9 @@ import java.util.*;
 public class Leetcode2948 {
     public static void main(String[] args) {
         Solution solution = new Solution();
-        int[] arr = {1, 5, 3, 9, 8};
+        int[] arr = {1,7,6,18,2,1};
 
-        int[] res = solution.lexicographicallySmallestArray(arr, 2);
+        int[] res = solution.lexicographicallySmallestArray(arr, 3);
         System.out.println(Arrays.toString(res));
     }
 
@@ -38,7 +38,6 @@ class Solution {
 
         for (int i=0; i<n; i++) {
             int num = nums[i];
-
             q = map.get(num);
             nums[i] = q.poll();
         }

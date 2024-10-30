@@ -61,92 +61,20 @@ public class Leetcode2959 {
 
     public static void main(String[] args) {
         System.out.println(1<<4);
-        int n = 3, maxDistance = 5;
-        int[][] roads = {{0,1,2},{1,2,10},{0,2,10}};
+        int n = 4, maxDistance = 3;
+        int[][] roads = {{2,1,8},{1,0,3},{0,3,8}};
 
         Leetcode2959 leetcode2959 = new Leetcode2959();
         int res = leetcode2959.numberOfSets(n, maxDistance, roads);
 
-        System.out.println(1<< 3);
+//        System.out.println(1<< 3);
         System.out.println(res);
     }
 
 
-    private static class Graph {
-
-        private int n;
-        private List<int[]>[] g;
-
-        public Graph(int n, int[][] edges) {
-            this.n = n;
-            g = new ArrayList[n];
-            for (int i = 0; i < n; ++i) g[i] = new ArrayList();
-            for (int[] e : edges) {
-                g[e[0]].add(new int[] {e[1], e[2]});
-                g[e[1]].add(new int[] {e[0], e[2]});
-            }
-        }
-
-        public int shortestPath(int src, int dst, boolean[] f) {
-            PriorityQueue<int[]> pq = new PriorityQueue<>(n, (o1, o2) -> o1[0] - o2[0]);
-            int[] dist = new int[n];
-            Arrays.fill(dist, Integer.MAX_VALUE);
-            boolean[] sptSet = new boolean[n];
-            pq.add(new int[] {0, src});
-            dist[src] = 0;
-
-            while (!pq.isEmpty()) {
-                int from = pq.poll()[1];
-//                if (from == dst) break;
-                if (!sptSet[from] && g[from] != null) {
-                    sptSet[from] = true;
-                    for (int[] e : g[from]) {
-                        int to = e[0];
-                        int cost = e[1];
-                        if (!f[to] && (dist[to] > dist[from] + cost)) {
-                            dist[to] = dist[from] + cost;
-                            pq.add(new int[] {dist[to], to});
-                        }
-                    }
-                }
-            }
-
-            return dist[dst];
-        }
-    }
 
 
     public int numberOfSets_2(int n, int maxDistance, int[][] roads) {
-        Graph graph = new Graph(n, roads);
-        boolean[] f = new boolean[n];
-        int ans = 0;
-        for (int i = 0; i < (1<<n); ++i) {
-            Arrays.fill(f, false);
-            for (int j = 0; j < n; ++j) {
-                if (((i >> j) & 1) == 1) f[j] = true;
-            }
-            boolean valid = true;
-            outer:
-            for (int src = 0; src < n; ++src) {
-                if (!f[src]) {
-                    for (int dst = src + 1; dst < n; ++dst) {
-                        if (!f[dst]) {
-                            int dist = graph.shortestPath(src, dst, f);
-                            if (dist > maxDistance) {
-                                valid = false;
-                                break outer;
-                            }
-                        }
-                    }
-                }
-            }
-            if (valid) ++ans;
-        }
-        return ans;
-    }
-
-
-    public int numberOfSets(int n, int maxDistance, int[][] roads) {
         //对于n最多102 ^10 = 1024的情况
                 // 0 ~ 1023为止
                 //去掉// 0的node，认为1是活的node
@@ -178,13 +106,13 @@ public class Leetcode2959 {
 //                * 110 (6 in decimal): Nodes 0 and 1 included.
 //                * 111 (7 in decimal): Nodes 0, 1, and 2 included.
         for(int i = 0; i < 1 << n; i++) {
-            if (check(n, i, graph, maxDistance)) count++;
+            if (checkByDijkstra(n, i, graph, maxDistance)) count++;
         }
 
         return count;
     }
 
-    private boolean check (int n, int nodes, List<List<int[]>> graph, int maxDistance) {
+    private boolean checkByDijkstra(int n, int nodes, List<List<int[]>> graph, int maxDistance) {
 
         String binary = Integer.toBinaryString(nodes);
         while(binary.length() < n) binary = '0'+binary;
@@ -233,12 +161,85 @@ public class Leetcode2959 {
                 if ( binary.charAt(j) == '0') continue;
                 if(distArr[j] > maxDistance ) return false;
             }
-
         }
-
 
         return true;
 
+    }
+
+    public int numberOfSets(int n, int maxDistance, int[][] roads) {
+        List<int[]>[] graph = createGraph(n,roads);
+        int nodes = 1<<n;//pow(2,n) 1 2;10 4;100 8
+        //System.out.println("pow == "+ Math.pow(2,n));
+        int count = 0;
+        for(int i =0;i< nodes;i++){
+            if(checkByFloyd(maxDistance,i,n,graph)){
+                count++;
+            }
+        }
+        return count;
+    }
+
+    private boolean checkByFloyd(int maxDistance, int nodes, int n, List<int[]>[] graph) {
+        String binary = Integer.toBinaryString(nodes);
+        while(binary.length() < n){
+            binary = "0" + binary;
+        }
+        int[][] dist = new int[n][n];
+        for(int i = 0;i<n;i++){
+            Arrays.fill(dist[i],Integer.MAX_VALUE);
+        }
+        for(int i =0;i< binary.length();i++){
+            if(binary.charAt(i) == '0'){
+                continue;
+            }
+            dist[i][i] = 0;
+        }
+        for(int i =0;i< graph.length;i++){
+            List<int[]> nexts = graph[i];
+            for(int[] next : nexts){
+                dist[i][next[0]] = Math.min(dist[i][next[0]],next[1]);
+            }
+        }
+
+        //floyd
+        for(int k = 0;k< n;k++){
+            for(int i =0;i< n;i++){
+                for(int j =0;j< n;j++){
+                    if(binary.charAt(i) != '0' && binary.charAt(j) != '0' && binary.charAt(k) != '0'&& dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE){
+                        dist[i][j] = Math.min(dist[i][j],dist[i][k] + dist[k][j]);
+                    }
+                }
+            }
+        }
+
+
+
+        for(int i = 0;i< dist.length;i++){
+            for(int j =0;j< dist[0].length;j++){
+                if(binary.charAt(i) != '0' && binary.charAt(j) != '0'){
+                    if(dist[i][j]>maxDistance){
+                        return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+
+    }
+
+    private List<int[]>[] createGraph(int n, int[][] roads) {
+        List<int[]>[] graph = new ArrayList[n];
+        for(int i =0;i< n;i++){
+            graph[i] = new ArrayList<>();
+        }
+        for(int i =0;i< roads.length;i++){
+            graph[roads[i][0]].add(new int[]{roads[i][1],roads[i][2]});
+            graph[roads[i][1]].add(new int[]{roads[i][0],roads[i][2]});
+        }
+
+        return graph;
     }
 
 }

@@ -39,22 +39,28 @@ public class BasicTest {
 
     @Test
     public void testMapC() {
+        //没有update,
         Map<String, String> map = new HashMap<>();
         map.put("a", "A");
         map.put("b", "B");
+        //存在原key 返回原value 值B
         String v = map.computeIfAbsent("b", k -> "v");  // 输出 B
         System.out.println(v);
+        //不存在原key 才加入新的值v,
         String v1 = map.computeIfAbsent("c", k -> "v"); // 输出 v
         System.out.println(v1);
     }
 
     @Test
     public void testMap() {
+        //没有update
         Map<String, String> map = new HashMap<>();
         map.put("a", "A");
         map.put("b", "B");
+        //存在原key 返回原value 值B, 不更新
         String v = map.putIfAbsent("b", "v");  // 输出 B
         System.out.println(v);
+        //不存在原key 才加入新的值v， 但是返回Null
         String v1 = map.putIfAbsent("c", "v");  // 输出 null
         System.out.println(v1);
     }

@@ -3,15 +3,16 @@ package basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._01stac
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Stack;
 
 public class _06GenMaxValueArray {
     public static void main(String[] args) {
         System.out.println(Long.MAX_VALUE);
         BigInteger bi = BigInteger.valueOf(10);
-//        _06GenMaxValueArray obj = new _06GenMaxValueArray();
-//        int[] arr = new int[]{4, 3, 5, 4, 3, 3, 6, 7};
-//        int[] res = obj.getMaxValueArray(arr, 3);
-//        System.out.println(Arrays.toString(res));
+        _06GenMaxValueArray obj = new _06GenMaxValueArray();
+        int[] arr = new int[]{4, 6, 2, 4, 3, 3, 6, 7};
+        int[] res = obj.getMaxValueArray(arr, 3);
+        System.out.println(Arrays.toString(res));
     }
 
 
