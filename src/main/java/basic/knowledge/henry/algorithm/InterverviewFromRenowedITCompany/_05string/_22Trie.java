@@ -7,21 +7,21 @@ public class _22Trie {
 
     public static void main(String[] args) {
         _22Trie trie = new _22Trie();
-        String str1 = "abc";
-        String str2 = "cdc";
-        String str3 = "bdce";
-        String str4 = "adcf";
-        String str5 = "abcm";
+        String str1 = "abd";
+        String str2 = "acd";
+//        String str3 = "bdce";
+//        String str4 = "adcf";
+//        String str5 = "abcm";
         trie.insert(str1);
         trie.insert(str2);
-        trie.insert(str3);
-        trie.insert(str4);
-        trie.insert(str5);
+//        trie.insert(str3);
+//        trie.insert(str4);
+//        trie.insert(str5);
 
-        System.out.println(trie.prefixNum("abc"));
-        System.out.println(trie.search(str4));
-        trie.delete(str4);
-        System.out.println(trie.search(str4));
+        System.out.println(trie.prefixNum("abd"));
+//        System.out.println(trie.search(str4));
+//        trie.delete(str4);
+//        System.out.println(trie.search(str4));
     }
 
 

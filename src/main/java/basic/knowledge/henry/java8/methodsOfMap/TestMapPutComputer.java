@@ -41,7 +41,7 @@ public class TestMapPutComputer {
         //computeIfAbsent:存在时返回存在的值(旧值)，不存在时返回新值
         String v = map.computeIfAbsent("b",k->"B2");  // 返回 B 且不更新
         System.out.println(v);
-        String v1 = map.computeIfAbsent("c",k->k+"C"); // 返回 C 更新
+        String v1 = map.computeIfAbsent("c",k->"C"); // 返回 C 更新
         System.out.println(v1);
         System.out.println(map);
     }

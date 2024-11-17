@@ -61,10 +61,10 @@ public class TransactionMap {
     }
 
     void delete (String key) {
-        if (transactionalStack.isEmpty()) {//not in the status of transaction ,similar to set function
-            store.remove(key);
+        if (!transactionalStack.isEmpty()) {//not in the status of transaction ,similar to set function
+            transactionalStack.peek().remove(key);
         }
-        transactionalStack.peek().remove(key);
+        store.remove(key);
     }
 
 

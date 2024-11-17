@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Karat2 {
     public static void main(String[] argv) {
-
+        Karat2 karat2 = new Karat2();
         char[][] grid1 = {
                 {'b', 'b', 'b', 'a', 'l', 'l', 'o', 'o'},
                 {'b', 'a', 'c', 'c', 'e', 's', 'c', 'n'},
@@ -19,7 +19,8 @@ public class Karat2 {
         String word1_3 = "wow";
         String word1_4 = "sec";
         String word1_5 = "bbaal";
-        List<int[]> ints = find(grid1, word1_2);
+        List<int[]> ints0 = karat2.find(grid1, word1_2);
+        List<int[]> ints1 = karat2.find2(grid1, word1_2);
 
         System.out.println();
 
@@ -28,7 +29,8 @@ public class Karat2 {
                 {'a'},
         };
         String word2_1 = "a";
-        List<int[]> ints2 = find(grid2, word2_1);
+        List<int[]> ints2 = karat2.find(grid2, word2_1);
+        List<int[]> ints3 = karat2.find2(grid2, word2_1);
 
         System.out.println();
         char[][] grid3 = {
@@ -40,7 +42,9 @@ public class Karat2 {
         };
         String word3_1 = "cat";
         String word3_2 = "hat";
-
+        List<int[]> ints6 = karat2.find(grid3, word3_1);
+        List<int[]> ints7 = karat2.find2(grid3, word3_1);
+        System.out.println();
         char[][] grid4 = {
                 {'c', 'c', 'x', 't', 'i', 'b'},
                 {'c', 'a', 't', 'n', 'i', 'i'},
@@ -48,28 +52,67 @@ public class Karat2 {
                 {'t', 'x', 'i', 'x', 't', 't'},
         };
         String word4_1 = "catnip";
-
-
+        List<int[]> ints4 = karat2.find(grid4, word4_1);
+        List<int[]> ints5 = karat2.find2(grid4, word4_1);
+        System.out.println();
     }
 
     static List<int[]> list = new ArrayList<>();
     static int[][] dirs = new int[][]{{0, 1}, {1, 0}};
-
-    public static List<int[]> find(char[][] grid, String target) {
-
+    public  List<int[]> find(char[][] grid, String target) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 if (grid[i][j] == target.charAt(0)) {
-                    ArrayList<int[]> ints = new ArrayList<>();
-                    ints.add(new int[]{i,j});
-                    dfs(i, j, grid, target, 0, ints);
+                    dfs(i, j, new ArrayList<>(),grid, target, 0);
                 }
             }
         }
         return list;
     }
 
-    private static <E> void dfs(int i, int j, char[][] grid, String target, int index, ArrayList<int[]> tmp) {
+    private void dfs(int i, int j, ArrayList<int[]> tmp, char[][] grid, String target, int idx) {
+         if(idx == target.length()){
+             return;
+         }
+
+         if(idx == target.length() - 1 && grid[i][j] == target.charAt(idx)){
+             list = new ArrayList<>(tmp);
+             return;
+         }
+         boolean flag = grid[i][j] == target.charAt(idx);
+         if(flag){
+             tmp.add(new int[]{i,j});
+             idx++;
+         }
+         for(int k =0;k< dirs.length;k++){
+             int nextI = i + dirs[k][0];
+             int nextJ = j + dirs[k][1];
+             if (nextI > grid.length - 1 || nextJ > grid[0].length - 1) {
+                 continue;
+             }
+             dfs(nextI,nextJ,tmp,grid,target,idx);
+         }
+        if(flag){
+            idx--;
+            tmp.remove(tmp.size() - 1);
+        }
+
+    }
+
+    public static List<int[]> find2(char[][] grid, String target) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                if (grid[i][j] == target.charAt(0)) {
+                    ArrayList<int[]> ints = new ArrayList<>();
+                    ints.add(new int[]{i,j});
+                    dfs2(i, j, grid, target, 0, ints);
+                }
+            }
+        }
+        return list;
+    }
+
+    private static <E> void dfs2(int i, int j, char[][] grid, String target, int index, ArrayList<int[]> tmp) {
         if (index == target.length()) {
             return;
         }
@@ -99,7 +142,7 @@ public class Karat2 {
                 tmp.add(new int[]{nextI, nextJ});
                 index++;
             }
-            dfs(nextI, nextJ, grid, target, index, tmp);
+            dfs2(nextI, nextJ, grid, target, index, tmp);
             if (flag) {
                 tmp.remove(tmp.size() - 1);
                 index--;

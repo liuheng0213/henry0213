@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.trade_desk;
+package basic.knowledge.henry.algorithm.InterviewExperience.ttd;
 
 public class Leetcode322 {
     public int coinChange_dp(int[] coins, int amount) {
