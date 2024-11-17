@@ -1,14 +1,12 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
 
-import org.example.Main;
-
 //first index where pre sum becomes non-positive
 //maximum money in bags
-public class Test2 {
+public class Test2_maximum_money_in_bags {
     public static void main(String[] args) {
         int[] arr = new int[]{-4,0,1,16,-15,27,2,0,0,-13};
-        int solution = new Test2().solution(arr);
+        int solution = new Test2_maximum_money_in_bags().solution(arr);
         System.out.println(solution);
     }
 

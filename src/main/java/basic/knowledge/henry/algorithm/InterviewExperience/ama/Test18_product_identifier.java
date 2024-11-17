@@ -4,7 +4,7 @@ package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 /**
  *  a product identifier string s,
  */
-public class Test18 {
+public class Test18_product_identifier {
 
 
     public int maximizeScore(String s){

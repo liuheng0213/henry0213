@@ -18,9 +18,9 @@ import java.util.List;
  * Your task is to determine the minimum number of rooks that can be left on the board in a peaceful state after capturing as many rooks as possible.
  * A peaceful state is defined as a state where no two rooks can capture each other (i.e., no two rooks share the same row or column).
  */
-public class Test7 {
+public class Test7_chessboard {
     public static void main(String[] args) {
-        int i = new Test7().rooksLeft(new int[][]{{0, 0, 1,0,0}, {1, 0, 1,0,0}, {1, 0, 0,0,1},{0,0,1,1,0}});
+        int i = new Test7_chessboard().rooksLeft(new int[][]{{0, 0, 1,0,0}, {1, 0, 1,0,0}, {1, 0, 0,0,1},{0,0,1,1,0}});
         System.out.println(i);
     }
 

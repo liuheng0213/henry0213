@@ -1,15 +1,12 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 
-//online market FindMaximumPackages
-public class Test15 {
+//online_market_FindMaximumPackages
+public class Test15_online_market_FindMaximumPackages {
     public static void main(String[] args) {
-        int maximumPackages = new Test15().findMaximumPackages(new int[]{1,1,2,2,1,4});
+        int maximumPackages = new Test15_online_market_FindMaximumPackages().findMaximumPackages(new int[]{1,1,2,2,1,4});
         System.out.println(maximumPackages);
     }
 

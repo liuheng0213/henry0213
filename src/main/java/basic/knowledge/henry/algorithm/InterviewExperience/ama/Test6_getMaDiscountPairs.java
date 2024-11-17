@@ -7,9 +7,9 @@ import java.util.List;
 
 //getMaDiscountPairs
 //find pairs of power of 3
-public class Test6 {
+public class Test6_getMaDiscountPairs {
     public static void main(String[] args) {
-        int maDiscountPairs = new Test6().getMaDiscountPairs(new int[]{2, 1, 7,25});
+        int maDiscountPairs = new Test6_getMaDiscountPairs().getMaDiscountPairs(new int[]{2, 1, 7,25});
         System.out.println(maDiscountPairs);
     }
     public int getMaDiscountPairs(int[] arr){

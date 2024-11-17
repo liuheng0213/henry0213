@@ -5,10 +5,10 @@ import java.util.Arrays;
 //system charge
 //remove and merge
 //类似爆气球那题
-public class Test14 {
+public class Test14_system_charge {
     public static void main(String[] args) {
-        int res = new Test14().solution_dp(new int[]{-2,4,9,1,-1,3,13,2,3,-8,9,21,-18,22,122,-189});
-        int res1 = new Test14().solution(new int[]{-2,4,9,1,-1,3,13,2,3,-8,9,21,-18,22,122,-189});
+        int res = new Test14_system_charge().solution_dp(new int[]{-2,4,9,1,-1,3,13,2,3,-8,9,21,-18,22,122,-189});
+        int res1 = new Test14_system_charge().solution(new int[]{-2,4,9,1,-1,3,13,2,3,-8,9,21,-18,22,122,-189});
         System.out.println(res);
         System.out.println(res1);
     }

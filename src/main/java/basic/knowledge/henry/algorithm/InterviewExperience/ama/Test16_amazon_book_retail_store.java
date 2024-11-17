@@ -5,7 +5,7 @@ import java.util.*;
 
 //amazon book retail store
 //arr[i] 表示 第i天上货的书的序。书要依据序来读
-public class Test16 {
+public class Test16_amazon_book_retail_store {
     public static void main(String[] args) {
 //        int[] arr = {3, 2, 1, 4, 5};
         int[] arr = {2,1,4,3};

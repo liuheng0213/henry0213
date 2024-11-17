@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 
 //dominance  prefix
-public class Test10 {
+public class Test10_dominance_prefix {
     public static void main(String[] args) {
         List<String> words1 = Arrays.asList("abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce","abc", "abd", "acc", "bcd", "bce");
         List<String> words2 = Arrays.asList("abba", "aabb", "abab");
@@ -19,7 +19,7 @@ public class Test10 {
 
 
         List<Integer> result = getDominantPrefixLengths(words1);
-        List<Integer> result2 = new Test10().getDominantPrefixLengths(arr1);
+        List<Integer> result2 = new Test10_dominance_prefix().getDominantPrefixLengths(arr1);
         System.out.println(result); // Output the result
         System.out.println(result2); // Output the result
     }

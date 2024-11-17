@@ -1,12 +1,10 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
-import java.util.HashSet;
-
-//stamp tagging parcels
+//stamp_tagging_parcels
 //stamps 可以重复选
-public class Test13 {
+public class Test13_stamp_tagging_parcels {
     public static void main(String[] args) {
-        int numberPackaging = new Test13().getNumberPackaging(new int[]{3,1,1});
+        int numberPackaging = new Test13_stamp_tagging_parcels().getNumberPackaging(new int[]{3,1,1});
         System.out.println(numberPackaging);
     }
 

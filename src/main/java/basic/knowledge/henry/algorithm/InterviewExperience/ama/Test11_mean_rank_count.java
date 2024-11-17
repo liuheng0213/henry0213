@@ -1,10 +1,10 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 //amazon academy mean rank count
-public class Test11 {
+public class Test11_mean_rank_count {
 
     public static void main(String[] args) {
         System.out.println(1%1);
-        int[] meanRankCount = new Test11().getMeanRankCount(new int[]{1, 2, 3, 4, 5}, 5);
+        int[] meanRankCount = new Test11_mean_rank_count().getMeanRankCount(new int[]{1, 2, 3, 4, 5}, 5);
         System.out.println(meanRankCount);
     }
     public int[] getMeanRankCount(int[] rank, int n){

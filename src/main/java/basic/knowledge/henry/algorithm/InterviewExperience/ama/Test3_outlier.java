@@ -1,13 +1,11 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
-import basic.knowledge.henry.algorithm.InterviewExperience.At.Test;
-
 import java.util.Arrays;
 
 //find outlier
-public class Test3 {
+public class Test3_outlier {
     public static void main(String[] args) {
-        int solution = new Test3().solution(new int[]{4, 1, 3, 17, 3, 10}, 6);
+        int solution = new Test3_outlier().solution(new int[]{4, 1, 3, 17, 3, 10}, 6);
         System.out.println(solution);
     }
     public int solution(int[] arr,int n){

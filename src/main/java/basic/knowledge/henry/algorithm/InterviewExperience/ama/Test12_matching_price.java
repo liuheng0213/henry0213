@@ -1,12 +1,11 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
 import java.util.HashMap;
-import java.util.HashSet;
 
 //matching price
-public class Test12 {
+public class Test12_matching_price {
     public static void main(String[] args) {
-        int mInPrice = new Test12().getMInPrice(new int[]{1, 2, 1,2});
+        int mInPrice = new Test12_matching_price().getMInPrice(new int[]{1, 2, 1,2});
         System.out.println(mInPrice);
     }
     public int getMInPrice(int[] arr){
