@@ -61,8 +61,8 @@ public class Leetcode2959 {
 
     public static void main(String[] args) {
         System.out.println(1<<4);
-        int n = 4, maxDistance = 3;
-        int[][] roads = {{2,1,8},{1,0,3},{0,3,8}};
+        int n = 3, maxDistance = 5;
+        int[][] roads = {{0,1,20},{0,1,10},{1,2,2},{0,2,2}};
 
         Leetcode2959 leetcode2959 = new Leetcode2959();
         int res = leetcode2959.numberOfSets(n, maxDistance, roads);
@@ -81,17 +81,7 @@ public class Leetcode2959 {
         //每个活体的node都要用极限检查
 //如果开始节点到其他节点的距离小于或等于maxDistance，就会增加count。
 // 1024 * 10(节点个数，起始点)* 10(需要确认的节点)* log(2)(1000) = 1024,000
-
-        List<List<int[]>> graph = new ArrayList<List<int[]>>();
-        for(int i = 0; i < n; i++) graph.add(new ArrayList<int[]>());
-
-        for(int i = 0; i < roads.length; i++) {
-            int a = roads[i][0];
-            int b = roads[i][1];
-            int dist = roads[i][2];
-            graph.get(a).add(new int[]{b,dist});
-            graph.get(b).add(new int[]{a,dist});
-        }
+        List<List<int[]>> graph = createGraph(n,roads);
 
         int count = 0;
 //        * Consider n = 3 (nodes 0, 1, 2):
@@ -106,7 +96,9 @@ public class Leetcode2959 {
 //                * 110 (6 in decimal): Nodes 0 and 1 included.
 //                * 111 (7 in decimal): Nodes 0, 1, and 2 included.
         for(int i = 0; i < 1 << n; i++) {
-            if (checkByDijkstra(n, i, graph, maxDistance)) count++;
+            if (checkByFloyd(maxDistance,i,n,graph)){
+                count++;
+            }
         }
 
         return count;
@@ -132,13 +124,15 @@ public class Leetcode2959 {
             });
 
             pq.add(new int[]{startNode, 0});
-
+            distArr[startNode]=0;
             int current[];
             while(!pq.isEmpty()) {
                 current = pq.poll();
                 int currentNode = current[0];
                 int currentDist = current[1];
-
+                if(currentDist > maxDistance){
+                    return false;
+                }
                 if ( currentDist > distArr[currentNode] ) continue;
                 distArr[currentNode] = currentDist;
 
@@ -168,7 +162,7 @@ public class Leetcode2959 {
     }
 
     public int numberOfSets(int n, int maxDistance, int[][] roads) {
-        List<int[]>[] graph = createGraph(n,roads);
+        List<List<int[]>> graph = createGraph(n,roads);
         int nodes = 1<<n;//pow(2,n) 1 2;10 4;100 8
         //System.out.println("pow == "+ Math.pow(2,n));
         int count = 0;
@@ -180,7 +174,7 @@ public class Leetcode2959 {
         return count;
     }
 
-    private boolean checkByFloyd(int maxDistance, int nodes, int n, List<int[]>[] graph) {
+    private boolean checkByFloyd(int maxDistance, int nodes, int n, List<List<int[]>> graph) {
         String binary = Integer.toBinaryString(nodes);
         while(binary.length() < n){
             binary = "0" + binary;
@@ -195,9 +189,17 @@ public class Leetcode2959 {
             }
             dist[i][i] = 0;
         }
-        for(int i =0;i< graph.length;i++){
-            List<int[]> nexts = graph[i];
+        //一定要注意排除 '0'
+        // 否则floyd 那里要排除0
+        for(int i =0;i< graph.size();i++){
+            if(binary.charAt(i) == '0'){
+                continue;
+            }
+            List<int[]> nexts = graph.get(i);
             for(int[] next : nexts){
+                if(binary.charAt(next[0]) == '0'){
+                    continue;
+                }
                 dist[i][next[0]] = Math.min(dist[i][next[0]],next[1]);
             }
         }
@@ -206,7 +208,7 @@ public class Leetcode2959 {
         for(int k = 0;k< n;k++){
             for(int i =0;i< n;i++){
                 for(int j =0;j< n;j++){
-                    if(binary.charAt(i) != '0' && binary.charAt(j) != '0' && binary.charAt(k) != '0'&& dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE){
+                    if(dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE){
                         dist[i][j] = Math.min(dist[i][j],dist[i][k] + dist[k][j]);
                     }
                 }
@@ -229,14 +231,18 @@ public class Leetcode2959 {
 
     }
 
-    private List<int[]>[] createGraph(int n, int[][] roads) {
-        List<int[]>[] graph = new ArrayList[n];
-        for(int i =0;i< n;i++){
-            graph[i] = new ArrayList<>();
-        }
-        for(int i =0;i< roads.length;i++){
-            graph[roads[i][0]].add(new int[]{roads[i][1],roads[i][2]});
-            graph[roads[i][1]].add(new int[]{roads[i][0],roads[i][2]});
+    private List<List<int[]>> createGraph(int n, int[][] roads) {
+
+        List<List<int[]>> graph = new ArrayList<List<int[]>>();
+        for(int i = 0; i < n; i++) graph.add(new ArrayList<int[]>());
+
+        for(int i = 0; i < roads.length; i++) {
+            int a = roads[i][0];
+            int b = roads[i][1];
+            int dist = roads[i][2];
+            //无向图要小心，两边都要加
+            graph.get(a).add(new int[]{b,dist});
+            graph.get(b).add(new int[]{a,dist});
         }
 
         return graph;
