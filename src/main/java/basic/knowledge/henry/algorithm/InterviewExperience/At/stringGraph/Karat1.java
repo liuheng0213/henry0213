@@ -64,7 +64,7 @@ public class Karat1 {
 
     public List<String> solution(String[] songs1, String song1_1) {
         HashMap<String, List<String>> graph = new HashMap<>();
-        ArrayList<String>[] g = new ArrayList[songs1.length];
+
         for (int i = 0; i < songs1.length; i++) {
             String str1 = songs1[i];
             for (int j = 0; j < songs1.length; j++) {

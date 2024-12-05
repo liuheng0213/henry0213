@@ -1,9 +1,7 @@
 package basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._01stackAndQueue;
 
 import java.math.BigInteger;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 public class _06GenMaxValueArray {
     public static void main(String[] args) {

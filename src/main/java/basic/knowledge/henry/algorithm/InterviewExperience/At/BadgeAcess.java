@@ -61,18 +61,20 @@ public class BadgeAcess {
                     // <= 60
                     if (cur - queue.peekFirst() <= 60) {
                         queue.addLast(cur);
-                    } else if (queue.size() < 3) {//> 60 and size <3 means  needing poll first element
+                    } else {
                         while (!queue.isEmpty() && cur - queue.peekFirst() > 60) {// do not use if
                             queue.pollFirst();
                         }
                         queue.addLast(cur);
-                    } else {// > 60 and size >3 . condition to print
+                    }
+
+                    if(queue.size() > 3){
                         break;
                     }
                 }
             }
 
-            if (queue.size() > 2) {
+            if (queue.size() > 3) {
                 printMoreThan3(name, queue);
             }
         }

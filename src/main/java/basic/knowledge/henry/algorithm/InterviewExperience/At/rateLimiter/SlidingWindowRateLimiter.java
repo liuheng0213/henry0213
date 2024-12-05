@@ -1,55 +1,54 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.rateLimiter;
 
-import java.util.ArrayDeque;
-import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class SlidingWindowRateLimiter {
     private final int maxRequests;
-    private final long windowMillis;
-    private final Queue<Long> requestTimes;
+    private final long windowDurationInMillis;
+    private final ConcurrentHashMap<String, ConcurrentLinkedQueue<Long>> requestLog = new ConcurrentHashMap<>();
 
-    public SlidingWindowRateLimiter(int maxRequests, long windowSeconds) {
+    public SlidingWindowRateLimiter(int maxRequests, long windowDurationInMillis) {
         this.maxRequests = maxRequests;
-        this.windowMillis = windowSeconds * 1000; // Convert seconds to milliseconds
-        this.requestTimes = new ArrayDeque<>();
+        this.windowDurationInMillis = windowDurationInMillis;
     }
 
-    public synchronized boolean allowRequest() {
+    public boolean allowRequest(String clientId) {
         long currentTime = System.currentTimeMillis();
+        requestLog.putIfAbsent(clientId, new ConcurrentLinkedQueue<>());
 
-        // Remove requests that are outside the sliding window
-        while (!requestTimes.isEmpty() && requestTimes.peek() < currentTime - windowMillis) {
-            requestTimes.poll();
-        }
+        ConcurrentLinkedQueue<Long> requests = requestLog.get(clientId);
+        synchronized (requests) {
+            while (!requests.isEmpty() && currentTime - requests.peek() >= windowDurationInMillis) {
+                requests.poll();
+            }
 
-        // Check if the number of requests is within the allowed limit
-        if (requestTimes.size() < maxRequests) {
-            // Allow the request and add the current time to the queue
-            requestTimes.offer(currentTime);
-            return true;
-        } else {
-            // Deny the request, as it exceeds the allowed rate
+            if (requests.size() < maxRequests) {
+                requests.add(currentTime);
+                return true;
+            }
             return false;
         }
     }
 
-    public static void main(String[] args) {
-        // Example usage
-        SlidingWindowRateLimiter rateLimiter = new SlidingWindowRateLimiter(5, 10); // Allow 5 requests per minute
+    public static void main(String[] args) throws InterruptedException {
+        SlidingWindowRateLimiter rateLimiter = new SlidingWindowRateLimiter(50, 1000); // 5 requests per second
+        int numberOfThreads = 10;
 
-        for (int i = 0; i < 20; i++) {
-            if (rateLimiter.allowRequest()) {
-                System.out.println("Request " + (i + 1) + ": Allowed" + System.currentTimeMillis());
-            } else {
-                System.out.println("Request " + (i + 1) + ": Denied"+ System.currentTimeMillis());
-            }
+        ExecutorService executorService = Executors.newFixedThreadPool(numberOfThreads);
 
-            try {
-                // Simulate a delay between requests
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        for (int i = 0; i < numberOfThreads; i++) {
+            final int threadId = i;
+            executorService.submit(() -> {
+                for (int j = 0; j < 10; j++) {
+                    boolean allowed = rateLimiter.allowRequest("client1");
+                    System.out.println("Thread " + threadId + " - Request " + j + ": " + allowed);
+                }
+            });
         }
+
+        executorService.shutdown();
     }
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Karat2 {
+   static List<int[]> list = new ArrayList<>();
     public static void main(String[] argv) {
         Karat2 karat2 = new Karat2();
         char[][] grid1 = {
@@ -19,20 +20,21 @@ public class Karat2 {
         String word1_3 = "wow";
         String word1_4 = "sec";
         String word1_5 = "bbaal";
-        List<int[]> ints0 = karat2.find(grid1, word1_2);
+
         List<int[]> ints1 = karat2.find2(grid1, word1_2);
 
         System.out.println();
-
+        list = new ArrayList<>();
 
         char[][] grid2 = {
                 {'a'},
         };
         String word2_1 = "a";
-        List<int[]> ints2 = karat2.find(grid2, word2_1);
+
         List<int[]> ints3 = karat2.find2(grid2, word2_1);
 
         System.out.println();
+        list = new ArrayList<>();
         char[][] grid3 = {
                 {'c', 'a'},
                 {'t', 't'},
@@ -42,9 +44,10 @@ public class Karat2 {
         };
         String word3_1 = "cat";
         String word3_2 = "hat";
-        List<int[]> ints6 = karat2.find(grid3, word3_1);
+
         List<int[]> ints7 = karat2.find2(grid3, word3_1);
         System.out.println();
+        list = new ArrayList<>();
         char[][] grid4 = {
                 {'c', 'c', 'x', 't', 'i', 'b'},
                 {'c', 'a', 't', 'n', 'i', 'i'},
@@ -52,102 +55,52 @@ public class Karat2 {
                 {'t', 'x', 'i', 'x', 't', 't'},
         };
         String word4_1 = "catnip";
-        List<int[]> ints4 = karat2.find(grid4, word4_1);
+
         List<int[]> ints5 = karat2.find2(grid4, word4_1);
         System.out.println();
     }
 
-    static List<int[]> list = new ArrayList<>();
-    static int[][] dirs = new int[][]{{0, 1}, {1, 0}};
-    public  List<int[]> find(char[][] grid, String target) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == target.charAt(0)) {
-                    dfs(i, j, new ArrayList<>(),grid, target, 0);
+    private List<int[]> find2(char[][] grid, String word) {
+        for(int i= 0;i< grid.length;i++){
+            for(int j =0;j< grid[0].length;j++){
+                if(word.charAt(0)==grid[i][j]){
+                    dfs2(0,word,grid,i,j,new ArrayList<>());
                 }
             }
         }
+
         return list;
     }
 
-    private void dfs(int i, int j, ArrayList<int[]> tmp, char[][] grid, String target, int idx) {
-         if(idx == target.length()){
-             return;
-         }
-
-         if(idx == target.length() - 1 && grid[i][j] == target.charAt(idx)){
-             list = new ArrayList<>(tmp);
-             return;
-         }
-         boolean flag = grid[i][j] == target.charAt(idx);
-         if(flag){
-             tmp.add(new int[]{i,j});
-             idx++;
-         }
-         for(int k =0;k< dirs.length;k++){
-             int nextI = i + dirs[k][0];
-             int nextJ = j + dirs[k][1];
-             if (nextI > grid.length - 1 || nextJ > grid[0].length - 1) {
-                 continue;
-             }
-             dfs(nextI,nextJ,tmp,grid,target,idx);
-         }
-        if(flag){
-            idx--;
-            tmp.remove(tmp.size() - 1);
-        }
-
-    }
-
-    public static List<int[]> find2(char[][] grid, String target) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                if (grid[i][j] == target.charAt(0)) {
-                    ArrayList<int[]> ints = new ArrayList<>();
-                    ints.add(new int[]{i,j});
-                    dfs2(i, j, grid, target, 0, ints);
-                }
-            }
-        }
-        return list;
-    }
-
-    private static <E> void dfs2(int i, int j, char[][] grid, String target, int index, ArrayList<int[]> tmp) {
-        if (index == target.length()) {
-            return;
-        }
-
-        if(i == grid.length - 1 && j == grid[0].length - 1){
-            if (index == target.length() - 1 && grid[i][j] == target.charAt(index)) {
-                list = new ArrayList<>(tmp);
-                return;
-            }
-            return;
-        }
-        if (index == target.length() - 1 && grid[i][j] == target.charAt(index)) {
+    private void dfs2(int idx, String word, char[][] grid,int i,int j,ArrayList<int[]> tmp) {
+        if(idx == word.length()){
             list = new ArrayList<>(tmp);
             return;
         }
 
-        for (int k = 0; k < dirs.length; k++) {
-            int nextI = i + dirs[k][0];
-            int nextJ = j + dirs[k][1];
-
-            if (nextI > grid.length - 1 || nextJ > grid[0].length - 1) {
-                continue;
-            }
-
-            boolean flag = grid[i][j] == target.charAt(index);
-            if (flag) {
-                tmp.add(new int[]{nextI, nextJ});
-                index++;
-            }
-            dfs2(nextI, nextJ, grid, target, index, tmp);
-            if (flag) {
-                tmp.remove(tmp.size() - 1);
-                index--;
-            }
+        if(i< 0|| j<0 || i> grid.length - 1 || j> grid[0].length - 1 || grid[i][j] == '#'){
+            return;
         }
+
+        char ch = grid[i][j];
+        if(ch != word.charAt(idx)){
+            return;
+        }
+
+        tmp.add(new int[]{i,j});
+        grid[i][j] = '#';
+
+        dfs2(idx+1,word,grid,i+1,j,tmp);
+        dfs2(idx+1,word,grid,i,j+1,tmp);
+
+        tmp.remove(tmp.size() - 1);
+        grid[i][j] = ch;
     }
+
+
+    static int[][] dirs = new int[][]{{0, 1}, {1, 0}};
+
+
+
 
 }
