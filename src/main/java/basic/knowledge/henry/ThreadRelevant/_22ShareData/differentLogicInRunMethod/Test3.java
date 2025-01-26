@@ -6,7 +6,7 @@ public class Test3 {
     static  int j = 0;
 
     public static void main(String[] args) {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 100; i++) {
             new Thread(new Add()).start();
             new Thread(new Reduce()).start();
         }

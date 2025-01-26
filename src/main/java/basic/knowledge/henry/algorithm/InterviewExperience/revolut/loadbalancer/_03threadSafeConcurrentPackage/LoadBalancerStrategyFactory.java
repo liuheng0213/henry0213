@@ -1,10 +1,11 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeCOncurrentPackage;
+package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeConcurrentPackage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LoadBalancerStrategyFactory {
-    private static final Map<String, ILoadbalancerStrategy> strategyRegistry = new HashMap<>();
+    private static final Map<String, ILoadbalancerStrategy> strategyRegistry = new ConcurrentHashMap<>();
 
     static {
         // Register default strategies

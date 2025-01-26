@@ -1,9 +1,8 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeCOncurrentPackage;
+package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeConcurrentPackage;
 
 import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer.Server;
 
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomStrategy implements ILoadbalancerStrategy{

@@ -1,13 +1,10 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeCOncurrentPackage;
+package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeConcurrentPackage;
 
 import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer.Server;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class LoadBalancer{
     public static void main(String[] args) {
@@ -36,9 +33,12 @@ public class LoadBalancer{
      * @param server
      */
     public void registry(Server server){
-        if(!servers.contains(server)){
-            servers.add(server);
+        synchronized (servers){
+            if(!servers.contains(server)){
+                servers.add(server);
+            }
         }
+
         //servers.add(server); // thread safe
 
     }

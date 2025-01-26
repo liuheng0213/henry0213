@@ -8,8 +8,8 @@ public class _06GenMaxValueArray {
         System.out.println(Long.MAX_VALUE);
         BigInteger bi = BigInteger.valueOf(10);
         _06GenMaxValueArray obj = new _06GenMaxValueArray();
-        int[] arr = new int[]{4, 6, 2, 4, 3, 3, 6, 7};
-        int[] res = obj.getMaxValueArray(arr, 3);
+        int[] arr = new int[]{7,2,4};
+        int[] res = obj.getMaxValueArray(arr, 2);
         System.out.println(Arrays.toString(res));
     }
 

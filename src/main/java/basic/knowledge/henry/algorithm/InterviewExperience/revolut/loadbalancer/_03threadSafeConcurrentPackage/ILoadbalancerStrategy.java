@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeCOncurrentPackage;
+package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeConcurrentPackage;
 
 import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer.Server;
 

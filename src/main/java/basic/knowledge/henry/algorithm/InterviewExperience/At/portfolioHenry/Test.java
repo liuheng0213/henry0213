@@ -1,0 +1,74 @@
+package basic.knowledge.henry.algorithm.InterviewExperience.At.portfolioHenry;
+
+import basic.knowledge.henry.algorithm.InterviewExperience.At.PortfolioTest;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class Test {
+    public static void main(String[] args) {
+        Portfolio p4 = new Portfolio("P4",0);
+        Portfolio p2 = new Portfolio("P2",0);
+        Portfolio p3 = new Portfolio("P3",0);
+        Portfolio p1 = new Portfolio("P1",0);
+        Portfolio p0 = new Portfolio("P0",0);
+        p4.add(new Stock("OKTA"),0.6);
+        p4.add(new Stock("TEAM"),0.4);
+
+
+        p3.add(new Stock("EA"), 0.2);
+        p3.add(new Stock("ATVI"), 0.8);
+//        p3.add(new Portfolio("HENRY"), 0.8);
+
+
+        p2.add(p3, 0.4);
+        p2.add(p4, 0.4);
+        p2.add(new Stock("APPL"), 0.2);
+
+
+        p1.add(p2, 0.4);
+        p1.add(new Stock("APPL"), 0.2);
+        p1.add(new Stock("EA"), 0.4);
+
+        p0.add(p1,0.2);
+        p0.add(p2,0.4);
+        p0.add(p3,0.4);
+
+        System.out.println(split(1000, p4));
+        System.out.println(split(1000, p3));
+        System.out.println(split(1000, p2));
+        System.out.println(split(1000, p1));
+        System.out.println(split(1000, p0));
+    }
+
+    /**
+     * 拿到最终的stock mapping sum的结果
+     * @param sum
+     * @param p
+     * @return
+     */
+    private static Map<String,Double> split(double sum, Portfolio p) {
+        Map<String,Double> nameToNum = new HashMap<>();
+
+        if(!nameToNum.isEmpty()){
+            return nameToNum;
+        }
+
+        Map<Stock, Double> portfolioToPortion = p.portfolios;
+        for(Stock key : portfolioToPortion.keySet()) {
+            double portion = portfolioToPortion.get(key);
+            if (key instanceof Portfolio) { // key is a type of portfolio
+//                nameToNum.putAll(split(sum*portion,(Portfolio)key));
+                //不能单纯的putall 还要相加
+                Map<String, Double> split = split(sum * portion, (Portfolio) key);
+                for(String subKey: split.keySet()){
+                    nameToNum.put(subKey,nameToNum.getOrDefault(subKey,0.0) + split.get(subKey));
+                }
+            } else {
+                //不能单纯的put 还要相加 val
+                nameToNum.put(key.name,nameToNum.getOrDefault(key.name,0.0) + portion * sum);
+            }
+        }
+        return nameToNum;
+    }
+}

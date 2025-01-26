@@ -2,9 +2,10 @@ package basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LoadBalancerStrategyFactory {
-    private static final Map<String, ILoadbalancerStrategy> strategyRegistry = new HashMap<>();
+    private static final Map<String, ILoadbalancerStrategy> strategyRegistry = new ConcurrentHashMap<>();
 
     static {
         // Register default strategies
@@ -13,6 +14,7 @@ public class LoadBalancerStrategyFactory {
     }
 
     public static void registerStrategy(String strategyType, ILoadbalancerStrategy strategy) {
+        //put 100% 线程安全
         strategyRegistry.put(strategyType.toLowerCase(), strategy);
     }
 

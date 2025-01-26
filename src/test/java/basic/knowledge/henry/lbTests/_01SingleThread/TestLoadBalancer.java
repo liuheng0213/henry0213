@@ -1,7 +1,7 @@
 package basic.knowledge.henry.lbTests._01SingleThread;
 
 import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer.Server;
-import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeCOncurrentPackage.*;
+import basic.knowledge.henry.algorithm.InterviewExperience.revolut.loadbalancer._03threadSafeConcurrentPackage.*;
 import org.junit.Before;
 import org.junit.Test;
 

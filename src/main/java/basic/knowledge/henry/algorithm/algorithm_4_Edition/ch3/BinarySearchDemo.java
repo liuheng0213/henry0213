@@ -6,11 +6,11 @@ public class BinarySearchDemo {
     public static void main(String[] args) {
 
         BinarySearchDemo binarySearchDemo = new BinarySearchDemo();
-        int[] arr = new int[]{2, 2, 8, 8, 8, 8, 11, 11, 13, 14, 15};
+        int[] arr = new int[]{2, 4, 8, 8, 8, 8, 11, 11, 13, 14, 15};
 
         int res = Arrays.binarySearch(arr,3);
         System.out.println(res);// -3 
-        int index = binarySearchDemo.searchTargetWithSmallestIndex(arr, 8);
+        int index = binarySearchDemo.searchTargetWithSmallestIndex(arr, 16);
 //        int index2 = Arrays.binarySearch(arr, 12);
         int index3 = binarySearchDemo.searchTargetWithBiggestIndex(arr, 10);
         System.out.println(index);
@@ -35,8 +35,15 @@ public class BinarySearchDemo {
                 right = mid - 1;
             }
         }
-
-        return res == -1 ? left : res;
+        if(res == -1){
+            if(left == 0){
+                return -1;
+            }
+            return left;
+        }else{
+            return res;
+        }
+//        return res == -1 ? left : res;
 //        return left - 1;
     }
     private int searchTargetWithSmallestIndex(int[] arr, int target) {
