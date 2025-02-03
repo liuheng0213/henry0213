@@ -1,12 +1,10 @@
-package org.example;
+package basic.knowledge.henry.algorithm.InterviewExperience.CBA;
 
-import java.util.*;
 
-public class Main {
+public class Test {
     int n =0;
     public static void main(String[] args) {
-        String[] strs = new String[]{"eat","tea","tan","ate","nat","bat"};
-        int res = new Main().solution("13471","59604");
+        int res = new Test().solution("1344","1344");
         System.out.println(res);
     }
 
@@ -17,14 +15,11 @@ public class Main {
 
         int res = 0;
         for(int i =0;i< n - 1;i++){
-
             char ch1_s = sb_s.charAt(i);
             char ch2_s = sb_s.charAt(i + 1);
-
             char ch1_t = sb_t.charAt(i);
             char ch2_t = sb_t.charAt(i + 1);
             int times = isValid(ch1_s,ch2_s,ch1_t,ch2_t);
-
             if(times > 0){
                 int num1 = ch1_s - '0';
                 num1 = (num1 + times)%10;
@@ -58,21 +53,4 @@ public class Main {
         return times - 1;
 
     }
-
-
-
-
 }
-
-class TreeNode {
-      int val;
-      TreeNode left;
-      TreeNode right;
-      TreeNode() {}
-      TreeNode(int val) { this.val = val; }
-      TreeNode(int val, TreeNode left, TreeNode right) {
-          this.val = val;
-          this.left = left;
-          this.right = right;
-      }
-  }
