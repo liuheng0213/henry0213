@@ -1,6 +1,5 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.portfolioHenry;
 
-import basic.knowledge.henry.algorithm.InterviewExperience.At.PortfolioTest;
 
 import java.util.*;
 
@@ -15,7 +14,11 @@ public class Portfolio extends Stock{
         this.portfolios = new HashMap<>();
     }
 
-
+    public Portfolio(String name) {
+        super(name);
+        this.portion = 0;
+        this.portfolios = new HashMap<>();
+    }
 
 
     public void add(Stock stock,double fraction){

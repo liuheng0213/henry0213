@@ -13,8 +13,58 @@ public class _01QuickSort {
         Integer[] arr = new Integer[]{8, 2, 9, 6, 12, 13};
         Integer[] arr1 = new Integer[]{4, 8, 7, 6, 5};
         sort(MockData.INTEGER_FOR_SORT_MOCK);
+//        sort2(MockData.INTEGER_FOR_SORT_MOCK);
         SortUtil.isSorted(MockData.INTEGER_FOR_SORT_MOCK);
     }
+
+    private static void sort2(Comparable[] a) {
+        sort2(a,0,a.length - 1);
+    }
+
+    private static void sort2(Comparable[] a, int start, int end) {
+        if(start >= end){
+            return;
+        }
+
+        int j = partition2(a,start,end);
+
+        sort2(a,start,j-1);
+        sort2(a,j+1,end);
+    }
+
+    private static int partition2(Comparable[] a, int start, int end) {
+        Comparable v = a[start];
+        int i = start+1;
+        int j = end;
+
+        while(true){
+            while(SortUtil.less(a[i++],v)){
+                if(i == end){
+                    break;
+                }
+            }
+
+
+            while(SortUtil.less(v,a[j--])){
+                if(j == start){
+                    break;
+                }
+            }
+
+            //now left side of i is less than v ,
+            // right side of j is more than v
+            if(i>= j){
+                break;
+            }
+            //if i< j
+            SortUtil.exch(a,i,j);
+        }
+
+        SortUtil.exch(a,start,j);
+
+        return j;
+    }
+
 
     public static void sort(Comparable[] a) {
         sort(a, 0, a.length - 1);

@@ -1,19 +1,19 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.karat.k1;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class GoToCamp {
     public static void main(String[] args) {
-        String[][] roads = new String[][]{{"Riverport", "Chester", "40"}, {"Chester", "Campground", "60"}, {"Halifax", "Chester", "40"}};
-        String[] starts = new String[]{"Riverport", "Halifax"};
-
-        String[][] people = new String[][]{{"Colin", "Riverport"}, {"Sam", "Chester"}, {"Alyssa", "Halifax"}};
-        List<List<String>> res = new GoToCamp().solution(roads,starts,people);
-
-        System.out.println(res);
+//        String[][] roads = new String[][]{{"Riverport", "Chester", "40"}, {"Chester", "Campground", "60"}, {"Halifax", "Chester", "40"}};
+//        String[] starts = new String[]{"Riverport", "Halifax"};
+//
+//        String[][] people = new String[][]{{"Colin", "Riverport"}, {"Sam", "Chester"}, {"Alyssa", "Halifax"}};
+//        List<List<String>> res = new GoToCamp().solution(roads,starts,people);
+//        System.out.println(res);
+        HashSet<int[]> set = new HashSet<>();
+        set.add(new int[]{1,2});
+        set.add(new int[]{1,2});
+        System.out.println();
     }
 
     List<List<People>> routes;

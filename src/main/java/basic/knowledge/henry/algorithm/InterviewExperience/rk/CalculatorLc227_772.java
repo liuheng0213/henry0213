@@ -8,8 +8,8 @@ public class CalculatorLc227_772 {
 
     public static void main(String[] args) {
         CalculatorLc227_772 calculator = new CalculatorLc227_772();
-        String str = "1+ (6 -3) * 15 - 8 / (3 -1)";
-        int calculate1 = calculator.calculateHard(str);
+        String str = "(1+ (6 -3) * 15 - 8)/ (3 -1)";
+        int calculate1 = calculator.calculateHardwithEmbeddedBracket(str);
         int calculate2 = calculator.calculatewithoutEmbeddedBrackets(str);
 
         System.out.println(calculate1);
@@ -86,7 +86,7 @@ public class CalculatorLc227_772 {
         return res;
     }
 
-    public int calculateHard(String s) {
+    public int calculateHardwithEmbeddedBracket(String s) {
         Map<Integer,Integer> indexPair= new HashMap<>();
         Stack<Integer> st = new Stack<>();
         for(int i =0;i< s.length();i++){

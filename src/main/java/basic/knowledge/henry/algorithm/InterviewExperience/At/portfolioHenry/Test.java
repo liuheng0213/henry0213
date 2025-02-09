@@ -1,17 +1,15 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.portfolioHenry;
 
-import basic.knowledge.henry.algorithm.InterviewExperience.At.PortfolioTest;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Test {
     public static void main(String[] args) {
-        Portfolio p4 = new Portfolio("P4",0);
-        Portfolio p2 = new Portfolio("P2",0);
-        Portfolio p3 = new Portfolio("P3",0);
-        Portfolio p1 = new Portfolio("P1",0);
-        Portfolio p0 = new Portfolio("P0",0);
+        Portfolio p4 = new Portfolio("P4");
+        Portfolio p2 = new Portfolio("P2");
+        Portfolio p3 = new Portfolio("P3");
+        Portfolio p1 = new Portfolio("P1");
+        Portfolio p0 = new Portfolio("P0");
         p4.add(new Stock("OKTA"),0.6);
         p4.add(new Stock("TEAM"),0.4);
 

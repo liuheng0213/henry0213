@@ -77,7 +77,6 @@ public class lc1166FileSystem {
     }
 
     private int findByWildCard(TrieNode curr, int idx,String[] nodes) {
-
         int n = nodes.length;
         for (int i = idx; i < n; i++) {
             if (!curr.children.containsKey(nodes[i])&& !nodes[i].equals("*")) {
@@ -90,9 +89,9 @@ public class lc1166FileSystem {
                     }
                 }
                 return -1;
+            }else if(curr.children.containsKey(nodes[i])){
+                curr = curr.children.get(nodes[i]);
             }
-            curr = curr.children.get(nodes[i]);
-
         }
         if (!curr.isEnd) return -1;
         return curr.val;

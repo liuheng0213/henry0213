@@ -4,7 +4,7 @@ package basic.knowledge.henry.algorithm.InterviewExperience.CBA;
 public class Test {
     int n =0;
     public static void main(String[] args) {
-        int res = new Test().solution("1344","1344");
+        int res = new Test().solution("13471","59604");
         System.out.println(res);
     }
 
@@ -29,7 +29,6 @@ public class Test {
                 sb_s.setCharAt(i+1,(char)(num2 + '0'));
                 res+=times;
             }
-
         }
         return sb_s.toString().equals(sb_t.toString()) ? res : -1;
     }

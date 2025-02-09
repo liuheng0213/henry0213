@@ -1,9 +1,6 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At.rankVote;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 // use stream
 public class VoteRank {
@@ -25,23 +22,42 @@ public class VoteRank {
                 voteMap.put(chs[i],cur);
             }
         }
-        List<Character> voteMasterList = new ArrayList<>(voteMap.keySet());
+//        List<Character> voteMasterList = new ArrayList<>(voteMap.keySet());
+//        int len = votes[0].length();
+//        Collections.sort(voteMasterList,(a, b)->{
+//            int index = 0;
+//            while(index < len && voteMap.get(a)[index] == voteMap.get(b)[index]){
+//                index++;
+//            }
+//            if(index == len){
+//                return a - b;
+//            }else{
+//                return  voteMap.get(b)[index] - voteMap.get(a)[index];
+//            }
+//        });
+//        StringBuilder answer = new StringBuilder();
+//        for(Character key: voteMasterList) {
+//            answer.append(key);
+//        }
+//        return answer.toString();
+
+        ArrayList<Map.Entry<Character, int[]>> entries = new ArrayList<>(voteMap.entrySet());
         int len = votes[0].length();
-        Collections.sort(voteMasterList,(a, b)->{
+        Collections.sort(entries,(a, b)->{
             int index = 0;
-            while(index < len && voteMap.get(a)[index] == voteMap.get(b)[index]){
+            while(index < len && a.getValue()[index] == b.getValue()[index]){
                 index++;
             }
             if(index == len){
-                return a - b;
+                return a.getKey() - b.getKey();
             }else{
-                return  voteMap.get(b)[index] - voteMap.get(a)[index];
+                return  b.getValue()[index] - a.getValue()[index];
             }
         });
 
         StringBuilder answer = new StringBuilder();
-        for(Character vote: voteMasterList) {
-            answer.append(vote);
+        for(Map.Entry<Character, int[]> entry: entries) {
+            answer.append(entry.getKey());
         }
         return answer.toString();
 
