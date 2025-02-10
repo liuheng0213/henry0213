@@ -3,27 +3,31 @@ package basic.knowledge.henry.algorithm.InterviewExperience.At.portfolioHenry;
 
 import java.util.*;
 
-public class Portfolio extends Stock{
-    final Map<Stock,Double> portfolios;
+public class Portfolio {
+    final Map<Portfolio,Double> portfolios;
+    final Map<Stock,Double> stocks;
     double portion;
 
-
-    public Portfolio(String name,double fraction) {
-        super(name);
-        this.portion = fraction;
-        this.portfolios = new HashMap<>();
-    }
+    String name;
 
     public Portfolio(String name) {
-        super(name);
+        this.name = name;
+        portfolios = new HashMap<>();
+        stocks = new HashMap<>();
         this.portion = 0;
-        this.portfolios = new HashMap<>();
     }
-
+    public void add(Portfolio portfolio,double fraction){
+        if(portion + fraction <= 1){
+            this.portfolios.put(portfolio,fraction);
+            this.portion+=fraction;
+        }else{
+            throw new RuntimeException("fraction not correct");
+        }
+    }
 
     public void add(Stock stock,double fraction){
         if(portion + fraction <= 1){
-            this.portfolios.put(stock,fraction);
+            this.stocks.put(stock,fraction);
             this.portion+=fraction;
         }else{
             throw new RuntimeException("fraction not correct");

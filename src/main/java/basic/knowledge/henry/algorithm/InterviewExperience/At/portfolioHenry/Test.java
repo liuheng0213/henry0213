@@ -48,25 +48,26 @@ public class Test {
     private static Map<String,Double> split(double sum, Portfolio p) {
         Map<String,Double> nameToNum = new HashMap<>();
 
-        if(!nameToNum.isEmpty()){
-            return nameToNum;
-        }
-
-        Map<Stock, Double> portfolioToPortion = p.portfolios;
-        for(Stock key : portfolioToPortion.keySet()) {
-            double portion = portfolioToPortion.get(key);
-            if (key instanceof Portfolio) { // key is a type of portfolio
-//                nameToNum.putAll(split(sum*portion,(Portfolio)key));
-                //不能单纯的putall 还要相加
-                Map<String, Double> split = split(sum * portion, (Portfolio) key);
+        if(!p.portfolios.isEmpty()){
+            Map<Portfolio, Double> portfolioToPortion = p.portfolios;
+            for(Portfolio portfolio : portfolioToPortion.keySet()) {
+                double portion = portfolioToPortion.get(portfolio);
+                Map<String, Double> split = split(sum * portion, portfolio);
                 for(String subKey: split.keySet()){
                     nameToNum.put(subKey,nameToNum.getOrDefault(subKey,0.0) + split.get(subKey));
                 }
-            } else {
-                //不能单纯的put 还要相加 val
-                nameToNum.put(key.name,nameToNum.getOrDefault(key.name,0.0) + portion * sum);
             }
         }
+
+        if(!p.stocks.isEmpty()){
+            Map<Stock, Double> stockToPortion = p.stocks;
+            for(Stock stock : stockToPortion.keySet()) {
+                double portion = stockToPortion.get(stock);
+                //不能单纯的put 还要相加 val
+                nameToNum.put(stock.name,nameToNum.getOrDefault(stock.name,0.0) + portion * sum);
+            }
+        }
+
         return nameToNum;
     }
 }
