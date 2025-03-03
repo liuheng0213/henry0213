@@ -13,7 +13,7 @@ class Leetcode218 {
 
     //将建筑物的左右端点分别提取出来并排序，左端点用负高度表示表示加入操作，右端点用正高度表示移除操作
     //然后遍历所有端点，用最大堆维护当前位置的所有高度，每当最大高度发生变化时就找到了一个天际线的关键点，
-    // 加入操作比maxheight更高为关键点，移除操作比maxheight低为关键点
+    // 每次 加入操作，移除操作  后，若有高度变化， 那么为天际线的点（加入或移除点的横坐标，高度；若高度没变化， 则不管
     // 最终得到所有关键点即为天际线。
     public List<List<Integer>> getSkyline(int[][] buildings) {
         List<List<Integer>> res=new ArrayList<>();
@@ -35,10 +35,10 @@ class Leetcode218 {
         for(int[] height:heights){ //O(n)
 
             if(height[1]<0){
-                pq.add(-height[1]);
+                pq.add(-height[1]); //adding
             }
             else{
-                pq.remove(height[1]); //O(log n)
+                pq.remove(height[1]); //O(log n) // leaving
             }
 
             int CurrentMax=pq.peek();

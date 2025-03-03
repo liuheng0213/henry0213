@@ -41,6 +41,7 @@ public class _07LongestIncreasingSubSet_DP {
      * @return
      */
     private int[] getLISBetter(int[] arr) {
+
         int n = arr.length;
         int right = 0;
         //ends[b] = c 表示b 表示长度,C表示最小末尾
@@ -50,7 +51,6 @@ public class _07LongestIncreasingSubSet_DP {
         ends[0] = arr[0];
         dp[0] = 1;
         for (int i = 1; i < n; i++) {
-
             if (arr[i] > ends[right]) {
                 ends[++right] = arr[i];
                 dp[i] = right + 1;
@@ -58,8 +58,6 @@ public class _07LongestIncreasingSubSet_DP {
                 int index = binarySearch(ends, 0, right, arr[i]);
                 ends[index] = arr[i];
                 dp[i] = index + 1;
-
-
             }
         }
 

@@ -9,11 +9,48 @@ public class CalculatorLc227_772 {
     public static void main(String[] args) {
         CalculatorLc227_772 calculator = new CalculatorLc227_772();
         String str = "(1+ (6 -3) * 15 - 8)/ (3 -1)";
+        String str2= "1+ 2 - 3 + 12-10";
+        System.out.println(calculator.calculateNoBracketOrNoMultiplication(str2));
         int calculate1 = calculator.calculateHardwithEmbeddedBracket(str);
         int calculate2 = calculator.calculatewithoutEmbeddedBrackets(str);
 
         System.out.println(calculate1);
         System.out.println(calculate2);
+    }
+
+    private int calculateNoBracketOrNoMultiplication(String s){
+        Stack<Integer> st = new Stack<>();
+
+        int num = 0;
+        char sign = '+';
+        for(int i =0;i< s.length();i++){
+            char ch = s.charAt(i);
+            if(Character.isDigit(ch)){
+                num = num * 10 + (ch - '0');
+            }else if(ch == '+' || ch == '-'){
+                if(sign == '+'){
+                    st.push(num);
+                }else if(sign == '-'){
+                    st.push(0-num);
+                }
+                sign = ch;
+                num = 0;
+            }
+            if(i == s.length() -1){
+                if(sign == '+'){
+                    st.push(num);
+                }else if(sign == '-'){
+                    st.push(0-num);
+                }
+            }
+        }
+
+        int res = 0;
+        while(!st.isEmpty()){
+            res+= st.pop();
+        }
+
+        return res;
     }
 
     private int calculatewithoutEmbeddedBrackets(String s){

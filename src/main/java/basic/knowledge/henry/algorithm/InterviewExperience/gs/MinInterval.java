@@ -3,7 +3,7 @@ package basic.knowledge.henry.algorithm.InterviewExperience.gs;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Solution {
+public class MinInterval {
     class Interval{
         int startTime;
         int endTime;
@@ -192,7 +192,7 @@ public class Solution {
      * Execution entry point.
      */
     public static void main(String[] args) {
-        Solution solution = new Solution();
+        MinInterval solution = new MinInterval();
         if (solution.doTestsPass()) {
             System.out.println("All tests passed");
         }

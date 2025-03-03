@@ -10,78 +10,80 @@ import java.util.Comparator;
 public class _08NestedEnvelope_DP {
     public static void main(String[] args) {
         _08NestedEnvelope_DP envelopeNesting = new _08NestedEnvelope_DP();
-        int[][] arr = new int[][]{{3, 4}, {2, 3}, {4, 5}, {1, 3}, {2, 2}, {3, 6}, {1, 2}, {3, 2}, {2, 4}};
-        int res = envelopeNesting.maxNestedEnvelopes(arr);
+        int[][] arr = new int[][]{{2,100},{3,200},{4,300},{5,500},{5,400},{5,250},{6,370},{6,360},{7,380}};
+        int res = envelopeNesting.maxEnvelopes(arr);
         System.out.println(res);
 
     }
 
-    private int maxNestedEnvelopes(int[][] arr) {
+    public int maxEnvelopes(int[][] arr) {
         if (arr == null || arr.length == 0) {
             return 0;
         }
-
-        Envelope[] sortedEnvelopes = getSortedEnvelopes(arr);
-
-        int n = sortedEnvelopes.length;
-        int[] ends = new int[n];
-
-        ends[0] = sortedEnvelopes[0].width;
-        int effectiveIndex = 0;
-        int left;
-        int right;
-        int mid;
-        for (int i = 1; i < n; i++) {
-            left = 0;
-            right = effectiveIndex;
-            while(left <= right){
-                mid = (left + right) >> 1;
-                if(ends[mid] >= sortedEnvelopes[i].width){
-                    right = mid - 1;
-                }else{
-                    left = mid + 1;
-                }
+        Arrays.sort(arr,(a,b)->{
+            if(a[0] == b[0]){
+                return b[1] - a[1];
             }
-            if(left > effectiveIndex){
-                effectiveIndex = left;
+
+            return a[0] - b[0];
+        });
+
+        int[] widths = new int[arr.length];
+        for(int i =0;i< arr.length;i++){
+            widths[i] = arr[i][1];
+            System.out.println(widths[i]);
+        }
+
+
+        int[] ints = getdp2(widths);
+           System.out.println(Arrays.toString(ints));
+
+         int max = 0;
+         for(int n :ints){
+             max= Math.max(n,max);
+         }
+
+         return max;
+    }
+
+    public int[] getdp2(int[] arr) {
+        int[] dp = new int[arr.length];
+        int[] ends = new int[arr.length];
+        ends[0] = arr[0];
+        dp[0] = 1;
+        int right = 0;//effective right
+        for (int i = 1; i < arr.length; i++) {
+            System.out.println("i " + i + "right " + right);
+            System.out.println("ends " + Arrays.toString(ends));
+            int idx = binarySearch(ends, 0, right, arr[i]);
+
+            if(idx < 0){
+                ends[right+ 1] = arr[i];
+                right++;
+                dp[i] = right+1;
+            }else{
+                ends[idx] = arr[i];
+                System.out.println( "update " + ends[right] + "i " + i +  "right " + right);
             }
-            ends[left] = sortedEnvelopes[left].width;
+
         }
-
-       return effectiveIndex + 1;
-
+        return dp;
     }
 
+    private int binarySearch(int[] ends,int left,int right,int target){
 
-    private Envelope[] getSortedEnvelopes(int[][] arr) {
-        Envelope[] envs = new Envelope[arr.length];
-        for (int i = 0; i < arr.length; i++) {
-            Envelope env = new Envelope(arr[i][0], arr[i][1]);
-            envs[i] = env;
+        int res = -1;
+        while(left <= right){
+            int mid = (left+ right) /2;
+            if(ends[mid] >= target){
+                res = mid;
+                right = mid - 1;
+            }else if(ends[mid] < target){
+                left = mid + 1;
+            }
         }
 
-        Arrays.sort(envs, new EnvComparator());
-
-        return envs;
+        return res;
     }
 
-    class EnvComparator implements Comparator<Envelope> {
-
-        @Override
-        public int compare(Envelope o1, Envelope o2) {
-            return o1.length == o2.length ? o2.width - o1.width : o1.length - o2.length;
-        }
-
-    }
-
-    class Envelope {
-        int length;
-        int width;
-
-
-        public Envelope(int length, int width) {
-            this.length = length;
-            this.width = width;
-        }
-    }
 }

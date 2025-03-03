@@ -37,6 +37,12 @@ public class Test {
         return  res;
     }
 
+    /**
+     * definition: from group to query , is e included?
+     * @param group
+     * @param e
+     * @return
+     */
     private boolean helper(Group group, Employee e) {
         boolean found = false;
         if(group.subGroups.size() != 0){
