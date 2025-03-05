@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.At.karat;
+package basic.knowledge.henry.algorithm.InterviewExperience.At.karat.commonAncester;
 
 import basic.knowledge.henry.algorithm.InterverviewFromRenowedITCompany._03binaryTree.Node;
 
@@ -88,51 +88,6 @@ public class AncestorQuestions {
         return found ? depth : -1;
     }
 
-
-    //只有一个parent 和只有0个parent的节点
-    // o parent 1, 2, 3
-    // 1 个parent 4, 5 ,6
-    public static void findParents(int n, int[][] arr) {
-        int[] starts = new int[n + 1];
-        ArrayList<Integer>[] graph = new ArrayList[n + 1];
-        for (int i = 0; i < n + 1; i++) {
-            graph[i] = new ArrayList<>();
-        }
-        for (int[] a : arr) {
-            starts[a[1]]++;
-            graph[a[0]].add(a[1]);
-        }
-
-        LinkedList<Integer> queue = new LinkedList<>();
-        HashSet<Integer> marked = new HashSet<>();
-        for (int i = 1; i < n + 1; i++) {
-            if (starts[i] == 0) {
-                System.out.print(i + " ");
-                marked.add(i);
-                queue.add(i);
-            }
-        }
-        System.out.println("");
-        int depth = 0;
-        while (!queue.isEmpty()) {
-            int size = queue.size();
-
-            for (int i = 0; i < size; i++) {
-                Integer poll = queue.pollFirst();
-                if (depth == 1) {
-                    System.out.print(poll + " ");
-                }
-                for (Integer next : graph[poll]) {
-                    if (!marked.contains(next)) {
-                        marked.add(next);
-                        queue.addLast(next);
-                    }
-                }
-
-            }
-            depth++;
-        }
-    }
 
 
     public static boolean commonAncestor(int n, int[][] arr, int p, int q) {

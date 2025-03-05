@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.At.treeIssue;
+package basic.knowledge.henry.algorithm.InterviewExperience.At.karat.commonAncester.treeIssue.findCommonGroup;
 
 import java.util.Objects;
 
