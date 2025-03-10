@@ -8,15 +8,39 @@ public class BinarySearchDemo {
         BinarySearchDemo binarySearchDemo = new BinarySearchDemo();
         int[] arr = new int[]{2, 4, 8, 8, 8, 8, 11, 11, 13, 14, 15};
 
-        int res = Arrays.binarySearch(arr,3);
+        int res = Arrays.binarySearch(arr,1);
         System.out.println(res);// -3 
-        int index = binarySearchDemo.searchTargetWithSmallestIndex(arr, 16);
+        int index = binarySearchDemo.searchTarget(arr, 3); //16: 11;0 : -1；3 ：1
 //        int index2 = Arrays.binarySearch(arr, 12);
         int index3 = binarySearchDemo.searchTargetWithBiggestIndex(arr, 10);
         System.out.println(index);
 //        System.out.println(index2);
         System.out.println(index3);
 
+    }
+
+    private int searchTarget(int[] arr, int target) {
+        int left = 0;
+        int right = arr.length - 1;
+        int mid;
+
+        int res = -1;
+        while (left <= right) {
+            mid = (left + right) >> 1;
+            if (arr[mid] == target) {
+                res = mid;
+                return res;
+            } else if (arr[mid] < target) {
+                left = mid + 1;
+            } else {
+                right = mid - 1;
+            }
+        }
+
+        return res;
+
+//        return res == -1 ? left : res;
+//        return left - 1;
     }
     private int searchTargetWithBiggestIndex(int[] arr, int target) {
         int left = 0;
@@ -35,15 +59,8 @@ public class BinarySearchDemo {
                 right = mid - 1;
             }
         }
-        if(res == -1){
-            if(left == 0){
-                return -1;
-            }
-            return left;
-        }else{
-            return res;
-        }
-//        return res == -1 ? left : res;
+
+    return res == -1 ? left : res;
 //        return left - 1;
     }
     private int searchTargetWithSmallestIndex(int[] arr, int target) {
@@ -64,7 +81,7 @@ public class BinarySearchDemo {
             }
         }
 
-        return res == -1 ? left : res;
+         return res == -1 ? left : res;
 //        return left;
     }
 

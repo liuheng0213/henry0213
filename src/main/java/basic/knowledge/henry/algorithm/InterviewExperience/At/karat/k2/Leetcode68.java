@@ -6,31 +6,48 @@ import java.util.List;
 public class Leetcode68 {
 
     public List<String> fullJustify(String[] words, int maxWidth) {
-        List<String> res = new ArrayList<>();
         List<String> cur = new ArrayList<>();
-        int num_of_letters = 0;
-        //cur.size() means the blank numbers
-        for (String word : words) {
-            if (word.length() + cur.size() + num_of_letters > maxWidth) {
-                for (int i = 0; i < maxWidth - num_of_letters; i++) {
-                    cur.set(i % (cur.size() - 1 > 0 ? cur.size() - 1 : 1), cur.get(i % (cur.size() - 1 > 0 ? cur.size() - 1 : 1)) + " ");
+        List<String> res = new ArrayList<>();
+        int num_letters = 0;
+        for(String word : words){
+            // System.out.println(word);
+            if(word.length() + num_letters+ cur.size() > maxWidth){
+                for(int i = 0;i< maxWidth - num_letters;i++){
+                    cur.set(i % (cur.size() - 1 >0 ?cur.size() - 1 : 1 ),cur.get(i % (cur.size() - 1 >0 ?cur.size() - 1 : 1)) + " ");
                 }
                 StringBuilder sb = new StringBuilder();
-                for (String s : cur) sb.append(s);
-                res.add(sb.toString());
+                for(String s : cur){
+                    sb.append(s);
+                }
                 cur.clear();
-                num_of_letters = 0;
+                res.add(sb.toString());
+                num_letters = 0;
             }
+
             cur.add(word);
-            num_of_letters += word.length();
+            num_letters += word.length();
         }
 
+        // for(String w : cur){
+        //      System.out.print(w);
+        // }
+
+
+        int n = words.length;
         StringBuilder lastLine = new StringBuilder();
-        for (int i = 0; i < cur.size(); i++) {
-            lastLine.append(cur.get(i));
-            if (i != cur.size() - 1) lastLine.append(" ");
+        for(int i =0;i< cur.size();i++){
+            if(i != cur.size() -1){
+                lastLine.append(cur.get(i)).append(" ");
+            }else{
+                lastLine.append(cur.get(i));
+            }
         }
-        while (lastLine.length() < maxWidth) lastLine.append(" ");
+
+        System.out.print(lastLine);
+        for(int i = lastLine.length();i< maxWidth;i++){
+            lastLine.append(" ");
+        }
+
         res.add(lastLine.toString());
 
         return res;

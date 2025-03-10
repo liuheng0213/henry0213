@@ -8,7 +8,7 @@ public class Portfolio {
     final Map<Stock,Double> stocks;
     double portion;
 
-    String name;
+    final  private String name;
 
     public Portfolio(String name) {
         this.name = name;

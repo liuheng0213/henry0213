@@ -52,7 +52,7 @@ public class Test {
             Map<Portfolio, Double> portfolioToPortion = p.portfolios;
             for(Portfolio portfolio : portfolioToPortion.keySet()) {
                 double portion = portfolioToPortion.get(portfolio);
-                Map<String, Double> split = split(sum * portion, portfolio);
+                Map<String, Double> split = split(sum * portion, portfolio);//绝对是 name mapping num
                 for(String subKey: split.keySet()){
                     nameToNum.put(subKey,nameToNum.getOrDefault(subKey,0.0) + split.get(subKey));
                 }

@@ -3,6 +3,7 @@ package basic.knowledge.henry.algorithm.InterviewExperience.At.karat.k1;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 
 public class DepPro {
     public static void main(String[] args) {
@@ -22,20 +23,18 @@ public class DepPro {
                 {"Pasta Sauce", "Pantry"}
         };
 
-        HashSet<String> bought = new HashSet<>(Arrays.asList("Milk", "Flour", "Chocolate Milk", "Pasta Sauce"));
+        List<String> bought = Arrays.asList("Milk", "Flour", "Chocolate Milk", "Pasta Sauce");
 
         int solution = new DepPro().solution(products, bought);
         System.out.println(solution);
     }
 
 
-    public int solution(String[][] products, HashSet<String> bought){
-//        HashMap<String, HashSet<String>> depToProd = new HashMap<>();
+    public int solution(String[][] products, List<String> bought){
+
         HashMap<String, String> prodToDep = new HashMap<>();
 
         for(String[] p : products){
-//            depToProd.putIfAbsent(p[1],new HashSet<>());
-//            depToProd.get(p[1]).add(p[0]);
             prodToDep.put(p[0],p[1]);
         }
 

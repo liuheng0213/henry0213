@@ -20,7 +20,7 @@ public class TestJustification {
                 if(cur.size() + num_of_letters + w.length() > max){
                     for(int i = 0;i< cur.size(); i++){
                         if(i != cur.size() - 1){
-                            cur.set(i,cur.get(i) + " ");
+                            cur.set(i,cur.get(i) + "-");
                         }
                     }
                     StringBuilder sb = new StringBuilder();

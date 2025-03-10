@@ -37,14 +37,14 @@ public class Solution {
         solution.FilesInCollection2(files);
         System.out.println("end");
     }
+
     private void FilesInCollection2(List<File> files) {
-        HashMap<String,List<File>> collectionToSize = new HashMap<>();
+        HashMap<String,List<File>> collectionToFiles = new HashMap<>();
         for(File f : files){
-            populate(collectionToSize,f.collections,f);
+            populate(collectionToFiles,f.collections,f);
         }
 
-
-        for(Map.Entry<String,List<File>> entry : collectionToSize.entrySet()){
+        for(Map.Entry<String,List<File>> entry : collectionToFiles.entrySet()){
             System.out.print(entry.getKey() + " : " + printList(entry.getValue()) + "   ");
             System.out.println(";");
         }
@@ -53,36 +53,37 @@ public class Solution {
 
     /**
      * populate collectionToSize by collections
-     * @param collectionToSize
+     * @param collectionToFiles
      * @param collections
      * @param f
      */
-    private void populate(HashMap<String, List<File>> collectionToSize, List<CollectionNode> collections, File f) {
+    private void populate(HashMap<String, List<File>> collectionToFiles, List<CollectionNode> collections, File f) {
         if(collections == null || collections.isEmpty()){
             return;
         }
 
         for(CollectionNode c : collections){
-            collectionToSize.putIfAbsent(c.name,new ArrayList<>());
-            collectionToSize.get(c.name).add(f);
+            //the direct collections attached to File  f
+            collectionToFiles.putIfAbsent(c.name,new ArrayList<>());
+            collectionToFiles.get(c.name).add(f);
 
-            populate(collectionToSize,c.subCollections,f);
+            // further collection attached to the direct collection
+            populate(collectionToFiles,c.subCollections,f);
         }
     }
 
 
 
     private void FilesInCollection(List<File> files) {
-        HashMap<String,List<File>> collectionToSize = new HashMap<>();
+        HashMap<String,List<File>> collectionToFiles = new HashMap<>();
         for(File f : files){
             List<CollectionNode> collectionNodes = f.collections;
             for(CollectionNode c : collectionNodes){
-                populate(collectionToSize,c,f);
+                populate(collectionToFiles,c,f);
             }
         }
 
-
-        for(Map.Entry<String,List<File>> entry : collectionToSize.entrySet()){
+        for(Map.Entry<String,List<File>> entry : collectionToFiles.entrySet()){
             System.out.print(entry.getKey() + " : " + printList(entry.getValue()) + "   ");
             System.out.println(";");
         }
@@ -92,16 +93,16 @@ public class Solution {
 
     /**
      * definition:  populate collectionToSize by CollectionNode
-     * @param collectionToSize
+     * @param collectionToFiles
      * @param c
      * @param f
      */
-    private void populate(HashMap<String, List<File>> collectionToSize, CollectionNode c,File f) {
-        collectionToSize.putIfAbsent(c.name,new ArrayList<>());
-        collectionToSize.get(c.name).add(f);
+    private void populate(HashMap<String, List<File>> collectionToFiles, CollectionNode c,File f) {
+        collectionToFiles.putIfAbsent(c.name,new ArrayList<>());
+        collectionToFiles.get(c.name).add(f);
 
         for(CollectionNode sub_c : c.subCollections){
-            populate(collectionToSize,sub_c,f);
+            populate(collectionToFiles,sub_c,f);
         }
     }
 
