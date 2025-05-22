@@ -1,7 +1,9 @@
 package basic.knowledge.henry.algorithm.test;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Test {
 
@@ -11,63 +13,42 @@ public class Test {
         Test test = new Test();
 
 
-        TreeNode root = new TreeNode(4);
-        root.left = new TreeNode(8);
-        root.left.left = new TreeNode(0);
-        root.left.right = new TreeNode(1);
-        root.right = new TreeNode(5);
-        root.right.right = new TreeNode(6);
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.left.right = new TreeNode(5);
+        root.right = new TreeNode(3);
+        root.right.right = new TreeNode(4);
 
-        int i = test.averageOfSubtree(root);
+        List<Integer> integers = test.rightSideView(root);
 
-        System.out.println(i);
+        System.out.println(integers);
     }
 
 
-    int ans = 0;
-    List<TreeNode> list = new ArrayList<>();
-    public int averageOfSubtree(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    public List<Integer> rightSideView(TreeNode root) {
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
 
-        if(root == null){
-            return ans;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0;i< size;i++){
+                TreeNode cur = queue.poll();
+                if(i == size - 1){
+                    res.add(cur.val);
+                }
+
+                if(cur.left != null){
+                    queue.add(cur.left);
+                }
+
+                if(cur.right != null){
+                    queue.add(cur.right);
+                }
+            }
         }
 
-        ReturnType data = process(root);
-
-
-        return ans;
-    }
-
-    private ReturnType process(TreeNode node){
-        if(node == null){
-            return new ReturnType(0,0);
-        }
-
-
-        ReturnType left = process(node.left);
-
-        ReturnType right = process(node.right);
-
-        int newSum = right.sum + left.sum + node.val;
-        int newNumber = right.number + left.number + 1;
-
-        if(newSum/newNumber == node.val){
-            ans++;
-            list.add(node);
-        }
-
-        return new ReturnType(newSum,newNumber);
-    }
-
-
-    class ReturnType{
-        int sum;
-        int number;
-
-        public ReturnType(int sum,int number){
-            this.sum = sum;
-            this.number = number;
-        }
+        return res;
     }
 
 

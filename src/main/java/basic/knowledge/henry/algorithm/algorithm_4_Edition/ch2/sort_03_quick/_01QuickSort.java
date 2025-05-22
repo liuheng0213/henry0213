@@ -12,9 +12,11 @@ public class _01QuickSort {
     public static void main(String[] args) {
         Integer[] arr = new Integer[]{8, 2, 9, 6, 12, 13};
         Integer[] arr1 = new Integer[]{4, 8, 7, 6, 5};
-        sort(MockData.INTEGER_FOR_SORT_MOCK);
+        Integer[] arr2 = new Integer[]{4,6, 4, 5, 4};
+        Integer[] arr3 = new Integer[]{3,3,4,5,1,1,2,3,7,-9};
+        sort2(arr3);
 //        sort2(MockData.INTEGER_FOR_SORT_MOCK);
-        SortUtil.isSorted(MockData.INTEGER_FOR_SORT_MOCK);
+        SortUtil.isSorted(arr3);
     }
 
     private static void sort2(Comparable[] a) {

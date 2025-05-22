@@ -16,14 +16,30 @@ public class TestWeakHashMAp {
     }
 
     public static void init() {
-        String ref1 = new String("obejct1");
-        String ref2 = new String("obejct2");
-        String ref3 = new String("obejct3");
-        String ref4 = new String("obejct4");
+//        String ref1 = new String("obejct1");
+//        String ref2 = new String("obejct2");
+//        String ref3 = new String("obejct3");
+//        String ref4 = new String("obejct4");
+//        wMap.put(ref1, "cacheObject1");
+//        wMap.put(ref2, "cacheObject2");
+//        map.put(ref3, "cacheObject3");
+//        map.put(ref4, "cacheObject4");
+//
+//
+//        System.out.println("String引用ref1，ref2，ref3，ref4 消失");
+
+
+        int ref1 = 1;
+        int ref2 = 2;
+        int ref3 = 3;
+        int ref4 = 4;
+
         wMap.put(ref1, "cacheObject1");
         wMap.put(ref2, "cacheObject2");
         map.put(ref3, "cacheObject3");
         map.put(ref4, "cacheObject4");
+
+
         System.out.println("String引用ref1，ref2，ref3，ref4 消失");
 
     }

@@ -8,7 +8,6 @@ import java.util.concurrent.FutureTask;
  * 这里需要注意的是 FutureTask_1 这个任务在执行泡茶任务前，需要等待 FutureTask_2 把茶叶拿来，
  * 所以 FutureTask_1 内部需要引用 FutureTask_2，并在执行泡茶之前，
  * 我们可以充分利用 Future 的 get 方法的阻塞性质来调用 FutureTask_2 的get()方法实现等待。
-
  */
 public class MakeTea{
         public static void main(String[]args){

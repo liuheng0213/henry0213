@@ -2,6 +2,13 @@ package basic.knowledge.henry.algorithm.InterviewExperience.At.routes;
 
 import java.util.HashMap;
 
+
+/**
+ * Code Design
+ * 设计一个URL router 组件，实现两个API
+ * put(url, func_name) 把func_name 注册到指定url 下
+ * get(url) 返回指定url 对应的func_name
+ */
 public class lc1166FileSystem {
     public static void main(String[] args) {
         lc1166FileSystem lc1166FileSystem = new lc1166FileSystem();
