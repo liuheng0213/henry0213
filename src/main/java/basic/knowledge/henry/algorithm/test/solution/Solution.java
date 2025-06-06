@@ -1,37 +1,32 @@
 package basic.knowledge.henry.algorithm.test.solution;
 
+import java.util.Arrays;
+import java.util.Deque;
+import java.util.LinkedList;
+import java.util.Stack;
+
 class Solution {
     public static void main(String[] args) {
-        int i = new Solution().maxProfit(new int[]{1,2,4});
-        System.out.println(i);
+
+        int[] res= new Solution().calculateGreaterElement(new int[]{2,1,2,4,3});
+        System.out.println(res);
     }
-    public int maxProfit(int[] prices) {
-        int n = prices.length;
-        int[][][] dp = new int[n][3][2];
-
-        dp[0][0][0] = 0;
-        dp[0][0][1] = -prices[0];//buy
-        dp[0][0][0] = 0;
-        dp[0][1][1] = -prices[0];//buy
-        dp[0][0][0] = 0;
-        dp[0][2][1] = -prices[0];//buy
-        for(int i =0;i< n;i++){
-            dp[i][0][1] = -prices[i];
-        }
-        // dp[0][2][0] = 0;
-        // dp[0][2][1] = -prices[0];//buy
-        //when k = 1,i>= 1;k = 2,i>=3;k=3,i>=5. so k<=(i+1)/2
-        for(int i =1;i< n;i++){
-            for(int k = 1;k< 3&&k<=(i+1)/2;k++){
-                dp[i][k][0] = Math.max(dp[i- 1][k][0], dp[i- 1][k-1][1] + prices[i]);
-                dp[i][k][1] = Math.max(dp[i- 1][k][1], dp[i- 1][k][0] - prices[i]);
+    int[] calculateGreaterElement(int[] nums) {
+        int n = nums.length;
+        // 存放答案的数组
+        int[] res = new int[n];
+        Stack<Integer> s = new Stack<>();
+        // 倒着往栈里放
+        for (int i = n - 1; i >= 0; i--) {
+            // 判定个子高矮
+            while (!s.isEmpty() && s.peek() <= nums[i]) {
+                // 矮个起开，反正也被挡着了。。。
+                s.pop();
             }
+            // nums[i] 身后的更大元素
+            res[i] = s.isEmpty() ? -1 : s.peek();
+            s.push(nums[i]);
         }
-        int max = 0;
-        for(int k = 0;k< 3;k++){
-            max = Math.max(max,dp[n - 1][k][0]);
-        }
-
-        return max;
+        return res;
     }
 }

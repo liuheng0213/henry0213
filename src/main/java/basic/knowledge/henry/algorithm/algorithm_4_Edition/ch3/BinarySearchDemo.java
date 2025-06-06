@@ -8,7 +8,7 @@ public class BinarySearchDemo {
         BinarySearchDemo binarySearchDemo = new BinarySearchDemo();
         int[] arr = new int[]{2, 4, 8, 8, 8, 8, 11, 11, 13, 14, 15};
 
-        int res = Arrays.binarySearch(arr,1);
+        int res = Arrays.binarySearch(arr,3);
         System.out.println(res);// -3 
         int index = binarySearchDemo.searchTarget(arr, 3); //16: 11;0 : -1；3 ：1
 //        int index2 = Arrays.binarySearch(arr, 12);

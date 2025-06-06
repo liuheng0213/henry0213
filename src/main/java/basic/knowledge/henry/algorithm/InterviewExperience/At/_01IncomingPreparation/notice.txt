@@ -1,0 +1,33 @@
+clarify everything before coding
+
+The verdict was NO Hire. The reasons provided from the HR -
+
+a. Unit Test cases were not written
+b. Exception handling wasn't done.
+c. corner cases weren't covered
+d. fields must be private final
+e. validation
+
+谨记我在ticketsystem follow up中犯的错误
+
+每次操作记得更新成员变量
+
+CopyOnWriteArrayList
+
+ConcurrentLinkedQueue
+
+PriorityBlockingQueue
+
+ConcurrentHashMap
+
+
+* When you have multiple shared mutable variables that must be updated together atomically.
+ *
+ * When operations are complex and can’t be handled by atomic variables alone.
+ *
+ * When you need to protect compound actions (read-modify-write sequences) on multiple fields.
+
+
+ the highest priority to make code thread safe is , find the shared variable firstly
+
+

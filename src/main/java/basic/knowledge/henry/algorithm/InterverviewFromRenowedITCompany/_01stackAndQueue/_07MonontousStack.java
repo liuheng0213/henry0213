@@ -5,6 +5,16 @@ import java.util.Stack;
 
 public class _07MonontousStack {
 
+    /**
+     * [-1, 2]
+     * [0, 2]
+     * [-1, -1]
+     * [2, 5]
+     * [3, 5]
+     * [2, -1]
+     * [5, -1]
+     * @param args
+     */
     public static void main(String[] args) {
         _07MonontousStack obj = new _07MonontousStack();
         int[] arr = new int[]{3, 4, 1, 5, 6, 2, 7};

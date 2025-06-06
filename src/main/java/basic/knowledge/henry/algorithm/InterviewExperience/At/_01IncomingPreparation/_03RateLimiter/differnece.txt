@@ -1,0 +1,4 @@
+Fixed window and sliding window rate limiters differ in how they track requests over time.
+Fixed windows divide time into fixed intervals and count requests within each interval,
+while sliding windows maintain a moving window that tracks requests over a more recent period.
+Sliding windows are more flexible and can handle spikes in traffic better,

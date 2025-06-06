@@ -9,8 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 //单一操作 安全
 public class TestRemove {
     public static void main(String[] args) {
-//        final Map<String, Integer> count = new HashMap<>();
-        final Map<String, Integer> count = new ConcurrentHashMap<>();
+
+        final Map<String, Integer> count = new HashMap<>();
+//        final Map<String, Integer> count = new ConcurrentHashMap<>();
         //final Hashtable<String, Integer> count = new Hashtable<>();
         for (int i = 0; i < 2000; i++) {
             count.put("count" + i, 1);
