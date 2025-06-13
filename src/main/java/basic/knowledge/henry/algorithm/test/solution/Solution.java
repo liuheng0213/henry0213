@@ -1,32 +1,40 @@
 package basic.knowledge.henry.algorithm.test.solution;
 
-import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Stack;
+import java.util.*;
 
 class Solution {
-    public static void main(String[] args) {
 
-        int[] res= new Solution().calculateGreaterElement(new int[]{2,1,2,4,3});
-        System.out.println(res);
-    }
-    int[] calculateGreaterElement(int[] nums) {
-        int n = nums.length;
-        // 存放答案的数组
-        int[] res = new int[n];
-        Stack<Integer> s = new Stack<>();
-        // 倒着往栈里放
-        for (int i = n - 1; i >= 0; i--) {
-            // 判定个子高矮
-            while (!s.isEmpty() && s.peek() <= nums[i]) {
-                // 矮个起开，反正也被挡着了。。。
-                s.pop();
+
+        public static int maxLengthOfMaxSumSubarray(int[] nums) {
+            int maxSum = Integer.MIN_VALUE;
+            int currentSum = 0;
+
+            int maxLength = 0;
+            int tempStart = 0;
+
+            for (int i = 0; i < nums.length; i++) {
+                if (currentSum <= 0) {
+                    currentSum = nums[i];
+                    tempStart = i;
+                } else {
+                    currentSum += nums[i];
+                }
+
+                if (currentSum > maxSum) {
+                    maxSum = currentSum;
+                    maxLength = i - tempStart + 1;
+                } else if (currentSum == maxSum) {
+                    maxLength = Math.max(maxLength, i - tempStart + 1);
+                }
             }
-            // nums[i] 身后的更大元素
-            res[i] = s.isEmpty() ? -1 : s.peek();
-            s.push(nums[i]);
+
+            return maxLength;
         }
-        return res;
-    }
+
+        public static void main(String[] args) {
+            int[] nums = {-2, 1, -3, 4, -1,0, 2, 1,0,0, -5, 4};  // Max sum = 6; max length = 4 ([4,-1,2,1])
+            System.out.println("Max length of subarray with max sum: " + maxLengthOfMaxSumSubarray(nums));
+        }
+
+
 }
