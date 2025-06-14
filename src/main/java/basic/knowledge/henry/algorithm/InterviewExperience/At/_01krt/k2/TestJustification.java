@@ -10,7 +10,19 @@ public class TestJustification {
         System.out.println(res);//"Hello-Sir", "Please", "Upvote-If", "You-Like", "My-Post"
         List<String> res2 =  new TestJustification().solution2(Arrays.asList("The day began as still as the", "night abruptly lighted with", "brilliant flame"),12);
         System.out.println(res2);
+        List<String> res3 =  new TestJustification().solution2_better(Arrays.asList("The day began as still as the", "night abruptly lighted with", "brilliant flame"),12);
+        System.out.println(res3);
     }
+
+    private List<String> solution2_better(List<String> asList, int max) {
+        List<String> list = new ArrayList<>();
+        for(String str : asList){
+            String[] strs = str.split(" ");
+            list.addAll(Arrays.asList(strs));
+        }
+        return solution(list,max);
+    }
+
     private List<String> solution(List<String> asList,int max){
         List<String> res = new ArrayList<>();
         String cur = asList.get(0);
@@ -24,7 +36,7 @@ public class TestJustification {
         }
 
         res.add(cur);
-        System.out.println(cur);
+//        System.out.println(cur);
         return res;
     }
     private List<String> solution2(List<String> asList,int max) {
