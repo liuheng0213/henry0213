@@ -1,4 +1,4 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._10VoteRank;
+package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._10VRank;
 
 import java.util.*;
 
