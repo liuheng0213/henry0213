@@ -49,11 +49,10 @@ public class TrieAmazon {
                 res.addAll(cur.contents);
             }
 
-            if(!cur.contents.isEmpty()){
-                for(int child : cur.children.keySet()){
-                    dfs(cur.children.get(child),res);
-                }
+            for(int child : cur.children.keySet()){
+                dfs(cur.children.get(child),res);
             }
+
             return res;
         }
 
