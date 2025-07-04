@@ -2,7 +2,6 @@ package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -17,7 +16,7 @@ import java.util.List;
  *
  * 此题失败再次证明，完全理解题意多么重要！！！！！！！！！
  */
-public class TrieAmazon {
+public class TrieAmz {
     HashMap<Integer,String> num2Char = new HashMap<>();
     {
         num2Char.put(2,"abc");
