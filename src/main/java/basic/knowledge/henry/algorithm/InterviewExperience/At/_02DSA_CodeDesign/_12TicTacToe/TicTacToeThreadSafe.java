@@ -1,5 +1,7 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._12TicTacToe;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class TicTacToeThreadSafe {
 
 
@@ -14,19 +16,24 @@ public class TicTacToeThreadSafe {
         tictactoe.move(2,1,1);
         System.out.println("=====");
     }
-    int[] rows; // change to
-    int[] cols;
-    int diagonal;
-    int antiDiagonal;
+    int[] rows; // change to AtomicIntegerArray
+    int[] cols;//AtomicIntegerArray
+    int diagonal;//AtomicInteger
+    int antiDiagonal;//AtomicInteger
+
+    AtomicInteger status;
     public TicTacToeThreadSafe(int n) {
         rows= new int[n];
         cols = new int[n];
         diagonal = 0;
         antiDiagonal = 0;
-
+        status = new AtomicInteger(1);
+    }
+    public int checkStatus(){
+        return this.status.get();
     }
 
-    public int move(int row, int col, int player) {
+    public int move(int row, int col, int player){
         if(player == 1){
             rows[row]++;
             cols[col]++;
@@ -55,8 +62,18 @@ public class TicTacToeThreadSafe {
 
         return 0;
     }
+    public int start(int row, int col,int player) throws Exception {
+        if(checkStatus() == player){
+            throw new Exception("you cannot play");
+        }
 
-    public int checkWinner(int row,int col){
+        synchronized (this){
+            move(row,col,player);
+        }
+        return 0;
+    }
+
+    private int checkWinner(int row,int col){
         int n = rows.length;
 
         if(rows[row] == n){

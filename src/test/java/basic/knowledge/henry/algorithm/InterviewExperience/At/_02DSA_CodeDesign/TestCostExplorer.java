@@ -16,6 +16,8 @@ public class TestCostExplorer {
     CostExplorer ce = new CostExplorer();
     @Before
     public void setup() throws ParseException {
+
+        System.out.println(Integer.valueOf("01"));
         Subscription s = new Subscription("BASIC","2021-01-01");
         Product product = new Product("Jira",s);
         SubscriptionInformation st = new SubscriptionInformation("c1",product);

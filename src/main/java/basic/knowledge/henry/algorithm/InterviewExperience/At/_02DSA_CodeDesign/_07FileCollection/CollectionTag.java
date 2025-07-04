@@ -13,6 +13,12 @@ public class  CollectionTag {
         this.totalSize = totalSize;
     }
 
+    public CollectionTag() {
+    }
+    public void addSize(int size){
+        this.totalSize+=size;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

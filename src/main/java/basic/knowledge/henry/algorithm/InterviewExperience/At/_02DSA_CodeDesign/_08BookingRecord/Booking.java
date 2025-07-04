@@ -1,12 +1,17 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._08BookingRecord;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Booking {
     private final int start, end;
+
+    List<Integer> courtIds;
     public Booking(int start, int end) {
         this.start = start;
         this.end = end;
+        this.courtIds = new ArrayList<>();
     }
 
 

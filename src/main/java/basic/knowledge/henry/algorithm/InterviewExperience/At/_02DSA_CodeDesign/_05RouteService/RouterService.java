@@ -19,10 +19,9 @@ public class RouterService {
             cur = cur.children.get(folders[i]);
         }
 
-        if(cur.isEnd){
+        if(cur.content != -1){
             return false;
         }
-        cur.isEnd = true;
         cur.content = content;
         return true;
     }
@@ -52,7 +51,7 @@ public class RouterService {
                 return -1;
             }
         }
-        if(cur.isEnd){
+        if(cur.content != -1){
             return cur.content;
         }
 
@@ -64,11 +63,10 @@ public class RouterService {
         private Map<String,PathNode> children;
         private int content;
 
-        private boolean isEnd;
+
 
         public PathNode() {
             this.children = new HashMap<>();
-            this.isEnd = false;
         }
     }
 }

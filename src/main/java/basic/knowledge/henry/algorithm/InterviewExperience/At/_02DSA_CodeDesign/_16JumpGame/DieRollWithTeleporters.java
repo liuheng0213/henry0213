@@ -7,7 +7,6 @@ package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign
  * Also, if after rolling the die, a number greater than lastNumber is reached then teleport to the lastNumber.
  * Find all final positions which can be reached by rolling the die once (1 to maxValue). (Working solution of this one).
  *
- *
  * Modified first problem, given teleporters, lastNumber, maxValue of die and startPosition,
  * is it possible to reach the lastNumber by rolling the die any number of times.
  * (Only solution approach was required without code).

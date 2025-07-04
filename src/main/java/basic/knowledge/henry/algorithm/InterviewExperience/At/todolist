@@ -80,3 +80,12 @@ You can consolidate a list by going through various discussions we have in leetc
 For System design I took Arpit's masterclass which helped me.
  For P50, they also focus on what impact you made in your previous organisations,
 \so you can get those points ready.
+
+
+Looking all the leetcode and glassdoor post I prepared following systems
+1.Tag management
+
+web scaper similar to web craweler
+Lol Here is the question: find top confluence feed. You have to find feed based on likes share and view.
+
+

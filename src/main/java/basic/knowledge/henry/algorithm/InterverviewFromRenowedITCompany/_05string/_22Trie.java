@@ -8,17 +8,22 @@ public class _22Trie {
     public static void main(String[] args) {
         _22Trie trie = new _22Trie();
         String str1 = "abd";
-        String str2 = "acd";
+        String str2 = "abe";
+        String str3 = "ebe";
+        String str4 = "ace";
 //        String str3 = "bdce";
 //        String str4 = "adcf";
 //        String str5 = "abcm";
         trie.insert(str1);
         trie.insert(str2);
+        trie.insert(str3);
+        trie.insert(str4);
 //        trie.insert(str3);
 //        trie.insert(str4);
 //        trie.insert(str5);
 
         System.out.println(trie.prefixNum("abd"));
+        System.out.println(trie.prefixNum("ab"));
 //        System.out.println(trie.search(str4));
 //        trie.delete(str4);
 //        System.out.println(trie.search(str4));

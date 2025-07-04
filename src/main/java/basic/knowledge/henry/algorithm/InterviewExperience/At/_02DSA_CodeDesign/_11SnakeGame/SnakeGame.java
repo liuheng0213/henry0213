@@ -36,7 +36,7 @@ public class SnakeGame{
 
     public void move(String dir) {
         // Don't start if game over
-        if (isGameOver.get()) {
+        if (!isGameOver.get()) {
             throw new RuntimeException("game is not over");
         }
 

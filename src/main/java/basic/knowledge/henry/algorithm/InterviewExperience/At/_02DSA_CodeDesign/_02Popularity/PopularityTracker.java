@@ -44,7 +44,6 @@ public class PopularityTracker {
 
         if(ids.isEmpty()){
             count2Id.remove(count);
-
         }
         count2Id.putIfAbsent(count + 1,new HashSet<>());
         count2Id.get(count + 1).add(id);
@@ -72,7 +71,6 @@ public class PopularityTracker {
 
         if(ids.isEmpty()){
             count2Id.remove(count);
-
         }
 
         if(count > 1){

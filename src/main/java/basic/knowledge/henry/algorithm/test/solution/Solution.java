@@ -3,38 +3,55 @@ package basic.knowledge.henry.algorithm.test.solution;
 import java.util.*;
 
 class Solution {
+    public static void main(String[] args) {
+        Solution solution = new Solution();
+
+        List<Integer> res = solution.findClosestElements(new int[]{0,0,1,2,3,3,4,7,7,8},3,5);
+        System.out.println(res);
+    }
+    //x
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        //binary search
+        int idx = Arrays.binarySearch(arr, x);
 
 
-        public static int maxLengthOfMaxSumSubarray(int[] nums) {
-            int maxSum = Integer.MIN_VALUE;
-            int currentSum = 0;
+        if(idx < 0){
+            idx = 0 - idx;
+            idx--;
+        }
 
-            int maxLength = 0;
-            int tempStart = 0;
+        int left = idx-1;
+        int right = idx;
 
-            for (int i = 0; i < nums.length; i++) {
-                if (currentSum <= 0) {
-                    currentSum = nums[i];
-                    tempStart = i;
-                } else {
-                    currentSum += nums[i];
-                }
 
-                if (currentSum > maxSum) {
-                    maxSum = currentSum;
-                    maxLength = i - tempStart + 1;
-                } else if (currentSum == maxSum) {
-                    maxLength = Math.max(maxLength, i - tempStart + 1);
-                }
+        LinkedList<Integer> res = new LinkedList<>();
+
+        while(right-left-1 < k){
+            if(left < 0){
+                res.addLast(arr[right]);
+                right++;
+            }else if(right> arr.length -1){
+                res.addFirst(arr[left]);
+                left--;
+            }else if(x- arr[left] <= arr[right] - x){
+                res.addFirst(arr[left]);
+                left--;
+            }else {
+                res.addLast(arr[right]);
+                right++;
             }
-
-            return maxLength;
         }
 
-        public static void main(String[] args) {
-            int[] nums = {-2, 1, -3, 4, -1,0, 2, 1,0,0, -5, 4};  // Max sum = 6; max length = 4 ([4,-1,2,1])
-            System.out.println("Max length of subarray with max sum: " + maxLengthOfMaxSumSubarray(nums));
-        }
-
+        return res;
+    }
 
 }
+
+
+
+/**
+ * Your MapSum object will be instantiated and called as such:
+ * MapSum obj = new MapSum();
+ * obj.insert(key,val);
+ * int param_2 = obj.sum(prefix);
+ */

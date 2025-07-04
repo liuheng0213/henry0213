@@ -31,9 +31,9 @@ public class TestFileSizeSort {
 
     }
 
-
     @Test
     public void testAddFile(){
+        fz = new FileSizeSort();
         fz.addFile(file);
         fz.addFile(file1);
         fz.addFile(file2);
@@ -45,7 +45,34 @@ public class TestFileSizeSort {
         fz.addFile(file8);
         fz.addFile(file9);
 
-        List<CollectionTag> strings = fz.topN(4);
+        List<CollectionTag> strings = fz.topN();
         System.out.println(strings);
+
+
+
     }
+    @Test
+    public void testAddFile2(){
+        fz.addFile2(file);
+        fz.addFile2(file1);
+        fz.addFile2(file2);
+        fz.addFile2(file3);
+        fz.addFile2(file4);
+        fz.addFile2(file5);
+        fz.addFile2(file6);
+        fz.addFile2(file7);
+        fz.addFile2(file8);
+        fz.addFile2(file9);
+
+        List<CollectionTag> strings = fz.topN2(4);
+        System.out.println(strings);
+
+        //[CollectionTag{name='e', totalSize=200},
+        // CollectionTag{name='a', totalSize=300},
+        // CollectionTag{name='c', totalSize=400},
+        // CollectionTag{name='f', totalSize=700}]
+    }
+
+
+
 }

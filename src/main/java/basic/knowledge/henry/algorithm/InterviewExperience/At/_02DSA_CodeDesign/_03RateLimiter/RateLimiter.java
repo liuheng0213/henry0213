@@ -11,6 +11,7 @@ public class RateLimiter {
     private final Map<Integer, Integer> id2Credit;
     private final ScheduledExecutorService executor;
 
+
     private final int maxCount = 5;
     private final int maxCredit = 6;
     private final int maInterval = 5;
@@ -19,20 +20,20 @@ public class RateLimiter {
         this.id2Count = new ConcurrentHashMap<>();
         this.id2Credit = new ConcurrentHashMap<>();
         this.executor = Executors.newSingleThreadScheduledExecutor();
-        this.executor.scheduleAtFixedRate(this::clear, maInterval, maInterval, TimeUnit.SECONDS);
+        this.executor.scheduleAtFixedRate(()->clear(), maInterval, maInterval, TimeUnit.SECONDS);
     }
 
     private void clear() {
         for (Integer id : id2Count.keySet()) {
-            synchronized (getLockInMap(id)) {
-                int count = id2Count.getOrDefault(id, 0);
-                int left = maxCount - count;
-                id2Count.put(id, 0);
 
-                int credit = id2Credit.getOrDefault(id, 0);
-                credit = Math.min(maxCredit, credit + left);
-                id2Credit.put(id, credit);
-            }
+            int count = id2Count.getOrDefault(id, 0);
+            int left = maxCount - count;
+            id2Count.put(id, 0);
+
+            int credit = id2Credit.getOrDefault(id, 0);
+            credit = Math.min(maxCredit, credit + left);
+            id2Credit.put(id, credit);
+
         }
     }
 

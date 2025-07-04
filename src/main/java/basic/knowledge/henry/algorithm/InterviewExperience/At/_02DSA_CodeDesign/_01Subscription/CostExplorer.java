@@ -24,6 +24,7 @@ public class CostExplorer {
 
     //上一次的更新得记下来， 或者同一个customer 同一个product 只能用一次trial
     HashMap<String, Map<String,Integer>> customer2product2TrialMonths = new HashMap<>();
+
     public void subscribe(SubscriptionInformation subscriptionInformation) throws ParseException {
         Map<String, double[]> product2CostList = customer2product2CostList.getOrDefault(subscriptionInformation.customerID,new HashMap<>());
 

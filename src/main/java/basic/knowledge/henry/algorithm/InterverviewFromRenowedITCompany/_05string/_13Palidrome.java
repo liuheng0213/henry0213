@@ -46,7 +46,7 @@ public class _13Palidrome {
 
         for(int j = 1; j <dp[0].length; j++){
             dp[j - 1][j] = chars[j - 1] == chars[j] ? 0 : 1;
-            for(int i = j -1 ;i > -1;i--){
+            for(int i = j -2 ;i > -1;i--){
                 if (chars[i] == chars[j]) {
                     dp[i][j] = dp[i + 1][j - 1];
                 } else {
@@ -55,30 +55,19 @@ public class _13Palidrome {
             }
         }
 
-
-//        for (int i = dp.length - 2; i >= 0; i--) {
-//            dp[i +1][i] = chars[i +1] == chars[i] ? 0 : 1;
-//            for (int j = i + 1; j <= dp[0].length - 1; j++) {
-//                if (chars[i] == chars[j]) {
-//                    dp[i][j] = dp[i + 1][j - 1];
-//                } else {
-//                    dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - 1]) + 1;
+        //or
+//        for(int i = n - 1;i>=0;i--){
+//            for(int j = i+2;j< n;j++){
+//                if(chs[j] == chs[i]){
+//                    dp[i][j] = dp[i+1][j- 1];
+//                }else{
+//                    dp[i][j] = Math.min(dp[i + 1][j],dp[i][j - 1]) +1;
 //                }
+//
 //            }
 //        }
 
-
-        //not correct
-//        for (int i = 0 ; i <= dp.length - 2; i++) {
-//            dp[i][i + 1] = chars[i +1] == chars[i] ? 0 : 1;
-//            for (int j = i + 2; j <= dp[0].length - 1; j++) {
-//                if (chars[i] == chars[j]) {
-//                    dp[i][j] = dp[i + 1][j - 1];
-//                } else {
-//                    dp[i][j] = Math.min(dp[i + 1][j], dp[i][j - 1]) + 1;
-//                }
-//            }
-//        }
+//
         return dp;
 
     }

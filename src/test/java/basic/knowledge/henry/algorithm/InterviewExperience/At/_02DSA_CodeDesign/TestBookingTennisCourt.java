@@ -29,6 +29,13 @@ public class TestBookingTennisCourt {
         bookingList.add(booking5);
         bookingList.add(booking6);
 
+
+//        Booking booking1 = new Booking(30,45);
+//        Booking booking2 = new Booking(30,45);
+//        List<Booking> bookingList = new ArrayList<>();
+//        bookingList.add(booking1);
+//        bookingList.add(booking2);
+
         HashMap<Integer, List<Booking>> integerListHashMap = bt.assignBookings(bookingList);
 
 

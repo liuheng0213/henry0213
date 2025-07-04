@@ -19,8 +19,9 @@ public class Portfolio {
     }
     public void add(Portfolio portfolio, double fraction){
         if(portion + fraction <= 1){
-            this.portfolios.put(portfolio,fraction);
+            double currentFraction = this.portfolios.computeIfAbsent(portfolio,k->0.0);
             this.portion+=fraction;
+            this.portfolios.put(portfolio,currentFraction + fraction);
         }else{
             throw new RuntimeException("fraction not correct");
         }

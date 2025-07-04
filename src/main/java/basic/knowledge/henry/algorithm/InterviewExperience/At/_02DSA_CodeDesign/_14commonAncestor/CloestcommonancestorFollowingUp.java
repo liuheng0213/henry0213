@@ -7,7 +7,7 @@ import java.util.List;
 
 /**
  * o(n+ m) n是group数量，m 是employee 数量
- *
+ * follow up : change it to be hashmap
  * 空间复杂度
  */
 public class CloestcommonancestorFollowingUp {
@@ -60,11 +60,11 @@ public class CloestcommonancestorFollowingUp {
 
         CloestcommonancestorFollowingUp multipleEmployees = new CloestcommonancestorFollowingUp();
         HashSet<Employee> employees = new HashSet<>();
-        employees.add(Springs);
+        employees.add(Bob);
         employees.add(Alice);
 //        employees.add(Mona);
 
-        Group group = multipleEmployees.findCommon(Engg, employees);
+        Group group = multipleEmployees.findCommon(BE, employees);
         System.out.println(group);
 
     }
@@ -78,6 +78,14 @@ public class CloestcommonancestorFollowingUp {
         return null;
     }
     HashSet<Employee> founds = new HashSet<>();
+
+    /**
+     * return  closet department which has any one of the required employees
+     * or return null if no employee is found
+     * @param g
+     * @param es
+     * @return
+     */
     private Group helper(Group g, HashSet<Employee> es) {
         if(g.subGroups.isEmpty() && g.employees.isEmpty()){
             return null;
