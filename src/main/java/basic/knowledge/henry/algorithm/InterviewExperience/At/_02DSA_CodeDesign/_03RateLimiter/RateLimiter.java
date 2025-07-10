@@ -25,15 +25,12 @@ public class RateLimiter {
 
     private void clear() {
         for (Integer id : id2Count.keySet()) {
-
             int count = id2Count.getOrDefault(id, 0);
             int left = maxCount - count;
             id2Count.put(id, 0);
-
             int credit = id2Credit.getOrDefault(id, 0);
             credit = Math.min(maxCredit, credit + left);
             id2Credit.put(id, credit);
-
         }
     }
 

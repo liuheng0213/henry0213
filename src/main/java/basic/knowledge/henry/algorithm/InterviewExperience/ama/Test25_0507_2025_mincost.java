@@ -2,8 +2,6 @@ package basic.knowledge.henry.algorithm.InterviewExperience.ama;
 
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.TreeMap;
 
 /**
  * I meet a really hard problem in Amazon OA and don't know how to solve it efficiently, can anyone please help?
@@ -41,7 +39,7 @@ import java.util.TreeMap;
  *
  * 本题和数字字符串转换字母组合这题很像
  */
-public class Test5 {
+public class Test25_0507_2025_mincost {
     int M = (int) (1e9) + 7;
 
     public static void main(String[] args) {
@@ -57,7 +55,7 @@ public class Test5 {
 //        x = 2;
 //        y = 3;
 
-        int res = new Test5().solution(str,x,y);
+        int res = new Test25_0507_2025_mincost().solution(str,x,y);
         System.out.println(res);
     }
 

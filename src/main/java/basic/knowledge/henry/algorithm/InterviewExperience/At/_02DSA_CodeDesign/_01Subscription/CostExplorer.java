@@ -21,9 +21,46 @@ public class CostExplorer {
         types.put("PREMIUM",15.0);
     };
     HashMap<String, Map<String,double[]>> customer2product2CostList = new HashMap<>();
-
+    double[] monthCost = new double[12];
     //上一次的更新得记下来， 或者同一个customer 同一个product 只能用一次trial
     HashMap<String, Map<String,Integer>> customer2product2TrialMonths = new HashMap<>();
+
+    public void subscribe2(SubscriptionInformation subscriptionInformation) throws ParseException {
+        Map<String, double[]> product2CostList = customer2product2CostList.getOrDefault(subscriptionInformation.customerID,new HashMap<>());
+
+        String name = subscriptionInformation.getProduct().getName();
+        String datestr = subscriptionInformation.getProduct().getSubscription().getDate();
+        String planId = subscriptionInformation.getProduct().getSubscription().getPlanId();
+        Double fee = types.get(planId);
+
+        int month = getMonth(datestr);
+
+        double[] monthCostOfCustomer = product2CostList.getOrDefault(name,new double[12]);
+
+        double diff = monthCostOfCustomer[month] - fee;
+
+        for(int i = month;i < 12;i++){
+            monthCostOfCustomer[i] = fee;
+        }
+
+        product2CostList.put(name,monthCostOfCustomer);
+        customer2product2CostList.put(subscriptionInformation.customerID,product2CostList);
+        for(int i = month;i< 12;i++){
+            monthCost[i] -= diff;
+        }
+
+    }
+
+    public int getMonth(String datestr) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = simpleDateFormat.parse(datestr);
+        int month = date.getMonth();
+        return month;
+    }
+
+    public double[] monthlyCostList2(){
+        return monthCost;
+    }
 
     public void subscribe(SubscriptionInformation subscriptionInformation) throws ParseException {
         Map<String, double[]> product2CostList = customer2product2CostList.getOrDefault(subscriptionInformation.customerID,new HashMap<>());
@@ -37,12 +74,9 @@ public class CostExplorer {
         int month = date.getMonth();
         double[] doubles = product2CostList.getOrDefault(name,new double[12]);
 
-        int trial = 0;
+
         for(int i = month;i < 12;i++){
-            if(trial > 2){
-                doubles[i] = fee;
-            }
-            trial++;
+            doubles[i] = fee;
         }
         product2CostList.put(name,doubles);
 

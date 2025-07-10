@@ -26,7 +26,9 @@ import java.util.List;
  * constraints :
  * n = effort.length
  * 1<=n, effort[i] <= 2 * 10^5
- * For this question my intuition was to sort the array them for each element calculate sqrt of it and perform binary search to find the upper bound of the element with the help of sqrt of the element. after find the upper bound I will traverse from 0 to the upper bound index and once I find a divisor I will break out from the loop. I'm sure my solution isn't efficient and I would be glad if anyone could give me a suggestion.
+ * For this question my intuition was to sort the array them for each element calculate sqrt of it
+ * and perform binary search to find the upper bound of the element with the help of sqrt of the element.
+ * after find the upper bound I will traverse from 0 to the upper bound index and once I find a divisor I will break out from the loop. I'm sure my solution isn't efficient and I would be glad if anyone could give me a suggestion.
  */
 public class Test8_EffiBin {
 

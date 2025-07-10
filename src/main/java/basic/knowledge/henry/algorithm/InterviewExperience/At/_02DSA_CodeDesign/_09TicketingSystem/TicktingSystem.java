@@ -5,13 +5,13 @@ import java.util.*;
 /**
  * follow up1 what if there is a tie
  * follow up2 查询加time range
+ *
+ * 变种：AverageScore 加一个lastScore
+ * followup 两套AverageScore，注意用继承，另外要合理的修改rating 方法使得代码可读性，可扩展性更高
  */
 public class TicktingSystem {
     public static void main(String[] args) {
         TicktingSystem ticktingSystem = new TicktingSystem();
-
-
-
         System.out.println(ticktingSystem.desSort());
     }
     int maxScore = 5;
@@ -24,8 +24,6 @@ public class TicktingSystem {
         if(rating > maxScore){
             throw new IllegalArgumentException("parameter wrong");
         }
-
-
         AverageScore as = name2Avg.getOrDefault(name, new AverageScore());
         as.totalScore += rating; // for solving a tie of average score
         as.count++;

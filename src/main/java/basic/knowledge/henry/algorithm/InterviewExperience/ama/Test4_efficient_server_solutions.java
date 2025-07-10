@@ -4,11 +4,14 @@ import java.util.Arrays;
 
 
 /**
- * AWS provides fast and efficient_server_solutions. The developers want to stress-test the quality of the servers' channels. They must ensure the following:
+ * AWS provides fast and efficient_server_solutions.
+ * The developers want to stress-test the quality of the servers' channels.
+ * They must ensure the following:
  *
  * Each of the packets must be sent via a single channel.
  * Each of the channels must transfer at least one packet.
- * The quality of the transfer for a channel is defined by the median of the sizes of all the data packets sent through that channel.
+ * The quality of the transfer for a channel is
+ * defined by the median of the sizes of all the data packets sent through that channel.
  */
 public class Test4_efficient_server_solutions {
     public int maximumQualitySum(int[] packets, int channels) {

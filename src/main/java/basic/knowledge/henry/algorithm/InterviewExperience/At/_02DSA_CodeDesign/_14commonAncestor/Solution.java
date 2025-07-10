@@ -65,33 +65,30 @@ public class Solution {
     }
 
     private Group findCommon(Group engg, HashSet<Employee> employees) {
-        ClosestGroup cg = helper(engg,employees);
-        if(cg == null){
+        GroupWithFoundEmployees gwfe = helper(engg,employees);
+        if(gwfe == null){
             return null;
         }
-        if(cg.es.containsAll(employees)){
-            return cg.group;
+        if(gwfe.es.containsAll(employees)){
+            return gwfe.group;
         }
         return null;
-//        if(founds.size() == employees.size()){
-//            return group;
-//        }
 
-//        return null;
     }
 
     /**
-     * FIND THE CLOSEST COMMON Group  which has non, one or all elements in employees
+     * FIND THE CLOSEST common Group With Found Employees which existing in input employees
+     *
      * @param group
      * @param employees
      * @return
      */
-    private ClosestGroup helper(Group group, HashSet<Employee> employees) {
+    private GroupWithFoundEmployees helper(Group group, HashSet<Employee> employees) {
         if(group.subGroups.isEmpty() && group.employees.isEmpty()){
             return null;
         }
 
-        ClosestGroup cg = new ClosestGroup(group);
+        GroupWithFoundEmployees cg = new GroupWithFoundEmployees(group);
         boolean flag = false;
         if(!group.employees.isEmpty()){
             for(Employee e: group.employees){
@@ -106,10 +103,10 @@ public class Solution {
             return cg;
         }
 
-        List<ClosestGroup> closerGroups = new ArrayList<>();
+        List<GroupWithFoundEmployees> closerGroups = new ArrayList<>();
         if(!group.subGroups.isEmpty()){
             for(Group g : group.subGroups){
-                ClosestGroup subGroups = helper(g,employees);//subGroups might be null
+                GroupWithFoundEmployees subGroups = helper(g,employees);//subGroups might be null
                 closerGroups.add(subGroups);
             }
         }
@@ -118,7 +115,7 @@ public class Solution {
         int num = 0;
         Group oneGroup = null;
         HashSet<Employee> founds = new HashSet<>();
-        for(ClosestGroup g: closerGroups){
+        for(GroupWithFoundEmployees g: closerGroups){
             if(g != null){
                 num++;
                 oneGroup = g.group;
@@ -130,22 +127,22 @@ public class Solution {
         if(num == 0){
             return null;
         }else if(num == 1){
-            ClosestGroup cg1 = new ClosestGroup(oneGroup);
-            cg1.es = founds;
-            return cg1;
+            cg.group = oneGroup;
+            cg.es = founds;
+            return cg;
         }else{
-            ClosestGroup cg2 = new ClosestGroup(group);
-            cg2.es = founds;
-            return cg2;
+            cg.group = group;
+            cg.es = founds;
+            return cg;
         }
 
     }
 
-    class ClosestGroup{
+    class GroupWithFoundEmployees{
         Group group;
         HashSet<Employee> es;
 
-        public ClosestGroup(Group group) {
+        public GroupWithFoundEmployees(Group group) {
             this.group = group;
             this.es = new HashSet<>();
         }

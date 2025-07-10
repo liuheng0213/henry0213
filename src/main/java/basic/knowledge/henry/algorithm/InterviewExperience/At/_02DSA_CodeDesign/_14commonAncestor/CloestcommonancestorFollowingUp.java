@@ -7,7 +7,6 @@ import java.util.List;
 
 /**
  * o(n * n+ m) n是group数量，m 是employee 数量
- * follow up : change it to be hashmap
  * 空间复杂度
  */
 public class CloestcommonancestorFollowingUp {

@@ -9,6 +9,10 @@ import java.util.List;
  * given arr is sorted ,and the result should be a sorted one as well
  */
 public class Leetcdoe658 {
+    public static void main(String[] args) {
+        List<Integer> closestElements = new Leetcdoe658().findClosestElements(new int[]{1, 2, 3, 4, 5}, 4, 3);
+        System.out.println(closestElements);
+    }
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
         //binary search
         int idx = Arrays.binarySearch(arr, x);

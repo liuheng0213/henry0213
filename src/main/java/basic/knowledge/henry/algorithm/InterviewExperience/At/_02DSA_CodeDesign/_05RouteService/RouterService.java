@@ -66,7 +66,7 @@ public class RouterService {
 
 
         public PathNode() {
-            this.children = new HashMap<>();
+            this.content = -1;
         }
     }
 }
