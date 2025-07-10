@@ -15,7 +15,7 @@ public class TicktingSystem {
         System.out.println(ticktingSystem.desSort());
     }
     int maxScore = 5;
-    HashMap<String,AverageScore> name2Avg = new HashMap<>();
+    HashMap<String, AScore> name2Avg = new HashMap<>();
     HashMap<String,HashMap<Long,Integer>> name2Time2RatingMap = new HashMap<>();
 
     //follow up add time range
@@ -24,7 +24,7 @@ public class TicktingSystem {
         if(rating > maxScore){
             throw new IllegalArgumentException("parameter wrong");
         }
-        AverageScore as = name2Avg.getOrDefault(name, new AverageScore());
+        AScore as = name2Avg.getOrDefault(name, new AScore());
         as.totalScore += rating; // for solving a tie of average score
         as.count++;
         as.updateAvg();
@@ -36,29 +36,29 @@ public class TicktingSystem {
 
     }
 
-    public List<AverageScore> desSortInTimeRange(long start,long end){
+    public List<AScore> desSortInTimeRange(long start, long end){
         Set<Map.Entry<String, HashMap<Long, Integer>>> entries = name2Time2RatingMap.entrySet();
-        HashMap<String,AverageScore> name2As = new HashMap<>();
+        HashMap<String, AScore> name2As = new HashMap<>();
         for(Map.Entry<String, HashMap<Long, Integer>> entry : entries){
             String name = entry.getKey();
             HashMap<Long, Integer> time2RatingMap = entry.getValue();
             for(Long time: time2RatingMap.keySet()){
                 if(time<=end && time >= start){
-                    AverageScore as = name2As.computeIfAbsent(name, k -> new AverageScore());
+                    AScore as = name2As.computeIfAbsent(name, k -> new AScore());
                     as.count++;
                     as.totalScore+=time2RatingMap.get(time);
                     as.updateAvg();
                 }
             }
         }
-        List<AverageScore> averageScores = new ArrayList<>(name2As.values());
-        Collections.sort(averageScores);
-        return averageScores;
+        List<AScore> aScores = new ArrayList<>(name2As.values());
+        Collections.sort(aScores);
+        return aScores;
     }
 
-    public List<AverageScore> desSort(){
-        ArrayList<AverageScore> averageScores = new ArrayList<>(name2Avg.values());
-        Collections.sort(averageScores);
-        return averageScores;
+    public List<AScore> desSort(){
+        ArrayList<AScore> aScores = new ArrayList<>(name2Avg.values());
+        Collections.sort(aScores);
+        return aScores;
     }
 }

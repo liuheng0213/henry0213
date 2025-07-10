@@ -1,12 +1,12 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._09TicketingSystem;
 
 
-public class AverageScore implements Comparable<AverageScore>{
+public class AScore implements Comparable<AScore>{
     Double avg;
     Double count;
     Double totalScore;
 
-    public AverageScore() {
+    public AScore() {
 
         this.avg = 0.0;
     }
@@ -26,7 +26,7 @@ public class AverageScore implements Comparable<AverageScore>{
     }
 
     @Override
-    public int compareTo(AverageScore that) {
+    public int compareTo(AScore that) {
         return that.avg.compareTo(this.avg);
     }
 }
