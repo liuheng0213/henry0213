@@ -4,47 +4,34 @@ import java.util.*;
 
 class Solution {
     public static void main(String[] args) {
-        Solution solution = new Solution();
-
-        List<Integer> res = solution.findClosestElements(new int[]{0,0,1,2,3,3,4,7,7,8},3,5);
-        System.out.println(res);
+        int i = new Solution().jobScheduling(new int[]{1, 2, 3, 4, 6}, new int[]{3, 5, 10, 6, 9}, new int[]{20, 20, 100, 70, 60});
+        System.out.println(i);
     }
-    //x
-    public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        //binary search
-        int idx = Arrays.binarySearch(arr, x);
-
-
-        if(idx < 0){
-            idx = 0 - idx;
-            idx--;
+    public int jobScheduling(int[] startTime, int[] endTime, int[] profit) {
+        int n = profit.length;
+        int[][] jobs = new int[n][3];
+        for(int i =0;i< n;i++){
+            jobs[i] = new int[]{startTime[i],endTime[i],profit[i]};
         }
 
-        int left = idx-1;
-        int right = idx;
+        //sorting is necessary, otherwise it may get the largest end firstly and the following job are all overlapped and cannot be updated
+        Arrays.sort(jobs,(a,b)->a[1]-b[1]);
 
+        TreeMap<Integer,Integer> dp = new TreeMap<>();
+        dp.put(0,0);
+        // 定义：在 0 到 i 这个时间区间内，最多能够获得的利润是 dp[i],
+        for(int[] job : jobs){
+            int start = job[0];
+            int end = job[1];
+            int value = job[2];
 
-        LinkedList<Integer> res = new LinkedList<>();
-
-        while(right-left-1 < k){
-            if(left < 0){
-                res.addLast(arr[right]);
-                right++;
-            }else if(right> arr.length -1){
-                res.addFirst(arr[left]);
-                left--;
-            }else if(x- arr[left] <= arr[right] - x){
-                res.addFirst(arr[left]);
-                left--;
-            }else {
-                res.addLast(arr[right]);
-                right++;
-            }
+            dp.put(end,Math.max(dp.floorEntry(start).getValue() + value,dp.lastEntry().getValue()));
         }
 
-        return res;
-    }
+        return dp.lastEntry().getValue();
 
+
+    }
 }
 
 
