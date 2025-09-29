@@ -33,12 +33,12 @@ public class _12TransformPath {
             strList.add(list[i]);
         }
 
-        HashMap<String, List<String>> nextMap = getNexts(strList); // created a graph
-        HashMap<String, Integer> disMap = bfs(start, nextMap);
+        HashMap<String, List<String>> graph = getNexts(strList); // created a graph
+        HashMap<String, Integer> disMap = bfs(start, graph);
         LinkedList<LinkedList<String>> paths = new LinkedList<>();
         LinkedList<String> subList = new LinkedList<>();
         subList.add(start);
-        dfs(paths, subList, start, end, disMap, nextMap);
+        dfs(paths, subList, start, end, disMap, graph);
         return paths;
     }
 
@@ -46,16 +46,16 @@ public class _12TransformPath {
                      LinkedList<String> subList,
                      String cur, String to,
                      HashMap<String, Integer> disMap,
-                     HashMap<String, List<String>> nextMap) {
+                     HashMap<String, List<String>> graph) {
         if (cur.equals(to)) {
             paths.add(new LinkedList<>(subList));
             return;
         }
 
-        for (String next : nextMap.get(cur)) {
+        for (String next : graph.get(cur)) {
             if (disMap.get(cur) + 1 == disMap.get(next)) {
                 subList.addLast(next);
-                dfs(paths, subList, next, to, disMap, nextMap);
+                dfs(paths, subList, next, to, disMap, graph);
                 subList.pollLast();
             }
         }
@@ -63,7 +63,7 @@ public class _12TransformPath {
     }
 
 
-    private HashMap<String, Integer> bfs(String start, HashMap<String, List<String>> nextMap) {
+    private HashMap<String, Integer> bfs(String start, HashMap<String, List<String>> graph) {
         HashMap<String, Integer> disMap = new HashMap<>();
         Queue<String> queue = new LinkedList<>();
         queue.add(start);
@@ -73,7 +73,7 @@ public class _12TransformPath {
         String cur = null;
         while (!queue.isEmpty()) {
             cur = queue.poll();
-            for (String next : nextMap.get(cur)) {
+            for (String next : graph.get(cur)) {
                 if (!flaggedSet.contains(next)) {
                     disMap.put(next, disMap.get(cur) + 1);
                     flaggedSet.add(next);

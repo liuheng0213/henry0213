@@ -1,120 +1,87 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._08BookingRecord;
 
+import java.util.HashMap;
 import java.util.*;
 
+/**
+ * 需要新开几个court
+ * a) Implement a function that given a list of tennis court bookings with start and finish times, returns a plan assigning each booking to a specific court, ensuring each court is used by only one booking at a time and using the minimum amount of courts with unlimites number of courts available.
+ * An example of the booking record might look like
+ *
+ * b) After each booking, a fixed amount of time, Y, is needed to maintain the court before it can be rented again
+ * c) Court only need maintenance after X amount of usage
+ * How would you modify the code if each court also had a Y maintenance time that occurred after X bookings?
+ * The function should now become something like
+ *
+ * d) The original problem can be made simpler by removing the “assigning each booking to a specific court” part.
+ * The candidate needs to find the minimum number of courts needed to accommodate all the bookings
+ * e) Check if booking conflict - Write a function that if given two bookings to check if they conflict with each other
+ *
+ * return Hashmap<Integer,Integer>,key is the Booking id, value is the court this booking is specified to
+ */
 public class BookingTennisCourt {
+    public static void main(String[] args) {
+        BookingTennisCourt bookingTennisCourt = new BookingTennisCourt();
+        Booking b1 = new Booking(1,10,20);
+        Booking b2 = new Booking(2,5,12);
+        Booking b3 = new Booking(3,13,30);
+        Booking b4 = new Booking(4,14,30);
+        Booking b5 = new Booking(5,31,35);
+        Booking b6 = new Booking(6,36,39);
 
-    public HashMap<Integer,List<Booking>> assignBookings(List<Booking> bookings){
-        // Step 1: Sort bookings by start time, occupy the room firstly
-        Collections.sort(bookings,(a,b)->a.getStart() - b.getStart());
-//        bookings.sort(Comparator.comparingInt(b -> b.start));
+        List<Booking> bookings = new ArrayList<>(Arrays.asList(b1,b2,b3,b4,b5));
 
-        // Step 2: Priority queue to track courts by end time,
-        // any room which polled out can be reused by the following book
-        PriorityQueue<Booking> courtQueue = new PriorityQueue<>((a,b)->a.getEnd()-b.getEnd());
+        HashMap<Integer,List<Integer>> plan = bookingTennisCourt.assignBookings(bookings,3,2);
 
-
-        //this design is not good, same booking might be sent twice
-//        HashMap<Booking,Integer> booking2Court = new HashMap<>();
-
-        //this design is better, same booking might be sent twice,need CLARIFICATION
-        courtQueue.add(bookings.get(0));
-        int idx = 1;
-        List<Booking> bookingList = new ArrayList<>();
-        bookingList.add(bookings.get(0));
-        bookings.get(0).courtIds.add(idx);
-//        HashMap<Integer,List<Booking>> res2 = new HashMap<>();
-//        List<Booking> bookingsInIdx = res2.computeIfAbsent(idx, k -> new ArrayList<>());
-//        bookingsInIdx.add(bookings.get(0));
-        for(int i = 1;i< bookings.size();i++){
-            Booking bookingInCounrt = courtQueue.peek();
-            Booking booking = bookings.get(i);
-            if(bookingInCounrt.getEnd() <= booking.getStart()){
-                Booking polledBooking = courtQueue.poll();
-                Integer id = polledBooking.courtIds.get(0);
-                booking.courtIds.add(id);
-                bookingList.add(booking);
-//                res2.get(courtId).add(bookings.get(i));
-                courtQueue.add(booking);
-
-            }else{
-                Booking booking1 = new Booking(booking.getStart(), booking.getEnd());
-                courtQueue.add(booking1);
-                idx++;
-                booking1.courtIds.add(idx);
-                bookingList.add(booking1);
-            }
-        }
-
-
-        HashMap<Integer,List<Booking>> res = new HashMap<>();
-        for(Booking booking: bookingList){
-            List<Integer> courtIds = booking.courtIds;
-            for(int id: courtIds){
-                List<Booking> bookings1 = res.computeIfAbsent(id, k -> new ArrayList<>());
-                bookings1.add(booking);
-            }
-
-        }
-
-        return res;
+        System.out.println(plan);
     }
 
+    public  HashMap<Integer,List<Integer>>  assignBookings(List<Booking> bookings,int maintenanceTime,int times){
+        Collections.sort(bookings,(a,b)->a.getStart()- b.getStart());
 
-    public HashMap<Integer,List<Booking>> assignBookings2(List<Booking> bookings){
-        // Step 1: Sort bookings by start time, occupy the room firstly
-        Collections.sort(bookings,(a,b)->a.getStart() - b.getStart());
-//        bookings.sort(Comparator.comparingInt(b -> b.start));
+        PriorityQueue<Booking> pq = new PriorityQueue<>((a,b)->a.getEnd()-b.getEnd());
 
-        // Step 2: Priority queue to track courts by end time,
-        // any room which polled out can be reused by the following book
-        PriorityQueue<Booking> courtQueue = new PriorityQueue<>((a,b)->a.getEnd()-b.getEnd());
-
-
-        //this design is not good, same booking might be sent twice
-//        HashMap<Booking,Integer> booking2Court = new HashMap<>();
-
-        //this design is better, same booking might be sent twice,need CLARIFICATION
-        HashMap<Booking,HashSet<Integer>> booking2Court = new HashMap<>();
-        courtQueue.add(bookings.get(0));
-        int idx = 1;
-        booking2Court.putIfAbsent(bookings.get(0), new HashSet<>());
-        booking2Court.get(bookings.get(0)).add(idx);
-//        HashMap<Integer,List<Booking>> res2 = new HashMap<>();
-//        List<Booking> bookingsInIdx = res2.computeIfAbsent(idx, k -> new ArrayList<>());
-//        bookingsInIdx.add(bookings.get(0));
-        for(int i = 1;i< bookings.size();i++){
-            Booking bookingInCounrt = courtQueue.peek();
-            Booking booking = bookings.get(i);
-            if(bookingInCounrt.getEnd() <= booking.getStart()){
-                Booking polledBooking = courtQueue.poll();
-                HashSet<Integer> courtIds = booking2Court.get(polledBooking);
-//                res2.get(courtId).add(bookings.get(i));
-                int id = courtIds.iterator().next();
-                booking2Court.putIfAbsent(booking,new HashSet<>());
-                booking2Court.get(booking).add(id);
-                courtQueue.add(booking);
-
+        int courtId = 0;
+        HashMap<Integer,Integer> booking2court = new HashMap<>();
+        HashMap<Integer,Integer> courtUsage = new HashMap<>();//store court to count of usage
+        for(int i = 0;i< bookings.size();i++){
+            Booking curBooking = bookings.get(i);
+            int curBookingId = curBooking.getId();
+            if(pq.isEmpty()){
+                pq.add(curBooking);
+                booking2court.putIfAbsent(curBookingId,courtId);
+                courtUsage.put(courtId,1);
             }else{
-                courtQueue.add(booking);
-                idx++;
-                booking2Court.putIfAbsent(booking, new HashSet<>());
-                booking2Court.get(booking).add(idx);
+                Booking bookingPossibleOutOfCourt = pq.peek();
+                int occupiedCourtId = booking2court.get(bookingPossibleOutOfCourt.getId());
+                //the court where bookingPossibleOutOfCourt is in can be reused by the  curBooking
+                if(bookingPossibleOutOfCourt.getEnd() + maintenanceTime <= curBooking.getStart() && courtUsage.get(occupiedCourtId)>= times){
+                    pq.poll();
+                    pq.add(curBooking);
+                    booking2court.put(curBookingId,occupiedCourtId);
+                    courtUsage.put(occupiedCourtId,courtUsage.get(occupiedCourtId) + 1);
+                }else{
+                    pq.add(curBooking);
+                    courtId++;
+                    booking2court.put(curBookingId,courtId);
+                    courtUsage.put(courtId,1);
+                }
             }
         }
 
+        return convert2Plan(booking2court);
 
-        HashMap<Integer,List<Booking>> res = new HashMap<>();
-        for(Map.Entry<Booking,HashSet<Integer>> entry : booking2Court.entrySet()){
-            HashSet<Integer> courtIds = entry.getValue();
-            Booking booking = entry.getKey();
-            for(int id: courtIds){
-                List<Booking> bookings1 = res.computeIfAbsent(id, k -> new ArrayList<>());
-                bookings1.add(booking);
-            }
+    }
 
+    private HashMap<Integer, List<Integer>> convert2Plan(HashMap<Integer, Integer> booking2court) {
+        HashMap<Integer, List<Integer>> plan = new HashMap<>();//courtid to bookingid
+        for(Integer bookingId : booking2court.keySet()){
+            int courtId = booking2court.get(bookingId);
+            plan.putIfAbsent(courtId,new ArrayList<>());
+            plan.get(courtId).add(bookingId);
         }
 
-        return res;
+        return plan;
     }
 }
+

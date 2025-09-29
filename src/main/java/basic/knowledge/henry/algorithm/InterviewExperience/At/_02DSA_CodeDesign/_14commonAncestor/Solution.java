@@ -1,25 +1,24 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._14commonAncestor;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 public class Solution {
+
     public static void main(String[] args) {
         Group Company = new Group("Company");
         Group HR = new Group("HR");
         Group Engg = new Group("Engg");
         Group BE = new Group("BE");
         Group FE = new Group("FE");
-        Group account = new Group("account");
-        Group teller = new Group("teller");
-        Group cfo = new Group("cfo");
-        Group cpa = new Group("cpa");
+        Group Account = new Group("account");
+        Group Teller = new Group("teller");
+        Group Cfo = new Group("cfo");
+        Group Cpa = new Group("cpa");
 
-        Company.subGroups.add(account);
-        account.subGroups.add(teller);
-        account.subGroups.add(cfo);
-        account.subGroups.add(cpa);
+        Company.subGroups.add(Account);
+        Account.subGroups.add(Teller);
+        Account.subGroups.add(Cfo);
+        Account.subGroups.add(Cpa);
         Company.subGroups.add(HR);
         Company.subGroups.add(Engg);
         Engg.subGroups.add(BE);
@@ -36,12 +35,14 @@ public class Solution {
         Employee henry = new Employee("henry");
         Employee jane = new Employee("jane");
         Employee vicky = new Employee("vicky");
+        HR.employees.add(vicky);
+        Engg.employees.add(vicky);
         Employee louis = new Employee("louis");
 
-        teller.employees.add(henry);
-        cfo.employees.add(jane);
-        cfo.employees.add(vicky);
-        cpa.employees.add(louis);
+        Teller.employees.add(henry);
+        Cfo.employees.add(jane);
+        Cfo.employees.add(vicky);
+        Cpa.employees.add(louis);
 
         HR.employees.add(Mona);
         HR.employees.add(Springs);
@@ -52,100 +53,88 @@ public class Solution {
         FE.employees.add(Lisa);
         FE.employees.add(Marley);
 
-        Solution solution = new Solution();
+        Solution sol  = new Solution();
         HashSet<Employee> employees = new HashSet<>();
-        employees.add(Bob);
         employees.add(Alice);
-//        employees.add(Alice);
-//        employees.add(Springs);
+        employees.add(vicky);
 //        employees.add(Mona);
 
-        Group group = solution.findCommon(Company, employees);
+        Group group = sol.findCommon(Company, employees);
         System.out.println(group);
+
     }
 
-    private Group findCommon(Group engg, HashSet<Employee> employees) {
-        GroupWithFoundEmployees gwfe = helper(engg,employees);
-        if(gwfe == null){
-            return null;
-        }
-        if(gwfe.es.containsAll(employees)){
-            return gwfe.group;
-        }
-        return null;
 
+    /**
+     * stores the cloest common group and  employees found in it
+     */
+    class CloestGroupWithFoundEmployees{
+        Group cloestCommonGroup;
+        HashSet<Employee> foundEmployees;
     }
 
     /**
-     * FIND THE CLOSEST common Group With Found Employees which existing in input employees
-     *
-     * @param group
+     * searching from start and find cloest common group of employees
+     * if it finds all of them,return the cloest common group
+     * if it finds part of them or none of,return null;
+     * @param start
      * @param employees
      * @return
      */
-    private GroupWithFoundEmployees helper(Group group, HashSet<Employee> employees) {
-        if(group.subGroups.isEmpty() && group.employees.isEmpty()){
+
+    private Group findCommon(Group start, HashSet<Employee> employees) {
+        CloestGroupWithFoundEmployees cloestGroupWithFoundEmployees = helper(start,employees);
+        if(cloestGroupWithFoundEmployees == null || !cloestGroupWithFoundEmployees.foundEmployees.containsAll(employees)){
             return null;
         }
 
-        GroupWithFoundEmployees cg = new GroupWithFoundEmployees(group);
-        boolean flag = false;
-        if(!group.employees.isEmpty()){
-            for(Employee e: group.employees){
-                if(employees.contains(e)){
-                    flag = true;
-                    cg.es.add(e);
+        return cloestGroupWithFoundEmployees.cloestCommonGroup;
+    }
+
+
+    /**
+     * searching from group and return CloestGroupWithFoundEmployees
+     * which includes the cloest common group of parts of employees and parts of employees themself
+     * if find nothing return empty CloestGroupWithFoundEmployees.
+     * @param startGroup
+     * @param employees
+     * @return
+     */
+    private CloestGroupWithFoundEmployees helper(Group startGroup, HashSet<Employee> employees) {
+        CloestGroupWithFoundEmployees result = new CloestGroupWithFoundEmployees();
+        if(startGroup.employees == null && startGroup.subGroups == null){
+            return result;
+        }
+
+        HashSet<Employee> founds = new HashSet<>();
+        if(startGroup.subGroups != null){
+            for(Group cloestCommonGroup: startGroup.subGroups){
+                CloestGroupWithFoundEmployees subCloestGroupWithFoundEmployees = helper(cloestCommonGroup,employees);
+                if(findAll(subCloestGroupWithFoundEmployees,employees)){
+                    return subCloestGroupWithFoundEmployees;
+                }
+                for(Employee em: subCloestGroupWithFoundEmployees.foundEmployees){
+                    if(employees.contains(em)){
+                        founds.add(em);
+                    }
                 }
             }
         }
-        // group has direct employee, it is the closest group, return immediately.
-        if(flag){
-            return cg;
-        }
-
-        List<GroupWithFoundEmployees> closerGroups = new ArrayList<>();
-        if(!group.subGroups.isEmpty()){
-            for(Group g : group.subGroups){
-                GroupWithFoundEmployees subGroups = helper(g,employees);//subGroups might be null
-                closerGroups.add(subGroups);
+        result.cloestCommonGroup = startGroup;
+        if(startGroup.employees != null){
+            for(Employee em: startGroup.employees){
+                if(employees.contains(em)){
+                    founds.add(em);
+                }
             }
+            result.foundEmployees = founds;
         }
 
-
-        int num = 0;
-        Group oneGroup = null;
-        HashSet<Employee> founds = new HashSet<>();
-        for(GroupWithFoundEmployees g: closerGroups){
-            if(g != null){
-                num++;
-                oneGroup = g.group;
-                founds.addAll(g.es);
-            }
-        }
-
-
-        if(num == 0){
-            return null;
-        }else if(num == 1){
-            cg.group = oneGroup;
-            cg.es = founds;
-            return cg;
-        }else{
-            cg.group = group;
-            cg.es = founds;
-            return cg;
-        }
-
+        return result;
     }
 
-    class GroupWithFoundEmployees{
-        Group group;
-        HashSet<Employee> es;
-
-        public GroupWithFoundEmployees(Group group) {
-            this.group = group;
-            this.es = new HashSet<>();
-        }
+    private boolean findAll(CloestGroupWithFoundEmployees cloestGroupWithFoundEmployees, HashSet<Employee> employees) {
+        return cloestGroupWithFoundEmployees.foundEmployees.containsAll(employees);
     }
 
 }

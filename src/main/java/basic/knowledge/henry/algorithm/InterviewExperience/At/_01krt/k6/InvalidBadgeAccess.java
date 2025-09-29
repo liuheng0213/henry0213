@@ -37,11 +37,12 @@ public class InvalidBadgeAccess {
             Stack<String> st = map.get(name);
 
             if(!st.isEmpty()){
+                //超过2 个不用管了 invalid
                 if(st.size() == 1){
-                    if(action.equals("enter")){
-                        st.push(action);
-                    }else{
+                    if(st.peek().equals("enter") && action.equals("exit")){
                         st.pop();
+                    }else{ //!st.peek().equals("enter") or !action.equals("exit")
+                        st.push(action);
                     }
                 }
             }else{

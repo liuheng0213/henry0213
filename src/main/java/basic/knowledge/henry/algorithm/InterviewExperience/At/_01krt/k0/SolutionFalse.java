@@ -1,10 +1,11 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._01krt.k0;
 
-public class Solution {
+public class SolutionFalse {
     public static void main(String[] args) {
-        String[] words = new String[]{"baby", "referee", "cat", "dada", "dog", "bird", "ax", "baz"};
+        System.out.println(2/3);
+        String[] words = new String[]{ "referee", "cat", "dada", "jbaby","dog", "bird", "ax", "baz"};
         String note1 = "bbbblkkjbaby";
-        String res = new Solution().solution(words,note1);
+        String res = new SolutionFalse().solution(words,note1);
         System.out.println(res);
     }
 

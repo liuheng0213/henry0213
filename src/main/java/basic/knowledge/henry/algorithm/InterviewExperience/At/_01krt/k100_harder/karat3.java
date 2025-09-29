@@ -35,7 +35,7 @@ public class karat3 {
         if(balance == 0){
              flag1 = helper(idx+instructions[idx],instructions,balance);
              if(flag1){
-                 dp[idx] = 1;
+                dp[idx] = 1;
                 return true;
              }
         }else if(balance > 0){
@@ -53,7 +53,7 @@ public class karat3 {
             return true;
         }
 
-
+        // all false
         dp[idx] = 0;
         return false;
     }

@@ -1,6 +1,7 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._01krt.k100_harder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Karat2 {
@@ -21,9 +22,11 @@ public class Karat2 {
         String word1_4 = "sec";
         String word1_5 = "bbaal";
 
-        List<int[]> ints1 = karat2.find2(grid1, word1_2);
+        List<int[]> ints1 = karat2.find2(grid1, word1_5);
 
-        System.out.println();
+        for(int[] a : ints1){
+            System.out.println(Arrays.toString(a));
+        }
         list = new ArrayList<>();
 
         char[][] grid2 = {
@@ -88,7 +91,7 @@ public class Karat2 {
         }
 
         tmp.add(new int[]{i,j});
-        grid[i][j] = '#';
+        grid[i][j] = '#';//没必要
 
         dfs2(idx+1,word,grid,i+1,j,tmp);
         dfs2(idx+1,word,grid,i,j+1,tmp);

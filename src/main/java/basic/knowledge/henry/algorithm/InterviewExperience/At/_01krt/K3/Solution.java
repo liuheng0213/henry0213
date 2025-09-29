@@ -183,7 +183,7 @@ public class Solution {
     }
 
     private static boolean validate(int[] paths,int position){
-        if(position == -1){
+        if(position < 0){
             return false;
         }
         if(paths[position] == -1){

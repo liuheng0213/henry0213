@@ -56,7 +56,7 @@ public class Karat1 {
         String song3_1 = "Love Me Do";
 
         Karat1 karat1 = new Karat1();
-        List<String> solution = karat1.solution(songs2, song2_1);
+        List<String> solution = karat1.solution(songs1, song1_1);
         for (String str : solution) {
             System.out.println(str);
         }
@@ -81,12 +81,11 @@ public class Karat1 {
         List<String> list = new ArrayList<>();
         HashSet<String> marked = new HashSet<>();
         list.add(song1_1);
-        marked.add(song1_1);
-        dfs(graph, marked, list, song1_1, 1);
+        dfs(graph, list, song1_1, 1);
         return maxList;
     }
 
-    private void dfs(HashMap<String, List<String>> graph, HashSet<String> marked, List<String> list, String cur, int depth) {
+    private void dfs(HashMap<String, List<String>> graph, List<String> list, String cur, int depth) {
         if (graph.get(cur) == null) {
             if (depth > max) {
                 max = depth;
@@ -96,14 +95,11 @@ public class Karat1 {
 
         if (graph.get(cur) != null) {
             for (String next : graph.get(cur)) {
-                if (!marked.contains(next)) {
-                    list.add(next);
-                    marked.add(next);
-                    dfs(graph, marked, list, next, depth + 1);
-                    list.remove(list.size() - 1);
-                    marked.remove(next);
-                }
+                list.add(next);
+                dfs(graph, list, next, depth + 1);
+                list.remove(list.size() - 1);
             }
+
         }
 
     }
