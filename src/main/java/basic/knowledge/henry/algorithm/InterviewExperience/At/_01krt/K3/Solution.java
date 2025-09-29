@@ -143,53 +143,58 @@ public class Solution {
         for(char dir : chs){
             if(dir == 'R'){
                 cur++;
-                System.out.println(cur);
-                if(cur >= 10){
-                    return true;
-                }
-                boolean flag =validate(paths,cur);
-                if(!flag){
+                int flag =validate(paths,cur);
+                if(flag == -1){
                     return false;
+                }else if (flag == 1){
+                    return true;
                 }
                 preDir = dir;
             }else if(dir == 'L'){
                 cur--;
-                boolean flag =validate(paths,cur);
-                if(!flag){
+                int flag =validate(paths,cur);
+                if(flag == -1){
                     return false;
+                }else if (flag == 1){
+                    return true;
                 }
                 preDir = dir;
             }else{
                 if(preDir == 'R'){
                     cur+=2;
-                    if(cur >= 10){
-                        return true;
-                    }
-                    boolean flag =validate(paths,cur);
-                    if(!flag){
+                    int flag =validate(paths,cur);
+                    if(flag == -1){
                         return false;
+                    }else if (flag == 1){
+                        return true;
                     }
                 }else{
                     cur-=2;
-                    boolean flag =validate(paths,cur);
-                    if(!flag){
+                    int flag =validate(paths,cur);
+                    if(flag == -1){
                         return false;
+                    }else if (flag == 1){
+                        return true;
                     }
                 }
             }
         }
 
-        return cur >= 10;
+        return cur == 10;
     }
 
-    private static boolean validate(int[] paths,int position){
-        if(position < 0){
-            return false;
+    private static int validate(int[] paths,int position){
+        if(position < 0|| position > 10){
+            return -1;
         }
         if(paths[position] == -1){
-            return false;
+            return -1;
         }
-        return true;
+        if(position == 10){
+            return 1;
+        };
+
+        return 0;
     }
 
 
