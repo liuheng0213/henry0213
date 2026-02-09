@@ -6,9 +6,16 @@ public class AScore implements Comparable<AScore>{
     Double count;
     Double totalScore;
 
-    public AScore() {
+    int lastRating;
 
+    public AScore() {
         this.avg = 0.0;
+    }
+
+    public AScore(Double avg, Double count, Double totalScore) {
+        this.avg = avg;
+        this.count = count;
+        this.totalScore = totalScore;
     }
 
     public void updateAvg(){

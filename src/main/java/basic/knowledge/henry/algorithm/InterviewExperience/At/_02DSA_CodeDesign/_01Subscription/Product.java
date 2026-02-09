@@ -1,7 +1,7 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._01Subscription;
 
 public class Product {
-    String name;
+    String name; // jira confluence bitbucket
 
     Subscription subscription;
 

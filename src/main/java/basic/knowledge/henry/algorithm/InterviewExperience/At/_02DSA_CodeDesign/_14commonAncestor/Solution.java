@@ -55,8 +55,9 @@ public class Solution {
 
         Solution sol  = new Solution();
         HashSet<Employee> employees = new HashSet<>();
-        employees.add(Alice);
+        employees.add(jane);
         employees.add(vicky);
+        employees.add(louis);
 //        employees.add(Mona);
 
         Group group = sol.findCommon(Company, employees);
@@ -74,9 +75,11 @@ public class Solution {
     }
 
     /**
-     * searching from start and find cloest common group of employees
-     * if it finds all of them,return the cloest common group
+     * searching from start and find closet common group of employees
+     * if it finds all of them,return the closet common group
      * if it finds part of them or none of,return null;
+     *
+     * so totally ,3 conditions
      * @param start
      * @param employees
      * @return
@@ -84,7 +87,7 @@ public class Solution {
 
     private Group findCommon(Group start, HashSet<Employee> employees) {
         CloestGroupWithFoundEmployees cloestGroupWithFoundEmployees = helper(start,employees);
-        if(cloestGroupWithFoundEmployees == null || !cloestGroupWithFoundEmployees.foundEmployees.containsAll(employees)){
+        if(cloestGroupWithFoundEmployees == null || cloestGroupWithFoundEmployees.foundEmployees == null || !cloestGroupWithFoundEmployees.foundEmployees.containsAll(employees)){
             return null;
         }
 
@@ -113,13 +116,15 @@ public class Solution {
                 if(findAll(subCloestGroupWithFoundEmployees,employees)){
                     return subCloestGroupWithFoundEmployees;
                 }
-                for(Employee em: subCloestGroupWithFoundEmployees.foundEmployees){
-                    if(employees.contains(em)){
-                        founds.add(em);
+                for(Employee employeeFound: subCloestGroupWithFoundEmployees.foundEmployees){
+                    if(employees.contains(employeeFound)){
+                        founds.add(employeeFound);
                     }
                 }
             }
         }
+
+        //  return subCloestGroupWithFoundEmployees is not realized which means startGroup is the cloeset common group
         result.cloestCommonGroup = startGroup;
         if(startGroup.employees != null){
             for(Employee em: startGroup.employees){

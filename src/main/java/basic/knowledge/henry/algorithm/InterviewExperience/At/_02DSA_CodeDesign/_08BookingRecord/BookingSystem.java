@@ -1,6 +1,5 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._08BookingRecord;
 
-import java.util.HashMap;
 import java.util.*;
 
 /**
@@ -19,27 +18,65 @@ import java.util.*;
  *
  * return Hashmap<Integer,Integer>,key is the Booking id, value is the court this booking is specified to
  */
-public class BookingTennisCourt {
+public class BookingSystem {
     public static void main(String[] args) {
-        BookingTennisCourt bookingTennisCourt = new BookingTennisCourt();
-        Booking b1 = new Booking(1,10,20);
-        Booking b2 = new Booking(2,5,12);
-        Booking b3 = new Booking(3,13,30);
-        Booking b4 = new Booking(4,14,30);
-        Booking b5 = new Booking(5,31,35);
-        Booking b6 = new Booking(6,36,39);
+        BookingSystem bookingTennisCourt = new BookingSystem();
 
-        List<Booking> bookings = new ArrayList<>(Arrays.asList(b1,b2,b3,b4,b5));
+        List<Booking> bookings = new ArrayList<>();
+        bookings.add(new Booking(1, 9, 12));
+        bookings.add(new Booking(2, 10, 11));
+        bookings.add(new Booking(3, 12, 14));
+        bookings.add(new Booking(4, 9, 10));
+        bookings.add(new Booking(5, 11, 13));
 
-        HashMap<Integer,List<Integer>> plan = bookingTennisCourt.assignBookings(bookings,3,2);
+        HashMap<Integer,List<Integer>> plan = bookingTennisCourt.assignBookingsNoMaintenanceTime(bookings);
 
         System.out.println(plan);
     }
+    public  HashMap<Integer,List<Integer>>  assignBookingsNoMaintenanceTime(List<Booking> bookings){
+        Collections.sort(bookings,(a,b)->a.getStart()- b.getStart());
+
+        PriorityQueue<Booking> pq = new PriorityQueue<>((a,b)->a.getEnd()-b.getEnd());
+
+        int courtId = 0;
+        HashMap<Integer,Integer> booking2court = new HashMap<>();
+        HashMap<Integer,Integer> courtUsage = new HashMap<>();//store court to count of usage
+        for(int i = 0;i< bookings.size();i++){
+            Booking curBooking = bookings.get(i);
+            int curBookingId = curBooking.getId();
+            if(pq.isEmpty()){
+                pq.add(curBooking);
+                booking2court.putIfAbsent(curBookingId,courtId);
+                courtUsage.put(courtId,1);
+            }else{
+                Booking bookingPossibleOutOfCourt = pq.peek();
+                int occupiedCourtId = booking2court.get(bookingPossibleOutOfCourt.getId());
+                //the court where bookingPossibleOutOfCourt is in can be reused by the  curBooking
+                if(bookingPossibleOutOfCourt.getEnd()<= curBooking.getStart()){
+                    pq.poll();
+                    pq.add(curBooking);
+                    booking2court.put(curBookingId,occupiedCourtId);
+                    courtUsage.put(occupiedCourtId,courtUsage.get(occupiedCourtId) + 1);
+                }else{
+                    pq.add(curBooking);
+                    courtId++;
+                    booking2court.put(curBookingId,courtId);
+                    courtUsage.put(courtId,1);
+                }
+            }
+        }
+
+        return convert2Plan(booking2court);
+
+    }
+
 
     public  HashMap<Integer,List<Integer>>  assignBookings(List<Booking> bookings,int maintenanceTime,int times){
         Collections.sort(bookings,(a,b)->a.getStart()- b.getStart());
 
-        PriorityQueue<Booking> pq = new PriorityQueue<>((a,b)->a.getEnd()-b.getEnd());
+        PriorityQueue<Booking> pq = new PriorityQueue<>((a,b)->{
+            return a.getEnd() - b.getEnd();
+        });
 
         int courtId = 0;
         HashMap<Integer,Integer> booking2court = new HashMap<>();
@@ -83,5 +120,7 @@ public class BookingTennisCourt {
 
         return plan;
     }
+
+
 }
 

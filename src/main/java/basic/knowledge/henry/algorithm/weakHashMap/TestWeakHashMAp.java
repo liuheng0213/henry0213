@@ -3,83 +3,69 @@ package basic.knowledge.henry.algorithm.weakHashMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.WeakHashMap;
-import java.util.concurrent.TimeUnit;
 
 public class TestWeakHashMAp {
-    static Map wMap = new WeakHashMap();
-    static Map map = new HashMap();
 
     public static void main(String[] args) {
-        init();
-        testWeakHashMap();
-//        testHashMap();
-    }
-
-    public static void init() {
-//        String ref1 = new String("obejct1");
-//        String ref2 = new String("obejct2");
-//        String ref3 = new String("obejct3");
-//        String ref4 = new String("obejct4");
-//        wMap.put(ref1, "cacheObject1");
-//        wMap.put(ref2, "cacheObject2");
-//        map.put(ref3, "cacheObject3");
-//        map.put(ref4, "cacheObject4");
-//
-//
-//        System.out.println("String引用ref1，ref2，ref3，ref4 消失");
-
-
-        int ref1 = 1;
-        int ref2 = 2;
-        int ref3 = 3;
-        int ref4 = 4;
-
-        wMap.put(ref1, "cacheObject1");
-        wMap.put(ref2, "cacheObject2");
-        map.put(ref3, "cacheObject3");
-        map.put(ref4, "cacheObject4");
-
-
-        System.out.println("String引用ref1，ref2，ref3，ref4 消失");
-
+//        testWeakHashMap();
+        testHashMap();
     }
 
     public static void testWeakHashMap() {
 
-        System.out.println("WeakHashMap GC之前");
-        for (Object o : wMap.entrySet()) {
-            System.out.println(o);
-        }
+        Map<Object, String> weakMap = new WeakHashMap<>();
+
+        Object key1 = new Object();
+        Object key2 = new Object();
+
+        weakMap.put(key1, "I am strongly referenced");
+        weakMap.put(key2, "I will be GC'd soon");
+
+        System.out.println("Before GC: " + weakMap);
+
+        // Remove strong reference for key2
+        key2 = null;
+//        key1 = null;
+
+        // Hint the GC to run
+        System.gc();
+
+        // Give the GC some time
         try {
-            System.gc();
-            TimeUnit.SECONDS.sleep(5);
+            Thread.sleep(5);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
-        System.out.println("WeakHashMap GC之后");
-        for (Object o : wMap.entrySet()) {
-            System.out.println(o);
-        }
-        System.out.println("wMap中无数据");
+        System.out.println("After GC: " + weakMap);
     }
 
     public static void testHashMap() {
-        System.out.println("HashMap GC之前");
-        for (Object o : map.entrySet()) {
-            System.out.println(o);
-        }
+        Map<Object, String> map = new HashMap<>();
+
+        Object key1 = new Object();
+        Object key2 = new Object();
+
+        map.put(key1, "I am strongly referenced");
+        map.put(key2, "I am strongly referenced");
+
+        System.out.println("Before GC: " + map);
+
+        // Remove strong reference for key2
+        key2 = null;
+        key1 = null;
+
+        // Hint the GC to run
+        System.gc();
+
+        // Give the GC some time
         try {
-            System.gc();
-            TimeUnit.SECONDS.sleep(5);
+            Thread.sleep(5);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        System.out.println("HashMap GC之后");
-        for (Object o : map.entrySet()) {
-            System.out.println(o);
-        }
-        System.out.println("Map中有数据");
+
+        System.out.println("After GC: " + map);
     }
 
 }

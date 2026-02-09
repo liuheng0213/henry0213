@@ -83,7 +83,7 @@ public class Test25_0507_2025_mincost {
         if(dp[idx] != Integer.MAX_VALUE){
             return dp[idx];
         }
-        int ones = idx - zeroCount;
+        int ones = idx - zeroCount;// 一共idx 个数， 其中zeroCount 代表0的个数
         if(msg.charAt(idx) == '1'){
             int a = zeroCount * x + helper(dp,zeroCount,x,y,idx+1,msg);
             dp[idx] = a%M;

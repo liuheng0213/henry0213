@@ -31,7 +31,6 @@ public class PopularityTracker {
     HashMap<String,Integer> id2Count = new HashMap<>();
     TreeMap<Integer, HashSet<String>> count2Id = new TreeMap<>();
 
-    int max = 0;
 
     public void inc(String id){
         //update id2Count
@@ -47,22 +46,18 @@ public class PopularityTracker {
         }
         count2Id.putIfAbsent(count + 1,new HashSet<>());
         count2Id.get(count + 1).add(id);
-        if(max == count){
-            max++;
-        }
+
     }
 
     public void dec(String id){
-        if(id2Count.containsKey(id)){
+        if(!id2Count.containsKey(id)){
             return;
         }
+
         //update id2Count
         Integer count = id2Count.get(id);
-        if(count > 0){
+        if(count >  1){
             id2Count.put(id,count - 1);
-        }
-        if(count - 1 == 0){
-            id2Count.remove(id);
         }
 
         //update count2Id
@@ -86,7 +81,7 @@ public class PopularityTracker {
         if(id2Count.isEmpty()){
             return "";
         }
-        return count2Id.get(max).iterator().next();
+        return count2Id.get(count2Id.lastKey()).iterator().next();
     }
 
 

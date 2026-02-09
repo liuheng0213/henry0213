@@ -5,7 +5,7 @@ import java.util.Arrays;
 public class Leetcode354 {
     public static void main(String[] args) {
         int[] arr = new int[]{2,1,5,3,6,4,8,9,7,100};
-        int res = new Leetcode354().getDp1(arr);
+        int res = new Leetcode354().getdp1(arr);
         int res2 = new Leetcode354().getdp2(arr);
         System.out.println(res == res2);
     }
@@ -14,7 +14,8 @@ public class Leetcode354 {
      * 1）如果 X 之前的信封长度小于 X 的长度。那么只要之前信封的宽度小于 X 的宽度，一定可
      * 以放在 X 内。所以在宽度组成的数组中，X 的宽度如果作为最后一个数，求宽度数组的最长递
      * 增子序列即可。
-     * 2）如果 X 之前的信封长度等于 X 的长度。因为长度相等的信封之间按照宽度从大到小排序，
+     * 2）如果 X 之前的信封长度等于 X 的长度。因为长度相等的信封之间按照宽度从大到小排序，，
+     * 所以宽度更大的信封必然长度更大
      * 所以这些信封的宽度一定大于或等于 X 的宽度，这样就不可能是 X 的宽度作为最后一个数的情况下，
      * 宽度数组的最长递增子序列的一部分。
      *        //so in this case as long as width is increasing,
@@ -45,7 +46,13 @@ public class Leetcode354 {
             widths[i] = arr[i][1];
         }
 
-        return  getdp2(widths);
+        int i = getdp2(widths);
+
+
+
+
+
+        return i;
         // int max = 0;
         // for(int n :ints){
         //     max= Math.max(n,max);
@@ -106,7 +113,7 @@ public class Leetcode354 {
         return res;
     }
 
-    public int getDp1(int[] widths ){
+    public int getdp1(int[] widths ){
         int[] dp = new int[widths.length];
         int max = 1;
         dp[0] = 1;

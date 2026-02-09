@@ -1,7 +1,10 @@
-package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._04CommodityPrices;
+package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._04CommodityPrice;
 
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.TreeMap;
 
 /**
  * interface RunningCommodityPrice {
@@ -50,14 +53,13 @@ public class RunningCommodityPrice {
             throw new IllegalArgumentException("wrong arguments");
         }
         int prePrice = time2Price.getOrDefault(timestamp,0);
-        int count = price2Count.getOrDefault(price,0);
+        Integer preCount = price2Count.getOrDefault(prePrice,0);
 
+        int count = price2Count.getOrDefault(price,0);
         //update time2Price
         time2Price.put(timestamp,price);
-
         //update price2Count
         price2Count.put(price,count + 1);
-        Integer preCount = price2Count.getOrDefault(prePrice,0);
         if(preCount >= 1){
             price2Count.put(prePrice,preCount - 1);
             if(preCount- 1== 0){
@@ -66,7 +68,7 @@ public class RunningCommodityPrice {
         }
 
         checkpoints_price2Count.add(new TreeMap<>(price2Count));
-        time2PriceCheckPoints.add(new TreeMap<>(time2Price));
+//        time2PriceCheckPoints.add(new TreeMap<>(time2Price));
         return checkpoints_price2Count.size();
     }
 
@@ -82,17 +84,18 @@ public class RunningCommodityPrice {
             throw new IllegalArgumentException("wrong arguments");
         }
         TreeMap<Integer, Integer> price2Count = checkpoints_price2Count.get(idx);
-        TreeMap<Integer, Integer> time2price = time2PriceCheckPoints.get(idx);
-        SortedMap<Integer, Integer> tailedTime2PriceCheckPoints = time2price.tailMap(timestamp);
-        ArrayList<Integer> prices = new ArrayList<>(tailedTime2PriceCheckPoints.values());
-        Collections.sort(prices,(a,b)->a-b);
-        for(int i = 0;i< prices.size();i++){
-            Integer p = prices.get(i);
-            if(price2Count.containsKey(p)){
-                return p;
-            }
-        }
-        return -1;
+//        TreeMap<Integer, Integer> time2price = time2PriceCheckPoints.get(idx);
+//        SortedMap<Integer, Integer> tailedTime2PriceCheckPoints = time2price.tailMap(timestamp);// >= timestamp
+//        ArrayList<Integer> prices = new ArrayList<>(price2Count.keySet());
+//        Collections.sort(prices,(a,b)->a-b);
+//        for(int i = 0;i< prices.size();i++){
+//            Integer p = prices.get(i);
+//            if(price2Count.containsKey(p)){
+//                return p;
+//            }
+//        }
+//        return -1;
+        return price2Count.lastKey();
     }
 }
 

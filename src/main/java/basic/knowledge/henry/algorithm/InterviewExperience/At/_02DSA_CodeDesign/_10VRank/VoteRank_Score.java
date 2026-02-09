@@ -14,7 +14,7 @@ public class VoteRank_Score {
         voteRankStream.rankTeams(votes);
     }
     HashMap<Character,Integer> nameToScore = new HashMap<>();
-    HashMap<Integer,LinkedList<Character>> score2Chs = new HashMap<>();
+    TreeMap<Integer,LinkedList<Character>> score2Chs = new TreeMap<>((a,b)->b-a);
 
     private void rankTeams(String[] votes) {
         for(String v : votes){
@@ -43,14 +43,12 @@ public class VoteRank_Score {
             }
         }
 
-
         List<Character> rank = rank();
         System.out.println(rank);
     }
 
     private List<Character> rank() {
         List<Integer> scores = new ArrayList<>(score2Chs.keySet());
-        Collections.sort(scores,(a,b)->b-a);
         List<Character> res = new ArrayList<>();
         for(int score : scores){
             LinkedList<Character> characters = score2Chs.get(score);

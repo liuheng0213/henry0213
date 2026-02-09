@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
+ *      //一定要定义一个 array，这样可以增强读的性能 且不要用封装的double ,否则会有nullpointer exception
+ *   主要用的getOrdefault 一定不要忘记有put
+ *
  *  follow up was basically to include trial period for 3 months where cost would be $0.
  *  And update monthly and yearly projection appropriately.
  *
@@ -21,6 +24,8 @@ public class CostExplorer {
         types.put("PREMIUM",15.0);
     };
     HashMap<String, Map<String,double[]>> customer2product2CostList = new HashMap<>();
+
+
     double[] monthCost = new double[12];
     //上一次的更新得记下来， 或者同一个customer 同一个product 只能用一次trial
     HashMap<String, Map<String,Integer>> customer2product2TrialMonths = new HashMap<>();
