@@ -1,12 +1,15 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._03RateLimiter;
 
 import java.util.Map;
-import java.util.concurrent.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * follow up How would you handle this in a multithreaded env
  */
-public class RateLimiter {
+public class FixedWindowRateLimiter {
     private final Map<Integer, Integer> id2Count;
     private final Map<Integer, Integer> id2Credit;
     private final ScheduledExecutorService executor;
@@ -16,7 +19,7 @@ public class RateLimiter {
     private final int maxCredit = 6;
     private final int maInterval = 5;
 
-    public RateLimiter() {
+    public FixedWindowRateLimiter() {
         this.id2Count = new ConcurrentHashMap<>();
         this.id2Credit = new ConcurrentHashMap<>();
         this.executor = Executors.newSingleThreadScheduledExecutor();

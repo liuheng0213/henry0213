@@ -1,17 +1,17 @@
 package basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign;
 
-import basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._03RateLimiter.RateLimiter;
+import basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._03RateLimiter.FixedWindowRateLimiter;
 import basic.knowledge.henry.algorithm.InterviewExperience.At._02DSA_CodeDesign._03RateLimiter.RateLimiterTwice;
 import org.junit.Before;
 import org.junit.Test;
 import org.testng.Assert;
 
 public class TestRateLimiter {
-    RateLimiter rl;
+    FixedWindowRateLimiter rl;
     RateLimiterTwice r2;
     @Before
     public void setup(){
-        rl = new RateLimiter();
+        rl = new FixedWindowRateLimiter();
         r2 = new RateLimiterTwice();
     }
 
